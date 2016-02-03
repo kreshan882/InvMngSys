@@ -39,57 +39,56 @@
         
         <default-action-ref name="DefLogin"/>
 
-        <action name="DefLogin" class="com.epic.login.action.UserLogin" method="getInstitutes">
+        <action name="DefLogin" class="com.org.login.action.UserLogin" method="getInstitutes">
             <result>/pages/login/Login.jsp</result>
         </action>
     </package>
      
     <package name="e24ocm_Login" namespace="/" extends="pglobal">           
-        <action name="*loginCall" class="com.epic.login.action.UserLogin" method="{1}">
+        <action name="*loginCall" class="com.org.login.action.UserLogin" method="{1}">
             <result name="success">/pages/login/Home.jsp</result>
             <result name="login">/pages/login/Login.jsp</result>           
         </action>
                 
         
-        <action name="logoutCall" class="com.epic.login.action.UserLogin" method="logoutFunction">
+        <action name="logoutCall" class="com.org.login.action.UserLogin" method="logoutFunction">
             <result name="login">/pages/login/Login.jsp</result>           
         </action>      
-        <action name="homeCall" class="com.epic.login.action.UserLogin" method="homeFunction">
+        <action name="homeCall" class="com.org.login.action.UserLogin" method="homeFunction">
             <result name="success">/pages/login/Home.jsp</result>          
         </action>
     </package>
         
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start User Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->       
-    <package name="e24ocm_User" namespace="/" extends="pglobal">
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start Customer Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->       
+    <package name="inventory_Customer" namespace="/" extends="pglobal">
         
                           
-        <action name="*UseraddNewUserISA" method="{1}" class="com.epic.user.action.AddNewUserISA" > 
-            <result name="success">/pages/userManagement/addNewUserISA.jsp</result> 
+        <action name="*addCus" method="{1}" class="com.org.cust.action.AddCustomer" > 
+            <result name="success">/pages/customManagement/addCustomer.jsp</result> 
             <result name="message">/pages/msgFrag.jsp</result>            
         </action>
       
               
-        <action name="*editViewUserISA"    class="com.epic.user.action.EditViewUserISA"   method="{1}"> 
-         
+        <action name="*editViewUserISA"    class="com.org.cust.action.EditViewUserISA"   method="{1}">       
             <result name="list" type="json"></result>           
             <result name="find" type="json"></result>              
             <result name="loadusers" type="json"></result> 
             <result name="delete"  type="json"  ></result>
             <result name="update">/pages/msgFrag.jsp</result>
-            <result name="success">/pages/userManagement/editAndViewUserISA.jsp</result>        
+            <result name="success">/pages/customManagement/editAndViewUserISA.jsp</result>        
             
         </action>
         
-        <action name="*viewUser"    class="com.epic.user.action.ViewUserAA"   method="{1}"> 
+        <action name="*viewUser"    class="com.org.cust.action.ViewUserAA"   method="{1}"> 
          
             <result name="list" type="json"></result>       
-            <result name="success">/pages/userManagement/viewUser.jsp</result>        
+            <result name="success">/pages/customManagement/viewUser.jsp</result>        
             
         </action>
         
         
-        <action name="*changePassword" class="com.epic.user.action.ChangePassword" method="{1}">
-            <result name="success">/pages/userManagement/changePassword.jsp</result> 
+        <action name="*changePassword" class="com.org.cust.action.ChangePassword" method="{1}">
+            <result name="success">/pages/customManagement/changePassword.jsp</result> 
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
                

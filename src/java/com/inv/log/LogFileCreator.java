@@ -5,7 +5,7 @@
 
 package com.inv.log;
 
-import com.epic.login.bean.SessionUserBean;
+import com.org.login.bean.SessionUserBean;
 import com.inv.util.Util;
 import java.io.BufferedWriter;
 import java.io.FileWriter;

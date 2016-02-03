@@ -6,7 +6,7 @@
 
 package com.inv.util;
 
-import com.epic.login.bean.ModuleBean;
+import com.org.login.bean.ModuleBean;
 import java.util.Comparator;
 
 /**

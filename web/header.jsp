@@ -8,8 +8,8 @@
 
 <%@page import="com.inv.util.ModuleComparator"%>
 <%@page import="java.util.TreeSet"%>
-<%@page import="com.epic.login.bean.PageBean"%>
-<%@page import="com.epic.login.bean.ModuleBean"%>
+<%@page import="com.org.login.bean.PageBean"%>
+<%@page import="com.org.login.bean.ModuleBean"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>

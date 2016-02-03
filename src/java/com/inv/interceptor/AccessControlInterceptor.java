@@ -5,8 +5,8 @@
 package com.inv.interceptor;
 
 import com.inv.log.LogFileCreator;
-import com.epic.login.action.UserLogin;
-import com.epic.login.bean.SessionUserBean;
+import com.org.login.action.UserLogin;
+import com.org.login.bean.SessionUserBean;
 import com.inv.util.AccessControlService;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
