@@ -1,0 +1,106 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!--
+    Document   : struts.xml
+    Created on : August 5, 2014, 4:19 PM
+    Author     : kreshan
+    Description: Purpose of the document follows.
+-->
+
+<struts>
+
+    <package name="pglobal" namespace="/" extends="struts-default,json-default">
+        
+        <interceptors>
+            <interceptor name="EpicAccesControl" class="com.inv.interceptor.AccessControlInterceptor" />              
+            <interceptor-stack name="EpicStack">
+                <interceptor-ref name="EpicAccesControl"/> 
+                <interceptor-ref name="workflow"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="basicStack"/>
+
+            </interceptor-stack>
+        </interceptors>
+        
+        <default-interceptor-ref name="EpicStack"/> 
+                   
+        <global-results>
+<!--            <result name="noaccessPage">/pages/login/noaccess.jsp</result>  -->
+            <result name="noaccessPage" type="chain" >logoutCall</result>
+        </global-results>  
+        
+    </package>
+
+    <package name="e24ocm_Login_DEFAULT" namespace="/" extends="struts-default">
+        
+        <default-action-ref name="DefLogin"/>
+
+        <action name="DefLogin" class="com.epic.login.action.UserLogin" method="getInstitutes">
+            <result>/pages/login/Login.jsp</result>
+        </action>
+    </package>
+     
+    <package name="e24ocm_Login" namespace="/" extends="pglobal">           
+        <action name="*loginCall" class="com.epic.login.action.UserLogin" method="{1}">
+            <result name="success">/pages/login/Home.jsp</result>
+            <result name="login">/pages/login/Login.jsp</result>           
+        </action>
+                
+        
+        <action name="logoutCall" class="com.epic.login.action.UserLogin" method="logoutFunction">
+            <result name="login">/pages/login/Login.jsp</result>           
+        </action>      
+        <action name="homeCall" class="com.epic.login.action.UserLogin" method="homeFunction">
+            <result name="success">/pages/login/Home.jsp</result>          
+        </action>
+    </package>
+        
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start User Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->       
+    <package name="e24ocm_User" namespace="/" extends="pglobal">
+        
+                          
+        <action name="*UseraddNewUserISA" method="{1}" class="com.epic.user.action.AddNewUserISA" > 
+            <result name="success">/pages/userManagement/addNewUserISA.jsp</result> 
+            <result name="message">/pages/msgFrag.jsp</result>            
+        </action>
+      
+              
+        <action name="*editViewUserISA"    class="com.epic.user.action.EditViewUserISA"   method="{1}"> 
+         
+            <result name="list" type="json"></result>           
+            <result name="find" type="json"></result>              
+            <result name="loadusers" type="json"></result> 
+            <result name="delete"  type="json"  ></result>
+            <result name="update">/pages/msgFrag.jsp</result>
+            <result name="success">/pages/userManagement/editAndViewUserISA.jsp</result>        
+            
+        </action>
+        
+        <action name="*viewUser"    class="com.epic.user.action.ViewUserAA"   method="{1}"> 
+         
+            <result name="list" type="json"></result>       
+            <result name="success">/pages/userManagement/viewUser.jsp</result>        
+            
+        </action>
+        
+        
+        <action name="*changePassword" class="com.epic.user.action.ChangePassword" method="{1}">
+            <result name="success">/pages/userManagement/changePassword.jsp</result> 
+            <result name="message">/pages/msgFrag.jsp</result>          
+        </action>
+               
+    </package>  
+    
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End User Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
+ 
+     
+    
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ End StartToken/Smart card certification Management~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
+</struts>
+
+                     
+        

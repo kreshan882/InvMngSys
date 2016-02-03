@@ -1,0 +1,35 @@
+===========================================
+=====       Data Base Updates         =====
+===========================================
+#####################################
+## start 1.08(13032015) ---- 1.09  ##
+#####################################
+
+*1) E24OCM_RA_REQUEST->CERTSIGNING_STATUS int(1) default 0
+*2) E24OCM_TPU_REQUEST->CERTSIGNING_STATUS int(1) default 0
+*3) E24OCM_VERSION -> DB_VERSION VARCHAR(20)   =>set db version       
+*4) E24OCM_MODULE and E24OCM_PAGE (spellimg check drop down list)
+*5) E24OCM_TPU_REQUEST --> PRIVATE_KEY (6000 to 8000)
+*6) ntbadmin remove Dashbord access
+		delete FROM e24ocm.E24OCM_APP_MODULE where APP_TYPE='07' and MODULE='10' and PAGE_ID='1003';
+		delete FROM e24ocm.E24OCM_USER_PF_MODULE where PROFILE_ID=2 and MODULE_ID='10' and PAGE_ID='1003';
+
+#####################################
+## start 1.09(28072015) -----1.10  ##
+#####################################
+		
+		
+1) show variables like '%wait_timeout%';   50->500
+2) E24OCM_PAGE
+			View Requests Explora->View Requests 
+			Audit system history ->System Audit
+			dash bord moniter    ->System Dash Board 
+3) delete FROM E24OCM_APP_MODULE where APP_TYPE='07' and PAGE_ID='0107';
+4) DELETE FROM E24OCM_USER_PF_MODULE WHERE PROFILE_ID=2 AND PAGE_ID='0107';
+
+
+#####################################
+## start 1.10(18112015) ------     ##
+#####################################
+	
+1) show variables like '%wait_timeout%';   50->500
