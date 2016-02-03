@@ -4,7 +4,7 @@
  */
 package com.org.cust.action;
 
-import com.inv.init.AppType;
+//import com.inv.init.AppType;
 import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.log.LogFileCreator;

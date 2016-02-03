@@ -7,7 +7,7 @@
 package com.org.cust.service;
 
 import com.inv.db.DBConnection;
-import com.inv.init.AppType;
+//import com.inv.init.AppType;
 import com.inv.init.Status;
 import com.org.login.bean.SessionUserBean;
 import com.org.cust.bean.ViewUserAADataBean;

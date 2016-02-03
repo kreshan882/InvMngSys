@@ -7,11 +7,10 @@
 package com.org.cust.service;
 
 import com.inv.db.DBConnection;
-import com.inv.init.AppType;
+//import com.inv.init.AppType;
 import com.inv.init.Status;
 import com.org.login.bean.SessionUserBean;
 import com.org.cust.bean.CustomerBeen;
-import com.inv.util.UserCatagory;
 import com.inv.util.Util;
 import java.sql.Connection;
 import java.sql.Date;
@@ -43,11 +42,10 @@ public class AddCustomerService {
             addUserStatement = connection.prepareStatement(query);
                                 
             
-            addUserStatement.setInt(1, UserCatagory.INSTITUTE_SU_CATAGORY);
-            addUserStatement.setInt(2, UserCatagory.INSTITUTE_SU_PROFILE);
+
             addUserStatement.setInt(3, Integer.parseInt(userBean.getInstitute()));
             addUserStatement.setString(4,Status.ACTIVE);
-            addUserStatement.setString(5,AppType.IAM);
+//            addUserStatement.setString(5,AppType.IAM);
             addUserStatement.setInt(6,0);
             addUserStatement.setString(7, userBean.getUserId());
             addUserStatement.setString(8, Util.generateHash(userBean.getPassword()));//should be insert increpted password
@@ -94,7 +92,7 @@ public class AddCustomerService {
             connection.setAutoCommit(false);
             String sql = "SELECT INSTITUTE_ID,NAME FROM E24OCM_INSTITUTE where INSTITUTE_ID !=? AND STATUS=?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
+//            ps.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
             ps.setString(2, Status.ACTIVE);
             result = ps.executeQuery();
 

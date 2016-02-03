@@ -6,13 +6,12 @@
 package com.org.cust.service;
 
 import com.inv.db.DBConnection;
-import com.inv.init.AppType;
+//import com.inv.init.AppType;
 import com.inv.init.Status;
 
 
 import com.org.cust.bean.EditViewUserISADataBean;
 import com.org.cust.bean.EditUserISAInputBean;
-import com.inv.util.UserCatagory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +35,7 @@ public class EditViewUserISAService {
             con.setAutoCommit(false);
             insListQuery = "SELECT NAME,INSTITUTE_ID FROM E24OCM_INSTITUTE where INSTITUTE_ID !=? AND (STATUS= ? OR STATUS = ?)";
             prepSt = con.prepareStatement(insListQuery);
-            prepSt.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
+//            prepSt.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
             prepSt.setString(2,Status.ACTIVE);
             prepSt.setString(3,Status.INACTIVE);
             res = prepSt.executeQuery();
@@ -85,7 +84,7 @@ public class EditViewUserISAService {
                 
             prepSt = con.prepareStatement(sqlCount);
             prepSt.setInt(1, bean.getInstituteID());
-            prepSt.setString(2, AppType.IAM);
+//            prepSt.setString(2, AppType.IAM);
             prepSt.setString(3, "%" + bean.getUsername() + "%");
             prepSt.setString(4, Status.ACTIVE);
             prepSt.setString(5, Status.INACTIVE);
@@ -105,7 +104,7 @@ public class EditViewUserISAService {
 
             prepSt = con.prepareStatement(getUsersListQuery);
             prepSt.setInt(1, bean.getInstituteID());
-            prepSt.setString(2, AppType.IAM);
+//            prepSt.setString(2, AppType.IAM);
             prepSt.setString(3, "%" + bean.getUsername() + "%");
             prepSt.setString(4, Status.ACTIVE);
             prepSt.setString(5, Status.INACTIVE);
@@ -189,7 +188,7 @@ public class EditViewUserISAService {
             prepSt = con.prepareStatement(getUsersListQuery);
             prepSt.setString(1,bean.getUsername());
             prepSt.setInt(2, bean.getInstituteID());
-            prepSt.setString(3, AppType.IAM);
+//            prepSt.setString(3, AppType.IAM);
             res = prepSt.executeQuery();
 
             while (res.next()) {

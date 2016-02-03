@@ -6,7 +6,7 @@ package com.inv.global;
 
 import com.inv.db.DBConnection;
 import com.inv.util.Util;
-import com.inv.xml.InitXmlReader;
+import com.inv.xml.ReaderDbInit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
@@ -25,7 +25,7 @@ public class ContextListener implements ServletContextListener{
             
 //~~~~~~~~~~start set globle configuration data~~~~~~~~~~~~~~
             Util.setDBxmlPath();
-            InitXmlReader.readConfigValues();
+            ReaderDbInit.readConfigValues();
             DBConnection.createDbPool();
            
             Logger.getLogger(ContextListener.class.getName()).log(Level.SEVERE, null, "glash fish loggggggggggggggggggggggggggg kkkkk");
