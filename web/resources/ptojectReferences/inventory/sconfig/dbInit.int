@@ -1,0 +1,15 @@
+#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+# Database configuration
+#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+DB_USERNAME=root
+DB_PASSWORD=password
+DB_DRIVER=com.mysql.jdbc.Driver
+DB_URL=jdbc:mysql://192.168.1.38:3306/inv_ctrl
+MIN_POOL=2
+MAX_POOL=10
+MAX_CON=20
+DB_CONNECTION_TIMEOUT=10000
+DB_CON_EXPIR_TIMEOUT=0
+
+
+
