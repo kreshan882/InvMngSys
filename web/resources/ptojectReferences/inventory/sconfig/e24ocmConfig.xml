@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SCONFIG>
+
+
+		<!-- Database configuration -->
+		<DBUSERNAME>root</DBUSERNAME>
+		<DBPASSWORD>password</DBPASSWORD>
+		<DBDRIVER>com.mysql.jdbc.Driver</DBDRIVER>
+		<DBURL>jdbc:mysql://127.0.0.1:3306/inv_ctrl</DBURL>
+		<DBMINPOOL>3</DBMINPOOL>
+		<DBMAXPOOL>10</DBMAXPOOL>
+		<DBMAXCON>20</DBMAXCON>
+		<DBCONNECTIONTIMEOUT>8000</DBCONNECTIONTIMEOUT>
+		<DBEXPIRTIMEOUT>0</DBEXPIRTIMEOUT>
+
+
+</SCONFIG>
