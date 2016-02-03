@@ -37,8 +37,9 @@ public class LogFileCreator {
     public static void writeInfoToLog(String msg) throws Exception {
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         SessionUserBean sub = (SessionUserBean) session.getAttribute("SessionObject");
-        String errorpath=sub.getLogFilePath()+"infors";
         
+        String errorpath=sub.getLogFilePath()+"infors";
+        System.out.println("sssssssssssssss"+errorpath);
         
         BufferedWriter bw = null;
         String newLine = "";

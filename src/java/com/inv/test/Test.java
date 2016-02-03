@@ -20,7 +20,7 @@ public class Test {
 //    APInit.IS_HSM_ENABLED=false;
 //    SSMModule.initSSM("");
     
-        System.out.println(Util.validateNIC("893140328"));
+        System.out.println((Util.generateHash("password")));
         
     }
       

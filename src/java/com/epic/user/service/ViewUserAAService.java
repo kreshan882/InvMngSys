@@ -29,111 +29,58 @@ import org.apache.struts2.ServletActionContext;
 public class ViewUserAAService {
     
     
-     public   void loaduserCategoryList(ViewUserAAInputBean bean)throws Exception{
-             
-        
-        
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        SessionUserBean su = (SessionUserBean)session.getAttribute("SessionObject");
-        PreparedStatement perSt = null;
-        ResultSet res = null;
-        Connection con=null;
-        String sql = null;
-        try {
-            con= DBConnection.getConnection();
-            con.setAutoCommit(false);
-            if(su.getApptype().equals(AppType.IAM)){
-                sql="SELECT CODE,NAME FROM E24OCM_USER_CATEGORY where INSTITUTE_ID =? AND STATUS!=?";
-
-                perSt = con.prepareStatement(sql);
-                perSt.setInt(1, su.getInstituteid());
-                perSt.setString(2, Status.DELETED);
-                res = perSt.executeQuery();
-            }else{
-                sql="SELECT CODE,NAME FROM E24OCM_USER_CATEGORY where INSTITUTE_ID =? AND APP_TYPE=? AND APP_ID=? AND STATUS!=?";
-
-                perSt = con.prepareStatement(sql);
-                perSt.setInt(1, su.getInstituteid());
-                perSt.setString(2, su.getApptype());
-                perSt.setInt(3, su.getAppid());
-                perSt.setString(4, Status.DELETED);
-                res = perSt.executeQuery();
-            }
-
-            while (res.next()) {
-                bean.getUserCategoryList().put(res.getInt("CODE"),res.getString("NAME") );
-            }
-                bean.setUserCategoryList(Util.sortByValues(bean.getUserCategoryList()));
-            con.commit();
-        } catch (Exception ex) {
-            if(con!=null){con.rollback();}
-            ex.printStackTrace();
-            throw ex;
-        } finally {
-            if (perSt != null) {
-                perSt.close();
-            }
-            if (res != null) {
-                res.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        
+     
     
-    }
-    
-    public   void loaduserProfileList(ViewUserAAInputBean bean)throws Exception{
-        
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        SessionUserBean su = (SessionUserBean)session.getAttribute("SessionObject");
-        PreparedStatement perSt = null;
-        ResultSet res = null;
-        Connection con=null;
-        String sql = null;
-        try {
-            con= DBConnection.getConnection();
-            con.setAutoCommit(false);
-            if(su.getApptype().equals(AppType.IAM)){
-                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND STATUS!=?";
-
-                perSt = con.prepareStatement(sql);
-                perSt.setInt(1, su.getInstituteid());
-                perSt.setString(2, Status.DELETED);
-                res = perSt.executeQuery();
-            }else{
-                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND APP_TYPE=? AND APP_ID=? AND STATUS!=?";
-
-                perSt = con.prepareStatement(sql);
-                perSt.setInt(1, su.getInstituteid());
-                perSt.setString(2, su.getApptype());
-                perSt.setInt(3, su.getAppid());
-                perSt.setString(4, Status.DELETED);
-                res = perSt.executeQuery();
-            }
-            while (res.next()) {
-                 bean.getUserProfileList().put(res.getInt("PROFILE_ID"), res.getString("NAME"));
-            }
-            
-            con.commit();
-        } catch (Exception ex) {
-            if(con!=null){con.rollback();}
-            
-            throw ex;
-        } finally {
-            if (perSt != null) {
-                perSt.close();
-            }
-            if (res != null) {
-                res.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-    
-    }
+//    public   void loaduserProfileList(ViewUserAAInputBean bean)throws Exception{
+//        
+//        HttpSession session = ServletActionContext.getRequest().getSession(false);
+//        SessionUserBean su = (SessionUserBean)session.getAttribute("SessionObject");
+//        PreparedStatement perSt = null;
+//        ResultSet res = null;
+//        Connection con=null;
+//        String sql = null;
+//        try {
+//            con= DBConnection.getConnection();
+//            con.setAutoCommit(false);
+//            if(su.getApptype().equals(AppType.IAM)){
+//                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND STATUS!=?";
+//
+//                perSt = con.prepareStatement(sql);
+//                perSt.setInt(1, su.getInstituteid());
+//                perSt.setString(2, Status.DELETED);
+//                res = perSt.executeQuery();
+//            }else{
+//                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND APP_TYPE=? AND APP_ID=? AND STATUS!=?";
+//
+//                perSt = con.prepareStatement(sql);
+//                perSt.setInt(1, su.getInstituteid());
+//                perSt.setString(2, su.getApptype());
+//                perSt.setInt(3, su.getAppid());
+//                perSt.setString(4, Status.DELETED);
+//                res = perSt.executeQuery();
+//            }
+//            while (res.next()) {
+//                 bean.getUserProfileList().put(res.getInt("PROFILE_ID"), res.getString("NAME"));
+//            }
+//            
+//            con.commit();
+//        } catch (Exception ex) {
+//            if(con!=null){con.rollback();}
+//            
+//            throw ex;
+//        } finally {
+//            if (perSt != null) {
+//                perSt.close();
+//            }
+//            if (res != null) {
+//                res.close();
+//            }
+//            if (con != null) {
+//                con.close();
+//            }
+//        }
+//    
+//    }
     
     public   List<ViewUserAADataBean> loadUsers( ViewUserAAInputBean bean,String orderBy, int max, int first )throws Exception{
     
@@ -167,9 +114,9 @@ public class ViewUserAAService {
             ps.setString(1, Status.ACTIVE);
             ps.setString(2, Status.INACTIVE);
             ps.setString(3, "%"+bean.getUsername()+"%");
-            ps.setInt(4, sub.getInstituteid());
-            ps.setString(5, sub.getApptype());
-            ps.setInt(6, sub.getAppid());
+//            ps.setInt(4, sub.getInstituteid());
+//            ps.setString(5, sub.getApptype());
+//            ps.setInt(6, sub.getAppid());
             
            if(bean.getUserProfileID()!=-1 && bean.getUserCategory()==-1){
                 ps.setInt(7, bean.getUserProfileID());
@@ -211,9 +158,9 @@ public class ViewUserAAService {
             ps.setString(1, Status.ACTIVE);
             ps.setString(2, Status.INACTIVE);
             ps.setString(3, "%"+bean.getUsername()+"%");
-            ps.setInt(4, sub.getInstituteid());
-            ps.setString(5, sub.getApptype());
-            ps.setInt(6, sub.getAppid());
+//            ps.setInt(4, sub.getInstituteid());
+//            ps.setString(5, sub.getApptype());
+//            ps.setInt(6, sub.getAppid());
 
             if(bean.getUserProfileID()!=-1 && bean.getUserCategory()==-1){
                 ps.setInt(7, bean.getUserProfileID());

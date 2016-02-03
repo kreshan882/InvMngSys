@@ -73,9 +73,9 @@ public class AddNewUserISA extends ActionSupport implements ModelDriven<AddISAUs
                 if (ok == false) {
                     addActionError(SystemMessage.USR_ERROR_UNHANDLE);
                 } else {
-                    DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
-                            sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
-                            Module.USER_MANAGEMENT, Operation.ADD, SystemMessage.USR_ADD + " for " + userBean.getUserId(),request.getRemoteAddr());
+//                    DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
+//                            sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
+//                            Module.USER_MANAGEMENT, Operation.ADD, SystemMessage.USR_ADD + " for " + userBean.getUserId(),request.getRemoteAddr());
                     
                     addActionMessage(SystemMessage.USR_ADD);
                     

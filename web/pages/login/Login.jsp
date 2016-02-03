@@ -39,13 +39,7 @@
                     <s:form action="loginCheckloginCall" theme="simple">
 
                         <table>
-<!--                            <tr> 
-                                <td class="lable">Institute Name</td>
-                                <td class="lable">:</td>
-                                <td colspan="2"><s:select name="institute" headerKey="-1" 
-                                          headerValue="---Select---"   headerKey="-1"  list="%{instituteList}"   listKey="key" 
-                                              listValue="value"  cssClass="login_textField"/></td>
-                            </tr>-->
+
                             <tr>
                                 <td class="lable">Login ID</td>
                                 <td class="lable">:</td>

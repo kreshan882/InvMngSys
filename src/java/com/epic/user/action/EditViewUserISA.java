@@ -63,10 +63,10 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
             LogFileCreator.writeInfoToLog("Deleting  user from page EditAndViewUserISA");
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
-            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
-                                Module.USER_MANAGEMENT,Operation.DELETE,SystemMessage.USR_DELETED,request.getRemoteAddr());
-           
+//            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
+//                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
+//                                Module.USER_MANAGEMENT,Operation.DELETE,SystemMessage.USR_DELETED,request.getRemoteAddr());
+//           
             service.deleteUserISA( inputBean);
             addActionMessage(SystemMessage.USR_DELETED); 
             inputBean.setMessage(SystemMessage.USR_DELETED);
@@ -173,9 +173,9 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
                 System.out.println(ok);
                if(ok==true){
                 addActionMessage(SystemMessage.USR_UPDATED);
-                DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
-                                Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_UPDATED,request.getRemoteAddr());
+//                DBProcesses.insertHistoryRecord(sub.getInstituteid(),
+//                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
+//                                Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_UPDATED,request.getRemoteAddr());
               
                 LogFileCreator.writeInfoToLog("Updating  user from page EditAndViewUserISA succesfull."); 
               

@@ -3,11 +3,6 @@
  * and open the template in the editor.
  */
 package com.epic.login.action;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.inv.init.Module;
-import com.inv.init.Operation;
 import com.inv.init.Status;
 import com.inv.log.LogFileCreator;
 import com.epic.login.bean.HomeValues;
@@ -16,7 +11,6 @@ import com.epic.login.bean.PageBean;
 import com.epic.login.bean.SessionUserBean;
 import com.epic.login.bean.UserLoginBean;
 import com.epic.login.service.LoginService;
-import com.inv.util.DBProcesses;
 import com.inv.util.SystemMessage;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -65,18 +59,14 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
                     
                     if (service.varifilogin(userLoginBean)) {
                         if (userLoginBean.getDBuserStatus().equals(Status.ACTIVE)) {
-
+                            
+                            System.out.println("pass ok, status active...............");
                             
                             sessionUserBean.setUsername(userLoginBean.getUserName());
                             sessionUserBean.setUserid(userLoginBean.getDBuserId());
-                            sessionUserBean.setInstituteid(userLoginBean.getDBuserInstituteId());
                             sessionUserBean.setCurrentUserProfileId(userLoginBean.getDBuserProfile());
-                            sessionUserBean.setApptype(userLoginBean.getDBuserAppType());
-                            sessionUserBean.setAppid(userLoginBean.getDBuserAppId());
-                            sessionUserBean.setLogFilePath(userLoginBean.getDBuserlogPath());
+                            sessionUserBean.setLogFilePath("/opt/inventory/logs/");
                             
-                            
-                            userLoginBean=service.getCertficateStatus(userLoginBean);
                             
   
                             HttpSession sessionPrevious = ServletActionContext.getRequest().getSession(false);
@@ -89,14 +79,14 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
                             
                             sessionUserBean.setCurrentSessionId(session.getId());
                             
-                            DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
-                                    sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
-                                    Module.LOGIN_MANAGEMENT, Operation.LOGIN, SystemMessage.LOGIN_MSG, request.getRemoteAddr());
+//                            DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
+//                                    sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
+//                                    Module.LOGIN_MANAGEMENT, Operation.LOGIN, SystemMessage.LOGIN_MSG, request.getRemoteAddr());
                             
                             LogFileCreator.writeInfoToLog(SystemMessage.LOGIN_MSG);
                             //load home page values
-                            service.getHomeValues(userLoginBean,homeValues);
-                            session.setAttribute("SessionHomeValues", homeValues);
+//                            service.getHomeValues(userLoginBean,homeValues);
+//                            session.setAttribute("SessionHomeValues", homeValues);
                             
                             profilePageidList = service.getUserprofilePageidList(userLoginBean.getDBuserProfile());
                             session.setAttribute("profilePageidList", profilePageidList);
@@ -155,8 +145,8 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
            if (session != null) {
                 SessionUserBean su = (SessionUserBean) session.getAttribute("SessionObject");
                 if(su!=null){
-                    DBProcesses.insertHistoryRecord(su.getInstituteid(), su.getUserid(), su.getApptype(), su.getAppid(),
-                    Module.LOGIN_MANAGEMENT, Operation.LOGOUT, SystemMessage.LOGOUT_MSG, request.getRemoteAddr());
+//                    DBProcesses.insertHistoryRecord(su.getInstituteid(), su.getUserid(), su.getApptype(), su.getAppid(),
+//                    Module.LOGIN_MANAGEMENT, Operation.LOGOUT, SystemMessage.LOGOUT_MSG, request.getRemoteAddr());
                 }else{
                     addActionError("Session timeout.");
                 }

@@ -43,7 +43,7 @@ public class ChangePassword extends ActionSupport implements ModelDriven<ChangeP
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
             changePasswordBean.setUsername(sub.getUsername());
-            changePasswordBean.setInstuteid(sub.getInstituteid());
+            
             try{
             
              cps.getOldPasswordFromDb(changePasswordBean);
@@ -54,18 +54,16 @@ public class ChangePassword extends ActionSupport implements ModelDriven<ChangeP
                 if(!changePasswordBean.getPasswordOld().equals(changePasswordBean.getPasswordNew1())){
                 if(cps.checkNewPasswordsMatch(changePasswordBean)){
                    
-                    if(!(sub.getApptype().equals(AppType.EIM) || sub.getApptype().equals(AppType.IAM))){
-                        msg = "Successful";//validator.validatePassword(changePasswordBean.getPasswordNew1());
-                    }else{
+                 
                         msg = "Successful";
-                    }
                     
+                 
                     if(msg.equals("Successful")){
 
                             cps.updatePassword(changePasswordBean);
-                            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-                            sub.getUserid(),sub.getApptype(),sub.getAppid(),
-                            Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_PW_CHG,request.getRemoteAddr());
+//                            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
+//                            sub.getUserid(),sub.getApptype(),sub.getAppid(),
+//                            Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_PW_CHG,request.getRemoteAddr());
                             addActionMessage(SystemMessage.USR_PW_UPDATE);
 
                     }else{

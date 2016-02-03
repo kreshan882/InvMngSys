@@ -35,8 +35,8 @@ public class ViewUserAA extends ActionSupport implements ModelDriven<ViewUserAAI
      public String View(){    
          try{      
             
-            service.loaduserCategoryList(inputBean);
-            service.loaduserProfileList(inputBean);
+//            service.loaduserCategoryList(inputBean);
+//            service.loaduserProfileList(inputBean);
         
         }catch(Exception e){
         
