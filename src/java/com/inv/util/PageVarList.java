@@ -9,7 +9,7 @@ package com.inv.util;
  * @author kreshan
  */
 public class PageVarList {
-    public static final String USER_ADD_ISA                 =   "0101";
+    public static final String CUS_ADD                      =   "0101";
     public static final String USER_ADD_IA                  =   "0102";
     public static final String USER_ADD_AA                  =   "0103";
     public static final String USER_EDIT_AND_VIEW_ISA       =   "0104";

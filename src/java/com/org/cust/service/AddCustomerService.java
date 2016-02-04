@@ -28,99 +28,90 @@ import java.sql.ResultSet;
  */
 public class AddCustomerService {
 
-    public boolean insertISADetails(CustomerBeen userBean ,  SessionUserBean sessionUserBean) throws Exception{
-        Connection connection = null;
+    public boolean insertCustomerDetails(CustomerBeen userBean ,  SessionUserBean sessionUserBean) throws Exception{
+        Connection con = null;
         String query;
-        PreparedStatement addUserStatement=null;
+        PreparedStatement preStat=null;
         boolean ok=false;
         
         
         try {
-            connection = DBConnection.getConnection();
-            query="INSERT INTO E24OCM_USER (USER_CATEGORY,USER_PROFILE,INSTITUTE_ID,STATUS,APP_TYPE,APP_ID,USERNAME,PASSWORD,EMAIL,TEL_NUMBER,NIC,LOCATION,COMPANY,GENDER,REG_DATE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            query="insert into ic_customer(NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_MOBILE,TP_OFFICE,STATUS,DATE) "
+                    + "VALUES(?,?,?,?,  ?,?,?,?)";
             
-            addUserStatement = connection.prepareStatement(query);
-                                
-            
+            preStat = con.prepareStatement(query);
 
-            addUserStatement.setInt(3, Integer.parseInt(userBean.getInstitute()));
-            addUserStatement.setString(4,Status.ACTIVE);
-//            addUserStatement.setString(5,AppType.IAM);
-            addUserStatement.setInt(6,0);
-            addUserStatement.setString(7, userBean.getUserId());
-            addUserStatement.setString(8, Util.generateHash(userBean.getPassword()));//should be insert increpted password
-            addUserStatement.setString(9, userBean.getEmail());
-            addUserStatement.setString(10, userBean.getTelephone());
-            addUserStatement.setString(11, userBean.getNic());
-            addUserStatement.setString(12, userBean.getLocation());
-            addUserStatement.setString(13, userBean.getCompany());
-            addUserStatement.setString(14, userBean.getGender());
-            addUserStatement.setDate(15, (Date) Util.getLocalDate());
+            preStat.setString(1, userBean.getCustName());
+            preStat.setString(2, userBean.getCompanyName());
+            preStat.setString(3, userBean.getEmail());
+            preStat.setString(4, userBean.getAddress());
             
-            
-            
-           int n= addUserStatement.executeUpdate();
+            preStat.setString(5, userBean.getTpMobile());
+            preStat.setString(6, userBean.getTpOffice());
+            preStat.setString(7, Status.ACTIVE);
+            preStat.setDate(8, (Date) Util.getLocalDate());
+
+           int n= preStat.executeUpdate();
            if(n >= 0){
                ok=true;
            }
+           con.commit();
 
-            
-            
         } catch (Exception e) {
             throw  e;
         }finally{
-            if(addUserStatement != null){
-                addUserStatement.close();
+            if(preStat != null){
+                preStat.close();
             }
-            if(connection != null){
-                DBConnection.dbConnectionClose(connection);
+            if(con != null){
+                DBConnection.dbConnectionClose(con);
             }
-            
-            
         }
         return ok;
       
     }
     
-    public void getInstituteList(CustomerBeen userBean) throws Exception {
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet result = null;
-
-        try {
-            connection = DBConnection.getConnection();
-            connection.setAutoCommit(false);
-            String sql = "SELECT INSTITUTE_ID,NAME FROM E24OCM_INSTITUTE where INSTITUTE_ID !=? AND STATUS=?";
-            ps = connection.prepareStatement(sql);
-//            ps.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
-            ps.setString(2, Status.ACTIVE);
-            result = ps.executeQuery();
-
-            while (result.next()) {
-                userBean.getInstituteList().put(result.getInt("INSTITUTE_ID"), result.getString("NAME"));
-            }
-            connection.commit();
-           
-        }
-        catch (Exception ex) {
-            throw ex;
-	}finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (result != null) {
-                result.close();
-            }
-            if (connection != null) {
-                DBConnection.dbConnectionClose(connection);
-            }
-        }
-        
-        }
+//    public void getInstituteList(CustomerBeen userBean) throws Exception {
+//        Connection connection = null;
+//        PreparedStatement ps = null;
+//        ResultSet result = null;
+//
+//        try {
+//            connection = DBConnection.getConnection();
+//            connection.setAutoCommit(false);
+//            String sql = "SELECT INSTITUTE_ID,NAME FROM E24OCM_INSTITUTE where INSTITUTE_ID !=? AND STATUS=?";
+//            ps = connection.prepareStatement(sql);
+////            ps.setInt(1,UserCatagory.EPIC_ROOT_INSTITUTE_ID);
+//            ps.setString(2, Status.ACTIVE);
+//            result = ps.executeQuery();
+//
+//            while (result.next()) {
+//                userBean.getInstituteList().put(result.getInt("INSTITUTE_ID"), result.getString("NAME"));
+//            }
+//            connection.commit();
+//           
+//        }
+//        catch (Exception ex) {
+//            throw ex;
+//	}finally {
+//            if (ps != null) {
+//                ps.close();
+//            }
+//            if (result != null) {
+//                result.close();
+//            }
+//            if (connection != null) {
+//                DBConnection.dbConnectionClose(connection);
+//            }
+//        }
+//        
+//        }
 
     
     
-     public boolean checkUserName(CustomerBeen userBean) throws Exception {
+     public boolean checkCusName(String cusname) throws Exception {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -129,17 +120,14 @@ public class AddCustomerService {
         try {
             connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
-            String sql = "SELECT * FROM E24OCM_USER WHERE INSTITUTE_ID=? AND USERNAME=?  AND STATUS!=? ";
+            String sql = "SELECT * FROM ic_customer WHERE NAME=? ";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, Integer.parseInt(userBean.getInstitute()));
-            ps.setString(2, userBean.getUserId());
-            ps.setString(3, Status.DELETED);
+            ps.setString(1, cusname);
             result = ps.executeQuery();
 
             if (result.next()) {
                 ok = true;
             }
-            connection.commit();
            
         }
         catch (Exception ex) {

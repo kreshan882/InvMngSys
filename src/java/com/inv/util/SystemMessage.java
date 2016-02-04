@@ -29,19 +29,26 @@ public class SystemMessage {
     public static final String LOGIN_INVALID        = "Invalid user login";
 
     /////////////////////////////////////////////////////////////////////////
-    //User managment
+    //Customer management managment
     ////////////////////////////////////////////////////////////////////////
-    public static String USR_USERNAME_ALREADY    = "User name already in institute";
-    public static final String USR_COUNT_EXCEEDED  = "Maximum number of users exists";
-    public static final String USR_ADD           = "User registration successful";
-    public static final String USR_UPDATED       = "User updated successful";
-    public static String USR_UPDATED_ERROR       = "User updated failed" ;
-    public static final String USR_DELETED       = "User deleted successful";//Added by supun
-    public static String USR_DELETED_ERROR       = "User deleted failed";
-    public static final String USR_GRP_ADD       = "User group successfully registered";
-    public static final String USR_GRP_UPDATED   = "User group successfully updated";
-    public static final String USR_ROLE_ADD      = "User role successfully added";
-    public static final String USR_ROLE_UPDATED  = "User role successfully updated";
+    public static final String CUS_NAME_EMPTY           = "Empty customer name";
+    public static final String CUS_NAME_INVALID         = "Invalid customer name";
+    public static final String CUS_NAME_ALREADY         = "Customer name already exists";
+    public static final String CUS_COMPANY_EMPTY        = "Empty company name";
+    public static final String CUS_COMPANY_INVALID      = "Invalid company name";  
+    public static final String CUS_ADDR_EMPTY           = "Empty customer address";
+    public static final String CUS_ADDR_INVALID         = "Invalid customer address";
+    public static final String CUS_EMAIL_EMPTY          = "Empty customer email";
+    public static final String CUS_EAMIL_INVALID        = "Invalid customer email";
+    public static final String CUS_TP_OFFI_EMPTY        = "Empty customer office number";
+    public static final String CUS_TP_OFFI_INVALID      = "Invalid customer office number";
+    public static final String CUS_TP_MOB_EMPTY         = "Empty customer mobile number";
+    public static final String CUS_TP_MOB_INVALID       = "Invalid customer mobile number";
+    
+    
+    public static final String CUS_ADD                  = "Customer add successful";
+    public static final String CUS_ADD_FAIL             = "Customer add failed";
+    
     public static final String USR_PW_CHG        = "User password change successful";
     public static final String USR_PW_UPDATE     = "User password update successful";
     public static final String USR_PW_NOT_MAT    = "User password not matched ";

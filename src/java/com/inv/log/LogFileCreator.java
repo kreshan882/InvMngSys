@@ -47,7 +47,7 @@ public class LogFileCreator {
 
         try {
             String osinfopath=Util.getOSLogPath(errorpath);
-            String filename=osinfopath + Util.getLocalDate()+"_EpicCA_Infor";
+            String filename=osinfopath + Util.getLocalDate()+"_INV_Infor";
             
             bw = new BufferedWriter(new FileWriter(filename, true));
             bw.write(msg);
@@ -85,7 +85,7 @@ public class LogFileCreator {
 
          try { 
             String osinfopath=Util.getOSLogPath(infopath);
-            String filename=osinfopath + Util.getLocalDate()+"_EpicCA_Error";
+            String filename=osinfopath + Util.getLocalDate()+"_INV_Error";
             
             msg = newLine + "\n" + getTime() + "\n" + getStackTrace(aThrowable);
             bw = new BufferedWriter(new FileWriter(filename, true));

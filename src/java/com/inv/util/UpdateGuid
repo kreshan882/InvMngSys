@@ -5,4 +5,9 @@
 ## start 1.00(03022016) ---- 1.01  ##
 #####################################
 
-Custmer table ->EMAIL var(100)
+Custmer ->EMAIL var(100)
+customer => name uniq
+customer> COMPANY_NAME var(45)
+
+add operation table
+add history table

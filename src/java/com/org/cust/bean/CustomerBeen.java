@@ -18,52 +18,70 @@ import java.util.HashMap;
  */
 public class CustomerBeen {
     
-    private String institute;
-    private HashMap<Integer,String> InstituteList = new HashMap<Integer,String>();
-    private String userId;
-    private String password;
-    private String confirmPassword;
+    //add details
+    private String custId;
+    private String custName;
+    private String companyName;
     private String email;
-    private String telephone;
-    private String nic;
-    private String location;
-    private String company;
-    private String gender;
+    private String address;
+    private String tpOffice;
+    private String tpMobile;
+    
+    
+
+    private String statusCode;
     private Date regDate;
 
+   private long fullCount;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
    
-    
-    public HashMap<Integer, String> getInstituteList() {
-        return InstituteList;
+   
+    public String getCustId() {
+        return custId;
     }
 
-    public void setInstituteList(HashMap<Integer, String> InstituteList) {
-        this.InstituteList = InstituteList;
+    public void setCustId(String custId) {
+        this.custId = custId;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getCustName() {
+        return custName;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-    
-    public String getInstitute() {
-        return institute;
+    public void setCustName(String custName) {
+        this.custName = custName;
     }
 
-    public void setInstitute(String institute) {
-        this.institute = institute;
+    public String getAddress() {
+        return address;
     }
 
-
-    public String getPassword() {
-        return password;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getTpMobile() {
+        return tpMobile;
+    }
+
+    public void setTpMobile(String tpMobile) {
+        this.tpMobile = tpMobile;
+    }
+
+    public String getTpOffice() {
+        return tpOffice;
+    }
+
+    public void setTpOffice(String tpOffice) {
+        this.tpOffice = tpOffice;
     }
 
     public String getEmail() {
@@ -74,52 +92,12 @@ public class CustomerBeen {
         this.email = email;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getNic() {
-        return nic;
-    }
-
-    public void setNic(String nic) {
-        this.nic = nic;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public Date getRegDate() {
@@ -129,8 +107,15 @@ public class CustomerBeen {
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }
-    
-    
-    
+
+    public long getFullCount() {
+        return fullCount;
+    }
+
+    public void setFullCount(long fullCount) {
+        this.fullCount = fullCount;
+    }
+   
+   
     
 }

@@ -9,7 +9,7 @@
 <%@taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
     <head>
-        <title>Add New User</title>
+        <title>Add New Customer</title>
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
             $.subscribe('resetButton', function(event, data) {
@@ -19,13 +19,12 @@
             
             function resetData(){
                 
-                $('#password').val("");
-                $('#confirmPassword').val("");
+                $('#custName').val("");
+                $('#companyName').val("");
+                $('#address').val("");
                 $('#email').val("");
-                $('#telephone').val("");
-                $('#nic').val("");
-                $('#location').val("");
-                $('#company').val("");
+                $('#tpMobile').val("");
+                $('#tpOffice').val("");
             }
             
         </script>
@@ -42,7 +41,7 @@
 
                 
                     <div class="watermark"></div>
-                    <div class="heading">Add New User</div>
+                    <div class="heading">Add New Customer</div>
                    <div class="AddUser_box "> 
                     
                     <div class="message" >   
@@ -55,49 +54,38 @@
                             
                     <div class="contentcenter">
                         
-                        <s:form theme="simple" method="post" name="adduser" id="adduser">         
+                        <s:form theme="simple" method="post" name="addcus" id="addcus">         
                             <table class="form_table" border="0px">
                                 
                                 <tr>
-                                    <td class="content_td formLable">Password<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">Customer Name<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:password id="password" name="password" cssClass="textField" /></td>
+                                    <td><s:textfield id="custName" name="custName" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Email</td>
+                                    <td class="content_td formLable">Company Name</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="companyName" name="companyName" cssClass="textField" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="content_td formLable">Email<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="email" name="email" cssClass="textField" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable">Address</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="address" name="address" cssClass="textField" /></td>
+                                   
                                 </tr>
                                 <tr>
-                                    <td class="content_td formLable">Confirm password<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">Tp-Office</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:password id="confirmPassword" name="confirmPassword" cssClass="textField" /></td>
+                                    <td><s:textfield id="tpOffice" name="tpOffice" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Gender<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">Tp-Mobile</td>
                                     <td class="content_td formLable">:</td>
-                                    <td>
-                                        <s:radio name="gender" list="{'Female'}" value="2" cssClass="formLable"/>
-                                        <s:radio name="gender" list="{'male'}" value="2" cssClass="formLable"/>
-                                    </td>
+                                    <td><s:textfield id="tpMobile" name="tpMobile" cssClass="textField" /></td>
                                 </tr>
-                                <tr>
-                                    <td class="content_td formLable">Telephone Number</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="telephone" name="telephone" cssClass="textField" /></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">NIC</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="nic" name="nic" cssClass="textField" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="content_td formLable">Location</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="location" name="location" cssClass="textField" /></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Company<span class="mandatory">*</span></td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="company" name="company" cssClass="textField" /></td>
-                                </tr>
-                                
+
                                 
                                 <tr>
                                     <td class="content_td formLable" colspan="7"><span class="mandatory_text">Mandatory fields are marked with</span><span class="mandatory">*</span></td>

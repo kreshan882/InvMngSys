@@ -3,8 +3,11 @@
  * and open the template in the editor.
  */
 package com.org.login.action;
+import com.inv.init.Module;
+import com.inv.init.Operation;
 import com.inv.init.Status;
 import com.inv.log.LogFileCreator;
+import com.inv.util.DBProcesses;
 import com.org.login.bean.HomeValues;
 import com.org.login.bean.ModuleBean;
 import com.org.login.bean.PageBean;
@@ -31,7 +34,7 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
     UserLoginBean userLoginBean = new UserLoginBean();
     HomeValues homeValues=new HomeValues();
     LoginService service = new LoginService();
-    SessionUserBean sessionUserBean = new SessionUserBean();
+    SessionUserBean sub = new SessionUserBean();
     HttpServletRequest request = ServletActionContext.getRequest();
     Map<ModuleBean, List<PageBean>> modulePageList = null;
     List<String> profilePageidList =  new ArrayList<String>();
@@ -62,10 +65,10 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
                             
                             System.out.println("pass ok, status active...............");
                             
-                            sessionUserBean.setUsername(userLoginBean.getUserName());
-                            sessionUserBean.setUserid(userLoginBean.getDBuserId());
-                            sessionUserBean.setCurrentUserProfileId(userLoginBean.getDBuserProfile());
-                            sessionUserBean.setLogFilePath("/opt/inventory/logs/");
+                            sub.setUsername(userLoginBean.getUserName());
+                            sub.setUserid(userLoginBean.getDBuserId());
+                            sub.setCurrentUserProfileId(userLoginBean.getDBuserProfile());
+                            sub.setLogFilePath("/opt/inventory/logs/");
                             
                             
   
@@ -75,15 +78,13 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
                             }
 
                             HttpSession session = ServletActionContext.getRequest().getSession(true);
-                            session.setAttribute("SessionObject", sessionUserBean);
+                            session.setAttribute("SessionObject", sub);
                             
-                            sessionUserBean.setCurrentSessionId(session.getId());
+                            sub.setCurrentSessionId(session.getId());
                             
-//                            DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
-//                                    sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
-//                                    Module.LOGIN_MANAGEMENT, Operation.LOGIN, SystemMessage.LOGIN_MSG, request.getRemoteAddr());
+                            DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.LOGIN_MANAGEMENT, Operation.LOGIN, SystemMessage.LOGIN_MSG+ ":" + userLoginBean.getUserName(),request.getRemoteAddr());
+                            LogFileCreator.writeInfoToLog(SystemMessage.LOGIN_MSG+":"+userLoginBean.getUserName());
                             
-                            LogFileCreator.writeInfoToLog(SystemMessage.LOGIN_MSG);
                             //load home page values
 //                            service.getHomeValues(userLoginBean,homeValues);
 //                            session.setAttribute("SessionHomeValues", homeValues);
@@ -128,11 +129,6 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
             
     @Override
     public UserLoginBean getModel() {
-        try {
-//            service.getInstitutesDb(userLoginBean);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
         return userLoginBean;
     }
 
@@ -145,8 +141,7 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
            if (session != null) {
                 SessionUserBean su = (SessionUserBean) session.getAttribute("SessionObject");
                 if(su!=null){
-//                    DBProcesses.insertHistoryRecord(su.getInstituteid(), su.getUserid(), su.getApptype(), su.getAppid(),
-//                    Module.LOGIN_MANAGEMENT, Operation.LOGOUT, SystemMessage.LOGOUT_MSG, request.getRemoteAddr());
+                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.LOGIN_MANAGEMENT, Operation.LOGOUT, SystemMessage.LOGOUT_MSG+ ":" + su.getUsername(),request.getRemoteAddr());              
                 }else{
                     addActionError("Session timeout.");
                 }
@@ -169,10 +164,8 @@ public class UserLogin extends ActionSupport implements Action, ModelDriven<User
     
     public Map<ModuleBean, List<PageBean>> getModulePageByUser() throws Exception {
         
-        try {
-            
+        try {  
             modulePageList = service.getModulePageByUser(userLoginBean.getDBuserProfile());
-            
         } catch (Exception e) {
             throw e;
         }

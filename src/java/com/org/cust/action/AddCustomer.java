@@ -36,6 +36,7 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
     CustomerBeen customerBean = new CustomerBeen();
     AddCustomerService service = new AddCustomerService(); 
     HttpServletRequest request = ServletActionContext.getRequest();
+    SessionUserBean sub = (SessionUserBean) ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
     
     @Override
     public String execute() {
@@ -47,44 +48,29 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
         return customerBean;
     }
     
-    public String userManagement() {
-        try {
-            service.getInstituteList(customerBean);
-        } catch (Exception ex) {
-             ex.printStackTrace();
-            LogFileCreator.writeErrorToLog(ex);
-        }
-        
-        return "success";
-        
-    }
     
     public String CustomerAdd() {
-        boolean ok = false;
         
         try {
-            HttpSession session = ServletActionContext.getRequest().getSession(false);
-            SessionUserBean sessionUserBean = (SessionUserBean) session.getAttribute("SessionObject");
-            service.getInstituteList(customerBean);
-            
+  
             if (doValidation(customerBean)) {
-                ok = service.insertISADetails(customerBean, sessionUserBean);
                 
-                if (ok == false) {
-                    addActionError(SystemMessage.USR_ERROR_UNHANDLE);
-                } else {
-//                    DBProcesses.insertHistoryRecord(sessionUserBean.getInstituteid(),
-//                            sessionUserBean.getUserid(), sessionUserBean.getApptype(), sessionUserBean.getAppid(),
-//                            Module.USER_MANAGEMENT, Operation.ADD, SystemMessage.USR_ADD + " for " + userBean.getUserId(),request.getRemoteAddr());
+                
+                if (service.insertCustomerDetails(customerBean, sub)) {
+                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + customerBean.getCustName(),request.getRemoteAddr());
                     
-                    addActionMessage(SystemMessage.USR_ADD);
+                    addActionMessage(SystemMessage.CUS_ADD);
+                    LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+customerBean.getCustName());
+                    
+                } else {
+                   addActionError(SystemMessage.USR_ERROR_UNHANDLE); 
                     
                 }
             }
             
         } catch (Exception ex) {
             try {
-                addActionError(SystemMessage.COMMON_ERROR_PROCESS + " User Add");
+                addActionError(SystemMessage.CUS_ADD_FAIL);
                  ex.printStackTrace();
                 LogFileCreator.writeErrorToLog(ex);
             } catch (Exception ex1) {
@@ -95,50 +81,47 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
         return "message";
     }
     
-    private boolean doValidation(CustomerBeen userBean) throws Exception {
+    private boolean doValidation(CustomerBeen cusBean) throws Exception {
         boolean ok = false;
         try {
-            if (userBean.getInstitute().equals("-1")) {
-                addActionError(SystemMessage.USR_INVALID_INSTITIUTE);
+            if (cusBean.getCustName() == null || cusBean.getCustName().isEmpty()) {
+                addActionError(SystemMessage.CUS_NAME_EMPTY);
                 return ok;
-            } else if (userBean.getUserId() == null || userBean.getUserId().isEmpty()) {
-                addActionError(SystemMessage.USR_EMPTY_USERNAME);
+            } else if (!Util.validateNAME(cusBean.getCustName())) {
+                addActionError(SystemMessage.CUS_NAME_INVALID);
                 return ok;
-            } else if (!Util.validateNAME(userBean.getUserId())) {
-                addActionError(SystemMessage.USR_INVALID_USERNAME);
+            }else if (service.checkCusName(cusBean.getCustName())) {
+                addActionError(SystemMessage.CUS_NAME_ALREADY);
                 return ok;
-            } else if (service.checkUserName(userBean)) {
-                addActionError(SystemMessage.USR_ERROR_USERNAME);
+            }else if (cusBean.getCompanyName() == null || cusBean.getCompanyName().isEmpty()) {
+                addActionError(SystemMessage.CUS_COMPANY_EMPTY);
                 return ok;
-            } else if (userBean.getPassword().isEmpty() || userBean.getPassword() == null) {
-                addActionError(SystemMessage.USR_EMPTY_USERPASSWORD);
+            } else if (!Util.validateDESCRIPTION(cusBean.getCompanyName())) {
+                addActionError(SystemMessage.CUS_COMPANY_INVALID);
                 return ok;
-            } else if (userBean.getConfirmPassword().isEmpty() || userBean.getConfirmPassword() == null) {
-                addActionError(SystemMessage.USR_EMPTY_CONPASSWORD);
-                return ok; 
-            } else if(!(userBean.getPassword().equals(userBean.getConfirmPassword()))) {   
-                addActionError(SystemMessage.USR_PASSWORD_NOT_MATCH);
-                return ok;     
-            } else if (!userBean.getEmail().isEmpty() && !Util.validateEMAIL(userBean.getEmail())) {
-                addActionError(SystemMessage.USR_INVALID_EMAIL);
+            }else if (cusBean.getEmail() == null || cusBean.getEmail().isEmpty()) {
+                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
                 return ok;
-            } else if ((!userBean.getTelephone().isEmpty()) && !Util.validateNUMBER(userBean.getTelephone())) {
-                addActionError(SystemMessage.USR_INVALID_PHONE);
+            } else if (!Util.validateEMAIL(cusBean.getEmail())) {
+                addActionError(SystemMessage.CUS_EAMIL_INVALID);
                 return ok;
-            } else if (( !userBean.getNic().isEmpty()) && !Util.validateNIC(userBean.getNic())) {
-                addActionError(SystemMessage.USR_INVALID_NIC);
+            }else if (cusBean.getAddress() == null || cusBean.getAddress().isEmpty()) {
+                addActionError(SystemMessage.CUS_ADDR_EMPTY);
                 return ok;
-            } else if ((!userBean.getLocation().isEmpty()) && !Util.validateNAME(userBean.getLocation())) {
-                addActionError(SystemMessage.USR_INVALID_LOCATION);
+            } else if (!Util.validateDESCRIPTION(cusBean.getAddress())) {
+                addActionError(SystemMessage.CUS_ADDR_INVALID);
                 return ok;
-            } else if (userBean.getCompany() == null || userBean.getCompany().isEmpty()) {
-                addActionError(SystemMessage.USR_EMPTY_COMPANY);
+            }else if (cusBean.getTpOffice() == null || cusBean.getTpOffice().isEmpty()) {
+                addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);
                 return ok;
-            } else if (!Util.validateDESCRIPTION(userBean.getCompany())) {
-                addActionError(SystemMessage.USR_INVALID_COMPANY);
+            } else if (!Util.validatePHONENO(cusBean.getTpOffice())) {
+                addActionError(SystemMessage.CUS_TP_OFFI_INVALID);
                 return ok;
-            } else if (userBean.getGender() == null || userBean.getGender().isEmpty()) {
-                addActionError(SystemMessage.USR_EMPTY_GENDER);
+            }else if (cusBean.getTpMobile() == null || cusBean.getTpMobile().isEmpty()) {
+                addActionError(SystemMessage.CUS_TP_MOB_EMPTY);
+                return ok;
+            } else if (!Util.validatePHONENO(cusBean.getTpMobile())) {
+                addActionError(SystemMessage.CUS_TP_MOB_INVALID);
                 return ok;
             } else {
                 ok = true;
@@ -154,7 +137,7 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.USER_ADD_ISA;
+        String page = PageVarList.CUS_ADD;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;
