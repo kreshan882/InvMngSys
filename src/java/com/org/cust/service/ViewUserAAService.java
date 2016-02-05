@@ -11,7 +11,7 @@ import com.inv.db.DBConnection;
 import com.inv.init.Status;
 import com.org.login.bean.SessionUserBean;
 import com.org.cust.bean.ViewUserAADataBean;
-import com.org.cust.bean.ViewUserAAInputBean;
+import com.org.cust.bean.ViewCustomerInputBean;
 import com.inv.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ import org.apache.struts2.ServletActionContext;
  *
  * @author tharaka
  */
-public class ViewUserAAService {
+public class ViewCustomerService {
     
     
      
@@ -82,7 +82,7 @@ public class ViewUserAAService {
 //    
 //    }
     
-    public   List<ViewUserAADataBean> loadUsers( ViewUserAAInputBean bean,String orderBy, int max, int first )throws Exception{
+    public   List<CustomerBeen> loadUsers( ViewCustomerInputBean bean,String orderBy, int max, int first )throws Exception{
     
         
         PreparedStatement ps = null;

@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.org.cust.service;
+package com.org.conf.service;
 
 import com.inv.db.DBConnection;
-import com.org.cust.bean.ChangePasswordBean;
+import com.org.conf.bean.ChangePasswordBean;
 import com.inv.util.Util;
 
 import java.sql.Connection;
@@ -27,11 +27,9 @@ public class ChangePasswordService {
 		try {
                         con=DBConnection.getConnection();
                         con.setAutoCommit(false);
-			String sql = "SELECT PASSWORD FROM E24OCM_USER where "
-                                + "INSTITUTE_ID = ? AND USERNAME= ? ";
+			String sql = "SELECT PASSWORD FROM ic_user where USERNAME= ? ";
                         perSt = con.prepareStatement(sql);
-                        perSt.setInt(1, cpb.getInstuteid());
-                        perSt.setString(2, cpb.getUsername());
+                        perSt.setString(1, cpb.getUsername());
 			res = perSt.executeQuery();
 
 			while (res.next()) {                           
@@ -80,18 +78,18 @@ public class ChangePasswordService {
                 Connection con=null;
 		try {
                         con= DBConnection.getConnection();
-                        String sql = "UPDATE E24OCM_USER SET "
-                                + "PASSWORD= ? WHERE INSTITUTE_ID= ? AND USERNAME= ? ";
+                        con.setAutoCommit(false);
+                        String sql = "UPDATE ic_user SET "
+                                + "PASSWORD= ? WHERE USERNAME= ? ";
                     
 			
 			ps = (PreparedStatement) con.prepareStatement(sql);
                         
                         ps.setString(1, Util.generateHash(cpb.getPasswordNew1()));
-			ps.setInt(2, cpb.getInstuteid());
-			ps.setString(3, cpb.getUsername());
+			ps.setString(2, cpb.getUsername());
 			
 			ps.executeUpdate();
-                        
+                        con.commit();
 		} catch (Exception ex) {
 			throw ex;
 		} finally {

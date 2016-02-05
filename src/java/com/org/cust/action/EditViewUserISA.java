@@ -68,8 +68,8 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
 //                                Module.USER_MANAGEMENT,Operation.DELETE,SystemMessage.USR_DELETED,request.getRemoteAddr());
 //           
             service.deleteUserISA( inputBean);
-            addActionMessage(SystemMessage.USR_DELETED); 
-            inputBean.setMessage(SystemMessage.USR_DELETED);
+//            addActionMessage(SystemMessage.USR_DELETED); 
+//            inputBean.setMessage(SystemMessage.USR_DELETED);
             LogFileCreator.writeInfoToLog("Deleting  user from page EditAndViewUserISA succesfully completed");
             inputBean.setDelsuccess("1");
             
@@ -172,7 +172,7 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
                ok= service.updateUserISA(inputBean);
                 System.out.println(ok);
                if(ok==true){
-                addActionMessage(SystemMessage.USR_UPDATED);
+//                addActionMessage(SystemMessage.USR_UPDATED);
 //                DBProcesses.insertHistoryRecord(sub.getInstituteid(),
 //                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
 //                                Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_UPDATED,request.getRemoteAddr());
@@ -180,7 +180,7 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
                 LogFileCreator.writeInfoToLog("Updating  user from page EditAndViewUserISA succesfull."); 
               
                } else {    
-                  addActionError(SystemMessage.USR_UPDATED_ERROR);
+//                  addActionError(SystemMessage.USR_UPDATED_ERROR);
                }
               
             }
@@ -233,7 +233,7 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.USER_EDIT_AND_VIEW_ISA;
+        String page = PageVarList.CUS_EDIT_VIEW;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;

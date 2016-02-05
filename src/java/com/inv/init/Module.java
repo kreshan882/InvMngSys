@@ -20,7 +20,8 @@ public class Module {
     public static final String    SUPPLIER_MANAGEMENT       =  "02";
     public static final String    ITEM_MANAGEMENT           =  "03";
     public static final String    SALE_PURCH_MANAGEMENT     =  "04";
-
-    public static final String    LOGIN_MANAGEMENT          =  "05";
+    public static final String    CONF_MANAGEMENT           =  "05";
+    
+    public static final String    LOGIN_MANAGEMENT          =  "06";
     
 }

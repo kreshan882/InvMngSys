@@ -14,19 +14,16 @@ import java.util.Map;
  *
  * @author tharaka
  */
-public class ViewUserAAInputBean {
-    private Map<Integer,String> userCategoryList=new HashMap<Integer,String>();
-    private Map<Integer,String> userProfileList=new HashMap<Integer,String>();
-    
+public class ViewCustomerInputBean {
+
     
     private String username;
     private boolean search;
     
-    private int userProfileID;
-    private int userCategory;
+
     
       // JQGrid pagination
-    private List<ViewUserAADataBean> gridModel;
+    private List<CustomerBeen> gridModel;
     private Integer rows = 0;
     private Integer page = 0;
     private Integer total = 0;
@@ -46,21 +43,7 @@ public class ViewUserAAInputBean {
         this.search = search;
     }    
     
-    public Map<Integer, String> getUserCategoryList() {
-        return userCategoryList;
-    }
 
-    public void setUserCategoryList(Map<Integer, String> userCategoryList) {
-        this.userCategoryList = userCategoryList;
-    }
-
-    public Map<Integer, String> getUserProfileList() {
-        return userProfileList;
-    }
-
-    public void setUserProfileList(Map<Integer, String> userProfileList) {
-        this.userProfileList = userProfileList;
-    }
 
     public String getUsername() {
         return username;
@@ -70,11 +53,11 @@ public class ViewUserAAInputBean {
         this.username = username;
     }
 
-    public List<ViewUserAADataBean> getGridModel() {
+    public List<CustomerBeen> getGridModel() {
         return gridModel;
     }
 
-    public void setGridModel(List<ViewUserAADataBean> gridModel) {
+    public void setGridModel(List<CustomerBeen> gridModel) {
         this.gridModel = gridModel;
     }
 
@@ -158,21 +141,7 @@ public class ViewUserAAInputBean {
         this.loadonce = loadonce;
     }
 
-    public int getUserProfileID() {
-        return userProfileID;
-    }
-
-    public void setUserProfileID(int userProfileID) {
-        this.userProfileID = userProfileID;
-    }
-
-    public int getUserCategory() {
-        return userCategory;
-    }
-
-    public void setUserCategory(int userCategory) {
-        this.userCategory = userCategory;
-    }
+ 
     
     
     

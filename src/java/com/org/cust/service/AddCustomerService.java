@@ -38,7 +38,7 @@ public class AddCustomerService {
         try {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
-            query="insert into ic_customer(NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_MOBILE,TP_OFFICE,STATUS,DATE) "
+            query="insert into ic_customer(NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_MOBILE,TP_OFFICE,STATUS,REG_DATE) "
                     + "VALUES(?,?,?,?,  ?,?,?,?)";
             
             preStat = con.prepareStatement(query);

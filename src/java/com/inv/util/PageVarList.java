@@ -10,13 +10,10 @@ package com.inv.util;
  */
 public class PageVarList {
     public static final String CUS_ADD                      =   "0101";
-    public static final String USER_ADD_IA                  =   "0102";
-    public static final String USER_ADD_AA                  =   "0103";
-    public static final String USER_EDIT_AND_VIEW_ISA       =   "0104";
-    public static final String USER_EDIT_AND_VIEW_IA        =   "0105";
-    public static final String USER_EDIT_AND_VIEW_AA        =   "0106";
-    public static final String USER_VIEWUSER                =   "0107";
-    public static final String USER_PASSWDCHANGE            =   "0108";
+    public static final String CUS_EDIT_VIEW               =   "0106";
+    public static final String CUS_VIEW                     =   "0107";
+    
+    public static final String CONF_PASSWDCHANGE            =   "0501";
     
     
     public static final String USERPROFILE_ADD_GROUP_IA             =   "0201";

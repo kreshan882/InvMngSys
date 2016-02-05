@@ -243,13 +243,13 @@
 
                 </div>
 
-<div class="viewuser_tbl">
+            <div class="viewuser_tbl">
                 <div id="tablediv">                  
 
-                    <s:url var="listurl" action="ListviewUser"/>
+                    <s:url var="listurl" action="ListviewCus"/>
                     <sjg:grid
                         id="gridtable"
-                        caption="View User "
+                        caption="View Customer"
                         dataType="json"
                         href="%{listurl}"
                         pager="true"
@@ -263,18 +263,17 @@
                         viewrecords="true"
                         >
 
-                        <sjg:gridColumn name="username" index="USERNAME" title="User Name" align="left" width="20" sortable="true"/>                    
-                        <sjg:gridColumn name="email" index="EMAIL" title="Email"  align="left" width="20"  sortable="true"/>                        
-                        <sjg:gridColumn name="telephonenumber" index="TELEPHONE" title="Telephone"  align="left" width="20"  sortable="true"/>
-                        <sjg:gridColumn name="nic" index="nic" title="NIC"  align="left" width="20"  sortable="true"/>
-                        <sjg:gridColumn name="location" index="LOCATION" title="Location"  align="left" width="20"  sortable="true"/>
-                        <sjg:gridColumn name="company" index="COMPANY" title="Company"  align="left" width="20"  sortable="true"/>
-                        <sjg:gridColumn name="category" index="CATEGORY" title="Category"  align="left" width="20"  sortable="true"/>
-                        <sjg:gridColumn name="profile" index="PROFILE" title="Profile"  align="left" width="20"  sortable="true"/>                        
-                        <sjg:gridColumn name="appType" index="APP_TYPE" title="App Type"  align="left" width="20"  sortable="true"/>  
-                        <sjg:gridColumn name="registrationDate" index="REG_DATE" title="Registration Date"  align="left" width="15"  sortable="true"/>   
-                        <%--<sjg:gridColumn name="appModule" index="appModule" title="App Module"  align="left" width="20"  sortable="true"/>--%>                        
-                        <sjg:gridColumn name="statusCode" index="STATUSCODE" title="Status" align="center" width="10" formatter="statusformatter" sortable="true"/>                    
+                        <sjg:gridColumn name="custId" index="CUS_ID" title="User Name" align="left" width="20" sortable="true" hidden="true"/>                    
+                        
+                        <sjg:gridColumn name="custName" index="NAME" title="Email"  align="left" width="20"  sortable="true"/>                        
+                        <sjg:gridColumn name="companyName" index="COMPANY_NAME" title="Telephone"  align="left" width="20"  sortable="true"/>
+                        <sjg:gridColumn name="email" index="EMAIL" title="NIC"  align="left" width="20"  sortable="true"/>
+                        <sjg:gridColumn name="address" index="ADDRESS" title="Location"  align="left" width="20"  sortable="true"/>
+                        <sjg:gridColumn name="tpOffice" index="TP_OFFICE" title="Company"  align="left" width="20"  sortable="true"/>
+                        <sjg:gridColumn name="tpMobile" index="TP_MOBILE" title="Category"  align="left" width="20"  sortable="true"/>
+                        
+                        <sjg:gridColumn name="regDate" index="REG_DATE" title="Registration Date"  align="left" width="15"  sortable="true"/>                         
+                        <sjg:gridColumn name="statusCode" index="STATUS" title="Status" align="center" width="10" formatter="statusformatter" sortable="true"/>                    
 
                        
 

@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.org.cust.action;
+package com.org.conf.action;
 
 //import com.inv.init.AppType;
 import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.log.LogFileCreator;
 import com.org.login.bean.SessionUserBean;
-import com.org.cust.bean.ChangePasswordBean;
-import com.org.cust.service.ChangePasswordService;
+import com.org.conf.bean.ChangePasswordBean;
+import com.org.conf.service.ChangePasswordService;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.DBProcesses;
@@ -27,10 +27,10 @@ import org.apache.struts2.ServletActionContext;
  * @author kreshan
  */
 public class ChangePassword extends ActionSupport implements ModelDriven<ChangePasswordBean>, AccessControlService{
-    ChangePasswordBean changePasswordBean= new ChangePasswordBean();
-    ChangePasswordService cps= new ChangePasswordService();
+    ChangePasswordBean inputBean= new ChangePasswordBean();
+    ChangePasswordService service= new ChangePasswordService();
     HttpServletRequest request = ServletActionContext.getRequest();
-
+    SessionUserBean sub = (SessionUserBean)ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
      
     
     public String execute() {
@@ -40,35 +40,25 @@ public class ChangePassword extends ActionSupport implements ModelDriven<ChangeP
      public String changePwFunction(){ 
          String msg=null;
              
-            HttpSession session = ServletActionContext.getRequest().getSession(false);
-            SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
-            changePasswordBean.setUsername(sub.getUsername());
+            
+            
+            inputBean.setUsername(sub.getUsername());
             
             try{
             
-             cps.getOldPasswordFromDb(changePasswordBean);
+             service.getOldPasswordFromDb(inputBean);
              
-           if(!(changePasswordBean.getPasswordOld() == null || changePasswordBean.getPasswordOld().isEmpty())){
+           if(!(inputBean.getPasswordOld() == null || inputBean.getPasswordOld().isEmpty())){
             
-               if(cps.checkPasswordMatchWithUserPass(changePasswordBean)){
-                if(!changePasswordBean.getPasswordOld().equals(changePasswordBean.getPasswordNew1())){
-                if(cps.checkNewPasswordsMatch(changePasswordBean)){
+               if(service.checkPasswordMatchWithUserPass(inputBean)){
+                if(!inputBean.getPasswordOld().equals(inputBean.getPasswordNew1())){
+                if(service.checkNewPasswordsMatch(inputBean)){
                    
-                 
-                        msg = "Successful";
-                    
-                 
-                    if(msg.equals("Successful")){
 
-                            cps.updatePassword(changePasswordBean);
-//                            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-//                            sub.getUserid(),sub.getApptype(),sub.getAppid(),
-//                            Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_PW_CHG,request.getRemoteAddr());
+                            service.updatePassword(inputBean);
+                            DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CONF_MANAGEMENT, Operation.UPDATE, SystemMessage.USR_PW_UPDATE+ " for " + sub.getUsername(),request.getRemoteAddr());                 
                             addActionMessage(SystemMessage.USR_PW_UPDATE);
 
-                    }else{
-                        addActionError(msg);
-                    }
                     
                  }else{
                      addActionError(SystemMessage.USR_PW_NOT_MAT);
@@ -92,14 +82,14 @@ public class ChangePassword extends ActionSupport implements ModelDriven<ChangeP
 
     @Override
     public ChangePasswordBean getModel() {
-        return changePasswordBean;
+        return inputBean;
     }
     
     
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.USER_PASSWDCHANGE;
+        String page = PageVarList.CONF_PASSWDCHANGE;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;

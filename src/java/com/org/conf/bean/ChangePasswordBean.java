@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.org.cust.bean;
+package com.org.conf.bean;
 
 /**
  *
@@ -16,11 +16,7 @@ public class ChangePasswordBean {
     private String passwordNew2;
     
     private String passwordDb;
-
-
-    
     private String username;
-    private int instuteid;
 
        
     public String getPasswordDb() {
@@ -29,13 +25,6 @@ public class ChangePasswordBean {
 
     public void setPasswordDb(String passwordDb) {
         this.passwordDb = passwordDb;
-    }
-    public int getInstuteid() {
-        return instuteid;
-    }
-
-    public void setInstuteid(int instuteid) {
-        this.instuteid = instuteid;
     }
 
     public String getUsername() {

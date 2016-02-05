@@ -79,22 +79,26 @@
             
         </action>
         
-        <action name="*viewUser"    class="com.org.cust.action.ViewUserAA"   method="{1}"> 
+        <action name="*viewCus"    class="com.org.cust.action.ViewCustomer"   method="{1}"> 
          
             <result name="list" type="json"></result>       
-            <result name="success">/pages/customManagement/viewUser.jsp</result>        
+            <result name="success">/pages/customManagement/viewCustomer.jsp</result>        
             
         </action>
-        
-        
-        <action name="*changePassword" class="com.org.cust.action.ChangePassword" method="{1}">
-            <result name="success">/pages/customManagement/changePassword.jsp</result> 
+       
+               
+    </package>  
+    
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End User Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
+     <package name="inventory_configuration" namespace="/" extends="pglobal">
+  
+        <action name="*changePassword" class="com.org.conf.action.ChangePassword" method="{1}">
+            <result name="success">/pages/confManagement/changePassword.jsp</result> 
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
                
     </package>  
     
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End User Management ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
  
      
     

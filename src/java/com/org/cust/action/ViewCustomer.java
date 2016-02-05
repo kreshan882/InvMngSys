@@ -9,8 +9,8 @@ package com.org.cust.action;
 
 import com.inv.log.LogFileCreator;
 import com.org.cust.bean.ViewUserAADataBean;
-import com.org.cust.bean.ViewUserAAInputBean;
-import com.org.cust.service.ViewUserAAService;
+import com.org.cust.bean.ViewCustomerInputBean;
+import com.org.cust.service.ViewCustomerService;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.PageVarList;
@@ -18,6 +18,7 @@ import com.inv.util.SystemMessage;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.org.cust.bean.CustomerBeen;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -26,29 +27,20 @@ import org.apache.struts2.ServletActionContext;
  *
  * @author tharaka
  */
-public class ViewUserAA extends ActionSupport implements ModelDriven<ViewUserAAInputBean> , AccessControlService {
+public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCustomerInputBean> , AccessControlService {
 
     
-     private ViewUserAAInputBean inputBean = new ViewUserAAInputBean();
-     private ViewUserAAService   service = new ViewUserAAService();
+     private ViewCustomerInputBean inputBean = new ViewCustomerInputBean();
+     private ViewCustomerService   service = new ViewCustomerService();
      
-     public String View(){    
-         try{      
-            
-//            service.loaduserCategoryList(inputBean);
-//            service.loaduserProfileList(inputBean);
-        
-        }catch(Exception e){
-        
-                        
-        }      
-        
+     public String execute(){    
+    
          return Action.SUCCESS;
      }
      
      public String List(){
         
-      List<ViewUserAADataBean> dataList = null;
+      List<CustomerBeen> dataList = null;
           
         try {
              
@@ -98,7 +90,7 @@ public class ViewUserAA extends ActionSupport implements ModelDriven<ViewUserAAI
      
      
      @Override
-    public ViewUserAAInputBean getModel() {
+    public ViewCustomerInputBean getModel() {
         return inputBean;
     }
     
@@ -106,7 +98,7 @@ public class ViewUserAA extends ActionSupport implements ModelDriven<ViewUserAAI
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.USER_VIEWUSER;
+        String page = PageVarList.CUS_VIEW;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;
