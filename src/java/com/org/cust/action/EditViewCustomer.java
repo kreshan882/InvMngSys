@@ -9,9 +9,8 @@ import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.log.LogFileCreator;
 import com.org.login.bean.SessionUserBean;
-import com.org.cust.bean.EditViewUserISADataBean;
-import com.org.cust.bean.EditUserISAInputBean;
-import com.org.cust.service.EditViewUserISAService;
+import com.org.cust.bean.EditViewCustomerInputBean;
+import com.org.cust.service.EditViewCustomerService;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.DBProcesses;
@@ -21,6 +20,7 @@ import com.inv.util.Util;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.org.cust.bean.CustomerBeen;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,34 +30,58 @@ import org.apache.struts2.ServletActionContext;
  *
  * @author tharaka
  */
-public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUserISAInputBean> , AccessControlService{
+public class EditViewCustomer extends ActionSupport implements ModelDriven<EditViewCustomerInputBean> , AccessControlService{
 
-    private EditViewUserISAService  service = new EditViewUserISAService();
-    EditUserISAInputBean inputBean = new EditUserISAInputBean();
+    private EditViewCustomerService  service = new EditViewCustomerService();
+    private EditViewCustomerInputBean inputBean = new EditViewCustomerInputBean();
     HttpServletRequest request = ServletActionContext.getRequest();
 
-    public String View() {
-            
-     
-        
-        try {          
-            
-            LogFileCreator.writeInfoToLog("Viewing page EditAndViewUserISA");
-            service.loadinstituteList(inputBean);
-
-        } catch (Exception ex) {
-             ex.printStackTrace();
-            LogFileCreator.writeErrorToLog(ex);
-        }
-
-        return Action.SUCCESS;
+    
+    public String execute(){
+        return SUCCESS;
     }
+    
 
     @Override
-    public EditUserISAInputBean getModel() {
+    public EditViewCustomerInputBean getModel() {
         return inputBean;
     }
 
+     public String List(){
+         System.out.println("liiiiiiiiiiiiii");
+        try {
+                List<CustomerBeen> dataList = null;
+                int rows = inputBean.getRows();
+                int page = inputBean.getPage();
+                int to = (rows * page);
+                int from = to - rows;
+                long records = 0;
+                String orderBy = "";    
+
+                if (!inputBean.getSidx().isEmpty()) {
+                    orderBy = " order by " + inputBean.getSidx() + " " + inputBean.getSord();
+                }
+                dataList=service.loadUsersFromInstiute(inputBean, orderBy, rows, from);
+                System.out.println("jjjj"+dataList.size());
+                if (!dataList.isEmpty()) {
+                    records = dataList.get(0).getFullCount();
+                    inputBean.setRecords(records);
+                    inputBean.setGridModel(dataList);
+                    int total = (int) Math.ceil((double) records / (double) rows);
+                    inputBean.setTotal(total);
+                } else {
+                    inputBean.setRecords(0L);
+                    inputBean.setTotal(0);
+                }
+//            }
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            LogFileCreator.writeErrorToLog(ex);
+            addActionError(SystemMessage.USR_ERROR_UNHANDLE);
+        }
+        return "list";
+     }
+    
     public String Delete() {
         try {
             LogFileCreator.writeInfoToLog("Deleting  user from page EditAndViewUserISA");
@@ -100,64 +124,9 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
         return "find";
     }
 
-    public String List() {
-        
-        List<EditViewUserISADataBean> dataList = null;
-      
-        
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
-        
-        addActionMessage("");
-        addActionError("");
-        
-        try {
-            
-           
-            if (inputBean.isSearch()) {
-                
-                if(inputBean.getInstituteID()==-1){                   
-                   
-                    addActionError("Please select institute.");
-                }
-                
-                LogFileCreator.writeInfoToLog("Searching  user from page EditAndViewUserISA");
-                int rows = inputBean.getRows();
-                int page = inputBean.getPage();
-                int to = (rows * page);
-                int from = to - rows;
-                long records = 0;
-                String orderBy = "";    
-                
-           
-                
-                if (!inputBean.getSidx().isEmpty()) {
-                    orderBy = " order by " + inputBean.getSidx() + " " + inputBean.getSord();
-                }
+  
 
-                dataList = service.loadUsersFromInstiute( inputBean,orderBy, rows, from);
-
-                if (!dataList.isEmpty()) {
-                    records = dataList.get(0).getFullCount();
-                    inputBean.setRecords(records);
-                    inputBean.setGridModel(dataList);
-                    int total = (int) Math.ceil((double) records / (double) rows);
-                    inputBean.setTotal(total);
-                } else {
-                    inputBean.setRecords(0L);
-                    inputBean.setTotal(0);
-                }
-
-            }
-
-        } catch (Exception ex) {
-             ex.printStackTrace();
-            LogFileCreator.writeErrorToLog(ex);
-            addActionError(SystemMessage.USR_ERROR_UNHANDLE);
-        }
-        return "list";
-    }
-
+     
     public String Update() {
          
         try {
@@ -206,7 +175,7 @@ public class EditViewUserISA extends ActionSupport implements ModelDriven<EditUs
         return "loadusers";
     }
     
-    private boolean  doValidation (EditUserISAInputBean bean) throws Exception{
+    private boolean  doValidation (EditViewCustomerInputBean bean) throws Exception{
         boolean ok = false;
         
         try {

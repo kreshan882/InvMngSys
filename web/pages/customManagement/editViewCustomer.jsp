@@ -1,7 +1,7 @@
 
 
 <%-- 
-    Document   : editAndViewUserISA
+    Document   : editViewCustomer
     Created on : Aug 6, 2014, 4:05:53 PM
     Author     : kreshan
 --%>
@@ -11,32 +11,22 @@
 <%@taglib prefix="sjg" uri="/struts-jquery-grid-tags"%>      
 
 <html>
-    <head>
-        <jsp:include page="/Styles.jsp" />
-    <head />
+    <head> <jsp:include page="/Styles.jsp" /><head />
 </head>
 
 <body style="overflow:hidden">
 
     <div class="wrapper">
-
         <jsp:include page="../../header.jsp" />            
-
         <script type="text/javascript">
 
 
             function statusformatter(cellvalue, options, rowObject) {
-
-
                 if (cellvalue == '01') {
-
                     var html = "<img src='${pageContext.request.contextPath}/resources/images/iconActive.png' />";
                 } else {
-
                     var html = "<img src= '${pageContext.request.contextPath}/resources/images/iconInactive.png' />";
                 }
-
-
                 return html;
             }
 
@@ -45,7 +35,6 @@
             }
 
             function editformatter(cellvalue, options, rowObject) {
-
                 return "<a href='#' onClick='javascript:editUser(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
 
@@ -117,7 +106,6 @@
                         $('#userEditForm').show();
                         $('#userISAForm').hide();
 
-
                         $('#upusername2').attr('readOnly', true);
                         $('#upstatus').val(data.statusCode);
                         $('#upcompany').val(data.company);
@@ -127,7 +115,6 @@
 
                     },
                     error: function(data) {
-
                         window.location = "${pageContext.request.contextPath}/logoutCall.action";
                     }
                 });
@@ -187,10 +174,9 @@
 
             $.subscribe('onclicksearch', function(event, data) {
 
-                var username = $('#username').val();
-                var instituteID = $('#institute').val();
+                var custName = $('#custName').val();
 
-                $("#gridtable").jqGrid('setGridParam', {postData: {username: username, instituteID: instituteID, search: true}});
+                $("#gridtable").jqGrid('setGridParam', {postData: {custName: custName, search: true}});
                 $("#gridtable").jqGrid('setGridParam', {page: 1});
                 jQuery("#gridtable").trigger("reloadGrid");
 
@@ -209,15 +195,13 @@
         <div class="body_content" id="includedContent">
              
                 <div class="watermark"></div>
-                <div class="heading">Edit & View User</div>
-<div class="AddUser_box ">
-                <div class="message">
-                            <div id="divmsg">             
-                        <s:div id="message">
+                <div class="heading">Edit & View Customer</div>
+                <div class="AddUser_box ">
+                    <div class="message" >   
+                        <s:div id="divmsg">
                             <i style="color: red">  <s:actionerror theme="jquery"/></i>
                             <i style="color: green"> <s:actionmessage theme="jquery"/></i>
                         </s:div>
-                        </div>
                     </div>
                 
 
@@ -227,26 +211,17 @@
 
                     <s:form id="userISAForm" action="VieweditViewUserISA" theme="simple">         
                         <table class="form_table">
+                            
                             <tr>
-                                <td class="content_td formLable">Institute</td>
+                                <td class="content_td formLable">Customer Name</td>
                                 <td class="content_td formLable">:</td>
-                                <td colspan="2"><s:select  name="institute" headerKey="-1" 
-                                           headerValue="---Select---" listKey="key" listValue="value"
-                                           list="%{instituteList}" id="institute" onchange="loadUserList(this.value)" cssClass="dropdown" /></td>
-                            </tr>
-                            <s:hidden name="loadingStatus" id="loadingStatus" value="1"/>
-                            <tr>
-                                <td class="content_td formLable">User Name</td>
-                                <td class="content_td formLable">:</td>
-                                <td colspan="2"><s:textfield name="username"  id="username" cssClass="textField" /> </td>
+                                <td colspan="2"><s:textfield name="custName"  id="custName" cssClass="textField" /> </td>
                             </tr>
 
                             <tr>                                
-                                <td colspan="4"><sj:a 
-                                        id="searchbut" 
-                                        button="true"                                        
-                                        onClickTopics="onclicksearch"  cssClass="button_asearch"   role="button" aria-disabled="false"                                    
-                                        >Search</sj:a>
+                                <td colspan="4">
+                                    <sj:a   id="searchbut"  button="true"    onClickTopics="onclicksearch"  cssClass="button_asearch" 
+                                            role="button" aria-disabled="false" >Search</sj:a>
                                         <s:reset  value="Reset" onClick="resetSearchData()" type="button" cssClass="button_reset"/></td>
 
                             </tr>
@@ -270,21 +245,15 @@
                             <tr>
                                 <td colspan="2" class="content_td formLable">Status</td>
                                 <td class="content_td formLable">:</td>
-                                <td colspan="3"><s:select  name="upstatus" headerKey="-1" 
+<%--                                <td colspan="3"><s:select  name="upstatus" headerKey="-1" 
                                            headerValue="---Select---"  list="%{usableStatusList}" listKey="key" listValue="value"
                                            id="upstatus" cssClass="dropdown" />
-                                </td>
+                                </td>--%>
 
 
                             </tr>
 
-                            <s:hidden name="upinstituteID" id="upinstituteID" value="1"/>
-                            <tr>
-                                <td colspan="2" class="content_td formLable">Company</td>
-                                <td class="content_td formLable">:</td>
-                                <td align="left" colspan="3"><s:textfield name="upcompany" id="upcompany" cssClass="textField"  />  </td>
-
-                            </tr>
+                            
 
                             <tr>
 <!--                                <td></td>-->
@@ -339,9 +308,7 @@
 
                         <sj:dialog 
                             id="deletedialogbox" 
-                            buttons="{
-                            'OK':function() { $( this ).dialog( 'close' );}
-                            }"  
+                            buttons="{ 'OK':function() { $( this ).dialog( 'close' );} }"  
                             autoOpen="false" 
                             modal="true" 
                             title="Delete user" 
@@ -351,10 +318,10 @@
                             />
                         <!-- End delete dialog box -->
                         
-                        <s:url var="listurl" action="ListeditViewUserISA"/>
+                        <s:url var="listurl" action="ListeditViewCus"/>
                         <sjg:grid
                             id="gridtable"
-                            caption="Edit View User"
+                            caption="Edit & View Custumer"
                             dataType="json"
                             href="%{listurl}"
                             pager="true"
@@ -368,12 +335,21 @@
                             viewrecords="true"
                             >
 
-                            <sjg:gridColumn name="username" index="username" title="User Name" align="left" width="20" sortable="true"/>                    
-                            <sjg:gridColumn name="company" index="company" title="Company"  align="left" width="20"  sortable="true"/>
-                            <sjg:gridColumn name="regDate" index="regDate" title="Reg Date" align="center"  width="18"  sortable="true"/>
-                            <sjg:gridColumn name="statusCode" index="statusCode" title="Status" align="center" width="10" formatter="statusformatter" sortable="true"/>                    
-                            <sjg:gridColumn name="username" index="username" title="Edit" align="center" width="10" align="center"  formatter="editformatter" sortable="false" />
-                            <sjg:gridColumn name="username" index="username" title="Delete" align="center" width="10" align="center"   formatter="deleteformatter" sortable="false" />
+                             <sjg:gridColumn name="custId" index="CUS_ID" title="User Name"  hidden="true"/>                    
+                        
+                            <sjg:gridColumn name="custName" index="NAME" title="Customer Name"  align="left" width="10"  sortable="true"/>                        
+                            <sjg:gridColumn name="companyName" index="COMPANY_NAME" title="Company Name"  align="left" width="15"  sortable="true"/>
+                            <sjg:gridColumn name="email" index="EMAIL" title="Email"  align="left" width="15"  sortable="true"/>
+                            <sjg:gridColumn name="address" index="ADDRESS" title="Address"  align="left" width="15"  sortable="true"/>
+                            <sjg:gridColumn name="tpOffice" index="TP_OFFICE" title="Office No"  align="left" width="12"  sortable="true"/>
+                            <sjg:gridColumn name="tpMobile" index="TP_MOBILE" title="Mobile No"  align="left" width="12"  sortable="true"/>
+
+                            <sjg:gridColumn name="regDate" index="REG_DATE" title="Reg Date"  align="left" width="8"  sortable="true"/>                         
+                            <sjg:gridColumn name="statusCode" index="STATUS" title="Status" align="center" width="8" formatter="statusformatter" sortable="true"/>                    
+
+                                         
+                            <sjg:gridColumn name="custId"  title="Edit" align="center" width="10" align="center"  formatter="editformatter" sortable="false" />
+                            <sjg:gridColumn name="custId"  title="Delete" align="center" width="10" align="center"   formatter="deleteformatter" sortable="false" />
 
                         </sjg:grid> 
 

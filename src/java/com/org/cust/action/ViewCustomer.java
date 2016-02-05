@@ -33,36 +33,24 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
      private ViewCustomerService   service = new ViewCustomerService();
      
      public String execute(){    
-    
-         return Action.SUCCESS;
+         return SUCCESS;
      }
      
      public String List(){
-         System.out.println("listtttttttttttttt"+inputBean.isSearch());
-      List<CustomerBeen> dataList = null;
-          
+        List<CustomerBeen> dataList = null;
         try {
-             
-           
-//            if (inputBean.isSearch()) { //after search click , table load
-                LogFileCreator.writeInfoToLog("Searching  user from page ViewUserAA");
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
                 int to = (rows * page);
                 int from = to - rows;
                 long records = 0;
                 String orderBy = "";    
-                               
-                
-                
+
                 if (!inputBean.getSidx().isEmpty()) {
                     orderBy = " order by " + inputBean.getSidx() + " " + inputBean.getSord();
                 }
- 
                 dataList=service.loadUsers(inputBean, orderBy, rows, from);
-                
-                
-                
+
                 if (!dataList.isEmpty()) {
                     records = dataList.get(0).getFullCount();
                     inputBean.setRecords(records);
@@ -73,18 +61,13 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
                     inputBean.setRecords(0L);
                     inputBean.setTotal(0);
                 }
-
 //            }
-
         } catch (Exception ex) {
              ex.printStackTrace();
             LogFileCreator.writeErrorToLog(ex);
             addActionError(SystemMessage.USR_ERROR_UNHANDLE);
         }
-          
-         
-     
-         return "list";
+        return "list";
      }
      
      
