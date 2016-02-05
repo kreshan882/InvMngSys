@@ -30,7 +30,7 @@ public class CustomerBeen {
     
 
     private String statusCode;
-    private Date regDate;
+    private String regDate;
 
    private long fullCount;
 
@@ -100,11 +100,11 @@ public class CustomerBeen {
         this.statusCode = statusCode;
     }
 
-    public Date getRegDate() {
+    public String getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Date regDate) {
+    public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
 

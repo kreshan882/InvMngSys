@@ -8,9 +8,7 @@ package com.org.cust.action;
 
 
 import com.inv.log.LogFileCreator;
-import com.org.cust.bean.ViewUserAADataBean;
 import com.org.cust.bean.ViewCustomerInputBean;
-import com.org.cust.service.ViewCustomerService;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.PageVarList;
@@ -19,6 +17,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.cust.bean.CustomerBeen;
+import com.org.cust.service.ViewCustomerService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -39,13 +38,13 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
      }
      
      public String List(){
-        
+         System.out.println("listtttttttttttttt"+inputBean.isSearch());
       List<CustomerBeen> dataList = null;
           
         try {
              
            
-            if (inputBean.isSearch()) {
+//            if (inputBean.isSearch()) { //after search click , table load
                 LogFileCreator.writeInfoToLog("Searching  user from page ViewUserAA");
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
@@ -75,7 +74,7 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
                     inputBean.setTotal(0);
                 }
 
-            }
+//            }
 
         } catch (Exception ex) {
              ex.printStackTrace();

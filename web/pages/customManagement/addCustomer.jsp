@@ -9,7 +9,7 @@
 <%@taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
     <head>
-        <title>Add New Customer</title>
+        
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
             $.subscribe('resetButton', function(event, data) {

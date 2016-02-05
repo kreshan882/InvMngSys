@@ -9,9 +9,9 @@ package com.inv.util;
  * @author kreshan
  */
 public class PageVarList {
-    public static final String CUS_ADD                      =   "0101";
-    public static final String CUS_EDIT_VIEW               =   "0106";
-    public static final String CUS_VIEW                     =   "0107";
+    public static final String CUS_ADD                  =   "0101";
+    public static final String CUS_EDIT_VIEW            =   "0102";
+    public static final String CUS_VIEW                 =   "0103";
     
     public static final String CONF_PASSWDCHANGE            =   "0501";
     

@@ -17,7 +17,7 @@ import java.util.Map;
 public class ViewCustomerInputBean {
 
     
-    private String username;
+    private String custName="";
     private boolean search;
     
 
@@ -42,16 +42,18 @@ public class ViewCustomerInputBean {
     public void setSearch(boolean search) {
         this.search = search;
     }    
+
+    public String getCustName() {
+        return custName;
+    }
+
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
     
 
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public List<CustomerBeen> getGridModel() {
         return gridModel;
