@@ -35,7 +35,7 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
     private EditViewCustomerService  service = new EditViewCustomerService();
     private EditViewCustomerInputBean inputBean = new EditViewCustomerInputBean();
     HttpServletRequest request = ServletActionContext.getRequest();
-
+    SessionUserBean sub = (SessionUserBean)ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
     
     public String execute(){
         return SUCCESS;
@@ -48,7 +48,6 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
     }
 
      public String List(){
-         System.out.println("liiiiiiiiiiiiii");
         try {
                 List<CustomerBeen> dataList = null;
                 int rows = inputBean.getRows();
@@ -61,7 +60,7 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
                 if (!inputBean.getSidx().isEmpty()) {
                     orderBy = " order by " + inputBean.getSidx() + " " + inputBean.getSord();
                 }
-                dataList=service.loadUsersFromInstiute(inputBean, orderBy, rows, from);
+                dataList=service.loadTableData(inputBean, orderBy, rows, from);
                 System.out.println("jjjj"+dataList.size());
                 if (!dataList.isEmpty()) {
                     records = dataList.get(0).getFullCount();
@@ -84,24 +83,19 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
     
     public String Delete() {
         try {
-            LogFileCreator.writeInfoToLog("Deleting  user from page EditAndViewUserISA");
-            HttpSession session = ServletActionContext.getRequest().getSession(false);
-            SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
-//            DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-//                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
-//                                Module.USER_MANAGEMENT,Operation.DELETE,SystemMessage.USR_DELETED,request.getRemoteAddr());
-//           
-            service.deleteUserISA( inputBean);
-//            addActionMessage(SystemMessage.USR_DELETED); 
-//            inputBean.setMessage(SystemMessage.USR_DELETED);
-            LogFileCreator.writeInfoToLog("Deleting  user from page EditAndViewUserISA succesfully completed");
-            inputBean.setDelsuccess("1");
-            
-            
+            if(service.deleteData( inputBean)){
+                DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.DELETE, SystemMessage.CUS_DELETE+" Cus ID:"+inputBean.getDcustId(),request.getRemoteAddr());        
+                LogFileCreator.writeInfoToLog(SystemMessage.CUS_DELETE+" Cus ID:"+inputBean.getDcustId());
+                inputBean.setDsuccess(true);
+                inputBean.setDmessage(SystemMessage.CUS_DELETE);
+            }else{
+                inputBean.setDsuccess(false);
+                inputBean.setDmessage(SystemMessage.CUS_DELETE_FAIL);
+            }
         } catch (Exception ex) {
-            addActionError(SystemMessage.USR_ERROR_UNHANDLE);
-            inputBean.setMessage(SystemMessage.USR_ERROR_UNHANDLE);
-             ex.printStackTrace();
+            inputBean.setDsuccess(false);
+            inputBean.setDmessage(SystemMessage.CUS_DELETE_FAIL);
+            ex.printStackTrace();
             LogFileCreator.writeErrorToLog(ex);
         }
 
@@ -110,17 +104,11 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
 
    
     public String Find() {
-        
         try {
-
-            service.findUser(inputBean);
-
-        } catch (Exception e) {
-            
+            service.findForUpdate(inputBean);
+        } catch (Exception e) {      
             addActionError(SystemMessage.USR_ERROR_UNHANDLE);
-
         }
-
         return "find";
     }
 
@@ -130,32 +118,20 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
     public String Update() {
          
         try {
-            boolean ok = false;
-            HttpSession session = ServletActionContext.getRequest().getSession(false);
-            SessionUserBean sub = (SessionUserBean)session.getAttribute("SessionObject");
-            service.loadinstituteList(inputBean);
-
-            LogFileCreator.writeInfoToLog("Updating  user from page EditAndViewUserISA");
             if (doValidation(inputBean)) {
-              
-               ok= service.updateUserISA(inputBean);
-                System.out.println(ok);
-               if(ok==true){
-//                addActionMessage(SystemMessage.USR_UPDATED);
-//                DBProcesses.insertHistoryRecord(sub.getInstituteid(),
-//                                sub.getUserid(),sub.getApptype(),sub.getAppid(),
-//                                Module.USER_MANAGEMENT,Operation.UPDATE,SystemMessage.USR_UPDATED,request.getRemoteAddr());
-              
-                LogFileCreator.writeInfoToLog("Updating  user from page EditAndViewUserISA succesfull."); 
+               if(service.updateData(inputBean)){
+                addActionMessage(SystemMessage.CUS_UPDATE);
+                DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.UPDATE, SystemMessage.CUS_UPDATE+":"+inputBean.getUpcustName(),request.getRemoteAddr());     
+                LogFileCreator.writeInfoToLog(SystemMessage.CUS_UPDATE+":"+inputBean.getUpcustName()); 
               
                } else {    
-//                  addActionError(SystemMessage.USR_UPDATED_ERROR);
+                  addActionError(SystemMessage.CUS_UPDATE_FAIL);
                }
               
             }
         } catch (Exception ex) {
 
-            addActionError(SystemMessage.USR_ERROR_UNHANDLE);
+            addActionError(SystemMessage.CUS_UPDATE_FAIL);
              ex.printStackTrace();
             LogFileCreator.writeErrorToLog(ex);
 
@@ -164,29 +140,45 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
     }
 
     
-    public String LoadUsers(){
-        try{
-        LogFileCreator.writeInfoToLog("Loading  user on for each institute from page EditAndViewUserISA");    
-        service.loadUserListFromInstitute(inputBean);
-        }catch(Exception ex){
-        ex.printStackTrace();
-        LogFileCreator.writeErrorToLog(ex);
-        }
-        return "loadusers";
-    }
-    
-    private boolean  doValidation (EditViewCustomerInputBean bean) throws Exception{
+    private boolean  doValidation (EditViewCustomerInputBean cusBean) throws Exception{
         boolean ok = false;
         
         try {
             
-            if(!Util.validateDESCRIPTION(bean.getUpcompany())){
-               addActionError(SystemMessage.USR_INVALID_COMPANY);
+            if (cusBean.getUpcompanyName() == null || cusBean.getUpcompanyName().isEmpty()) {
+                addActionError(SystemMessage.CUS_COMPANY_EMPTY);
                 return ok;
-           }else if (("-1".equals(bean.getUpstatus()))) {
-                addActionError(SystemMessage.USR_EMPTY_STATUS);
-                return ok;          
-           }else {
+            } else if (!Util.validateDESCRIPTION(cusBean.getUpcompanyName())) {
+                addActionError(SystemMessage.CUS_COMPANY_INVALID);
+                return ok;
+            }else if (cusBean.getUpemail() == null || cusBean.getUpemail().isEmpty()) {
+                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
+                return ok;
+            } else if (!Util.validateEMAIL(cusBean.getUpemail())) {
+                addActionError(SystemMessage.CUS_EAMIL_INVALID);
+                return ok;
+            }else if (cusBean.getUpaddress() == null || cusBean.getUpaddress().isEmpty()) {
+                addActionError(SystemMessage.CUS_ADDR_EMPTY);
+                return ok;
+            } else if (!Util.validateDESCRIPTION(cusBean.getUpaddress())) {
+                addActionError(SystemMessage.CUS_ADDR_INVALID);
+                return ok;
+            }else if (cusBean.getUptpOffice() == null || cusBean.getUptpOffice().isEmpty()) {
+                addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);
+                return ok;
+            } else if (!Util.validatePHONENO(cusBean.getUptpOffice())) {
+                addActionError(SystemMessage.CUS_TP_OFFI_INVALID);
+                return ok;
+            }else if (cusBean.getUptpMobile() == null || cusBean.getUptpMobile().isEmpty()) {
+                addActionError(SystemMessage.CUS_TP_MOB_EMPTY);
+                return ok;
+            } else if (!Util.validatePHONENO(cusBean.getUptpMobile())) {
+                addActionError(SystemMessage.CUS_TP_MOB_INVALID);
+                return ok;
+            }else if ("-1".equals(cusBean.getUpstatus())) {
+                addActionError(SystemMessage.CUS_STATUS_EMPTY);
+                return ok;
+            }else {
                 ok = true;
             }
             

@@ -44,10 +44,17 @@ public class SystemMessage {
     public static final String CUS_TP_OFFI_INVALID      = "Invalid customer office number";
     public static final String CUS_TP_MOB_EMPTY         = "Empty customer mobile number";
     public static final String CUS_TP_MOB_INVALID       = "Invalid customer mobile number";
-    
+    public static final String CUS_STATUS_EMPTY         = "Please select status";
+
     
     public static final String CUS_ADD                  = "Customer add successful";
     public static final String CUS_ADD_FAIL             = "Customer add failed";
+    
+    public static final String CUS_UPDATE               = "Customer update successful";
+    public static final String CUS_UPDATE_FAIL          = "Customer update failed";
+    
+    public static final String CUS_DELETE               = "Customer delete successful";
+    public static final String CUS_DELETE_FAIL          = "Customer delete failed";
     
     public static final String USR_PW_CHG        = "User password change successful";
     public static final String USR_PW_UPDATE     = "User password update successful";

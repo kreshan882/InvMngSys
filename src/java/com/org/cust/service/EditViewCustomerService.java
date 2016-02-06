@@ -26,7 +26,7 @@ import java.util.List;
 public class EditViewCustomerService {
 
 
-    public List<CustomerBeen> loadUsersFromInstiute(EditViewCustomerInputBean bean, String orderBy, int max, int first) throws Exception {
+    public List<CustomerBeen> loadTableData(EditViewCustomerInputBean bean, String orderBy, int max, int first) throws Exception {
 
         
         List <CustomerBeen> dataList = null;       
@@ -99,8 +99,9 @@ public class EditViewCustomerService {
     
     
 
-    public void deleteUserISA(EditViewCustomerInputBean bean) throws Exception {
+    public boolean deleteData(EditViewCustomerInputBean bean) throws Exception {
 
+        boolean result=false;
         PreparedStatement prepSt = null;
         Connection con = null;
         String deleteUser = null;
@@ -108,17 +109,18 @@ public class EditViewCustomerService {
 
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
-            deleteUser = "UPDATE E24OCM_USER SET STATUS =?  WHERE USERNAME= ? AND INSTITUTE_ID = ?";
+            deleteUser = "delete from ic_customer where CUS_ID=?";
             prepSt = con.prepareStatement(deleteUser);
 
-            prepSt.setString(1,  Status.DELETED);
-//            prepSt.setString(2, bean.getUsername());            
-       
+            prepSt.setInt(1,  Integer.parseInt(bean.getDcustId()));
             prepSt.execute();
             con.commit();
+            result=true;
+
         } catch (Exception e) {
             e.printStackTrace();
             con.rollback();
+            result=false;
             throw e;
 
         } finally {
@@ -129,36 +131,39 @@ public class EditViewCustomerService {
                 con.close();
             }
         }
-
+        return result;
     }
 //Added on 22nd Aug to find user.
 
-     public void findUser(EditViewCustomerInputBean bean) throws Exception {
+     public void findForUpdate(EditViewCustomerInputBean bean) throws Exception {
         
         PreparedStatement prepSt = null;
         ResultSet res = null;
         Connection con = null;
-        String getUsersListQuery = null;
+        String sql = null;
         try {
 
             con = DBConnection.getConnection();
-            con.setAutoCommit(false);
-            getUsersListQuery = "SELECT USERNAME,COMPANY,STATUS FROM E24OCM_USER WHERE USERNAME = ? AND INSTITUTE_ID = ? AND APP_TYPE = ?";
+            sql = "SELECT CUS_ID,NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS "
+                    + "FROM ic_customer WHERE CUS_ID=?";
 
-            prepSt = con.prepareStatement(getUsersListQuery);
-//            prepSt.setString(1,bean.getUsername());
+            prepSt = con.prepareStatement(sql);
+            prepSt.setString(1,bean.getUpcustId());
 
             res = prepSt.executeQuery();
 
-            while (res.next()) {
-
-//                bean.setUsername(res.getString("USERNAME"));
-//                bean.setCompany(res.getString("COMPANY"));
-//                bean.setStatusCode(res.getString("STATUS"));
+            if (res.next()) {
+                bean.setUpcustId(res.getString("CUS_ID"));
+                bean.setUpcustName(res.getString("NAME"));
+                bean.setUpcompanyName(res.getString("COMPANY_NAME"));
+                bean.setUpemail(res.getString("EMAIL"));       
                 
+                bean.setUpaddress(res.getString("ADDRESS")); 
+                bean.setUptpOffice(res.getString("TP_OFFICE")); 
+                bean.setUptpMobile(res.getString("TP_MOBILE")); 
+                bean.setUpstatus(res.getString("STATUS")); 
             }
-//            bean.setInstituteID(bean.getInstituteID());
-            con.commit();
+            
         } catch (Exception e) {
             con.rollback();
             throw e;
@@ -178,26 +183,29 @@ public class EditViewCustomerService {
 
     }
 
-    public boolean updateUserISA(EditViewCustomerInputBean inputBean) throws Exception {
+    public boolean updateData(EditViewCustomerInputBean inputBean) throws Exception {
 
         
         boolean ok = false;
         PreparedStatement prepSt = null;
         ResultSet res = null;
         Connection con = null;
-        String getUsersListQuery = null;
+        String sql = null;
         try {
 
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             
            
-            getUsersListQuery = "UPDATE E24OCM_USER SET STATUS =? , COMPANY = ?  WHERE USERNAME= ? AND INSTITUTE_ID = ? ";
-            prepSt = con.prepareStatement(getUsersListQuery);
-//            prepSt.setString(1, inputBean.getUpstatus());
-//            prepSt.setString(2, inputBean.getUpcompany());
-//            prepSt.setString(3, inputBean.getUpusername2());
-//            prepSt.setInt(4,inputBean.getUpinstituteID());
+            sql = "update ic_customer SET COMPANY_NAME=?,EMAIL=?,ADDRESS=?,TP_OFFICE=?,TP_MOBILE=?,STATUS=? where CUS_ID=?";
+            prepSt = con.prepareStatement(sql);
+            prepSt.setString(1, inputBean.getUpcompanyName());
+            prepSt.setString(2, inputBean.getUpemail());
+            prepSt.setString(3, inputBean.getUpaddress());
+            prepSt.setString(4, inputBean.getUptpOffice());
+            prepSt.setString(5, inputBean.getUptpMobile());
+            prepSt.setString(6, inputBean.getUpstatus());
+            prepSt.setString(7, inputBean.getUpcustId());
 
             int n= prepSt.executeUpdate();
             if(n>0){
@@ -224,6 +232,7 @@ public class EditViewCustomerService {
         }
            return ok;
     }
+
     
   
 

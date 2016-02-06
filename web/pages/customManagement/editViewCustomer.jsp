@@ -31,86 +31,73 @@
             }
 
             function deleteformatter(cellvalue, options, rowObject) {
-                return "<a href='#' onClick='deleteUserInit(&#34;" + cellvalue + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
+                return "<a href='#' onClick='deleteInit(&#34;" + rowObject.custId + "&#34;,&#34;" + rowObject.custName + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
             }
 
             function editformatter(cellvalue, options, rowObject) {
-                return "<a href='#' onClick='javascript:editUser(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
+                return "<a href='#' onClick='javascript:editCall(&#34;" + cellvalue + "&#34;)'><img src ='${pageContext.request.contextPath}/resources/images/iconEdit.png' /></a>";
             }
 
-            function deleteUser(keyval) {
-                var instituteID = $('#institute').val();
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/DeleteeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-                        $('#message').empty();
-                        if (data.delsuccess == 1) {
-                            $("#deletedialogbox").dialog('open');
-                            $("#deletedialogbox").html('<br><b><font size="3" color="green"><center>' + data.message + ' ');
-                        } else {
-                            $("#deletedialogbox").dialog('open');
-                            $("#deletedialogbox").html('<br><b><font size="3" color="red"><center>' + data.message + ' ');
-                        }
-                        $('#message').val('Success');
-                        resetData();
-                    },
-                    error: function(data) {
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-
-            }
-
-
-            function loadUserList(keyval) {
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/LoadUserseditViewUserISA',
-                    data: {instituteID: keyval},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-
-                    },
-                    error: function(data) {
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-
-
-            }
-
-            function deleteUserInit(keyval) {
+            function deleteInit(keyval,desc) {
                 $('#message').empty();
                 $("#deletedialog").data('keyval', keyval).dialog('open');
-                $("#deletedialog").html('<br><b><font size="3" color="red"><center>Please confirm to delete user : ' + keyval + '');
+                $("#deletedialog").html('<br><b><font size="3" color="red"><center>Please confirm to delete custumer : ' + desc + '');
                 return false;
             }
+            
+            function deleteNow(keyval) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/DeleteeditViewCus',
+                    data: {dcustId: keyval},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data) {
+                        
+                        if (data.dsuccess) {
+                            $("#deletedialogbox").dialog('open');
+                            $("#deletedialogbox").html('<br><b><font size="3" color="green"><center>' + data.dmessage + ' ');
+                        } else {
+                            $("#deletedialogbox").dialog('open');
+                            $("#deletedialogbox").html('<br><b><font size="3" color="red"><center>' + data.dmessage + ' ');
+                        }
+                        
+                        jQuery("#gridtable").trigger("reloadGrid");
+                    },
+                    error: function(data) {
+                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
+                    }
+                });
 
-            function editUser(keyval) {
-                $('#userEditForm').show();
-                $('#userISAForm').hide();
-                $('#divmsg').empty();
-                var instituteID = $('#institute').val();
+            }
+
+
+
+
+            
+
+            function editCall(keyval) {
 
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/FindeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
+                    url: '${pageContext.request.contextPath}/FindeditViewCus',
+                    data: {upcustId: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function(data) {
 
-                        $('#userEditForm').show();
-                        $('#userISAForm').hide();
+                        $('#updateForm').show();
+                        $('#searchForm').hide();
+                        $('#divmsg').empty();
 
-                        $('#upusername2').attr('readOnly', true);
-                        $('#upstatus').val(data.statusCode);
-                        $('#upcompany').val(data.company);
-                        $('#upusername2').val(data.username);
-                        $('#upinstituteID').val(data.instituteID);
+                        $('#upcustId').val(data.upcustId);
+                        $('#upcustName').attr('readOnly', true);
+                        $('#upcustName').val(data.upcustName);
+                        $('#upcompanyName').val(data.upcompanyName);
+                        $('#upemail').val(data.upemail);
+                        $('#upaddress').val(data.upaddress);
+                        
+                        $('#uptpOffice').val(data.uptpOffice);
+                        $('#uptpMobile').val(data.uptpMobile);
+                        $('#upstatus').val(data.upstatus);
 
 
                     },
@@ -118,59 +105,42 @@
                         window.location = "${pageContext.request.contextPath}/logoutCall.action";
                     }
                 });
-            }
-
-            function resetData() {
-                jQuery("#gridtable").trigger("reloadGrid");
-            }
-            
-            function resetSearchData() {
-                $("#gridtable").jqGrid('clearGridData', true);
-            }
-
-            function backToMain() {
-                $('#userEditForm').hide();
-                $('#userISAForm').show();
-                $('#divmsg').empty();
-                jQuery("#gridtable").trigger("reloadGrid");
-
             }
 
 
             function resetUpdateForm() {
+                var keyval = $('#upcustId').val();
+                editCall(keyval);
+            }
+            
+            
+            function resetData() {
+                 
+                $('#upcustName').val("");
+                $('#upcompanyName').val("");
+                $('#upaddress').val("");
+                $('#upemail').val("");
+                $('#uptpMobile').val("");
+                $('#uptpOffice').val("");
+                $('#upstatus').val("-1");
+                jQuery("#gridtable").trigger("reloadGrid");
+            }
+            
+            function generateXSL() {
+                alert("dddd gen xl");
 
-                var instituteID = $('#institute').val();
-                var keyval = $('#upusername2').val();
+            }
 
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/FindeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-
-                        $('#userEditForm').show();
-                        $('#userISAForm').hide();
-
-
-                        $('#upusername2').attr('readOnly', true);
-                        $('#upstatus').val(data.statusCode);
-                        $('#upcompany').val(data.company);
-                        $('#upusername2').val(data.username);
-                        $('#upinstituteID').val(data.instituteID);
-
-
-                    },
-                    error: function(data) {
-
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-                
+            function backToMain() {
+                $('#updateForm').hide();
+                $('#searchForm').show();
                 $('#divmsg').empty();
                 jQuery("#gridtable").trigger("reloadGrid");
 
             }
+
+
+            
 
             $.subscribe('onclicksearch', function(event, data) {
 
@@ -209,7 +179,7 @@
                     
                     
 
-                    <s:form id="userISAForm" action="VieweditViewUserISA" theme="simple">         
+                    <s:form id="searchForm"  theme="simple">         
                         <table class="form_table">
                             
                             <tr>
@@ -222,7 +192,8 @@
                                 <td colspan="4">
                                     <sj:a   id="searchbut"  button="true"    onClickTopics="onclicksearch"  cssClass="button_asearch" 
                                             role="button" aria-disabled="false" >Search</sj:a>
-                                        <s:reset  value="Reset" onClick="resetSearchData()" type="button" cssClass="button_reset"/></td>
+                                    <sj:submit button="true" value="Gen-XSL" onClick="generateXSL()" cssClass="button_sreset"/>
+                               </td>
 
                             </tr>
 
@@ -232,56 +203,74 @@
 
                 </div>
                 <div class="contentcenter">
-                    <s:form action="UpdateeditViewUserISA" theme="simple" method="post" id="userEditForm" cssClass="form_hidden" >
+                    <s:form id="updateForm"  theme="simple" method="post" cssClass="form_hidden" >
 
                         <table class="form_table">
-
+                                    <s:hidden name="upcustId" id="upcustId" cssClass="textField" />
                             <tr>
-                                <td class="content_td formLable" colspan="2">User Name</td>
-                                <td class="content_td formLable" width="5px">:</td>
-                                <td colspan="3"><s:textfield name="upusername2" id="upusername2" cssClass="textField" /></td>
-
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="content_td formLable">Status</td>
-                                <td class="content_td formLable">:</td>
-<%--                                <td colspan="3"><s:select  name="upstatus" headerKey="-1" 
-                                           headerValue="---Select---"  list="%{usableStatusList}" listKey="key" listValue="value"
-                                           id="upstatus" cssClass="dropdown" />
-                                </td>--%>
-
-
-                            </tr>
-
+                                    <td class="content_td formLable">Customer Name<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="upcustName" name="upcustName" cssClass="textField" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable">Company Name</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="upcompanyName" name="upcompanyName" cssClass="textField" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="content_td formLable">Email<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable">Address</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td class="content_td formLable">Tp-Office</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="uptpOffice" name="uptpOffice" cssClass="textField" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable">Tp-Mobile</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="uptpMobile" name="uptpMobile" cssClass="textField" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="content_td formLable">Status</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:select  name="upstatus" id="upstatus" headerKey="-1"  headerValue="---Select---" 
+                                               list="%{usableStatusList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <s:url var="updateuserurl" action="UpdateeditViewCus"/>                                   
+                                        <sj:submit  button="true"  href="%{updateuserurl}" value="Update" 
+                                        targets="divmsg" cssClass="button_sadd" onCompleteTopics="oncompleteform" />
+                                        
+                                        <sj:a href="#" name="back" button="true" onclick="backToMain()"  cssClass="button_aback" >Back</sj:a> 
+                                        
+                                        <sj:submit button="true" value="Reset" onClick="resetUpdateForm()" cssClass="button_sreset"/>
+                                    <td colspan="4"></td>
+                                </tr>
                             
 
                             <tr>
 <!--                                <td></td>-->
-                                <td colspan="3" align="right" class="buttoncell"><s:url var="updateuserurl" action="UpdateeditViewUserISA"/>                                   
-                                    <sj:submit 
-                                        button="true"
-                                        href="%{updateuserurl}"
-                                        value="Update" 
-                                        targets="divmsg"  
-                                        cssClass="button_sadd"
-                                        onCompleteTopics="oncompleteform"
-                                        />
+                                <td colspan="3" align="left" class="buttoncell">
+                                    
                                 </td>
-                                <td align="left" width="60px" class="buttoncell">
-                                    <sj:a href="#" name="back" button="true" onclick="backToMain()"  cssClass="button_aback" >Back</sj:a> 
-                                    </td>
-                                    <td align="right" width="60px" class="buttoncell">
-                                    <sj:submit button="true" value="Reset" onClick="resetUpdateForm()" cssClass="button_sreset"/>
+                                <td align="left" width="10px" class="buttoncell">
+                                    
+                                </td>
+                                <td align="right" width="60px" class="buttoncell">
+                                    
                                 </td>
 
                             </tr>
-<!--                            <tr>
-                                <td colspan="6">  
-                                    <div>
-
-                                    </div>
-                                </td>   
-                            </tr>-->
 
                         </table>
 
@@ -295,12 +284,12 @@
                         <sj:dialog 
                             id="deletedialog" 
                             buttons="{ 
-                            'OK':function() { deleteUser($(this).data('keyval'));$( this ).dialog( 'close' ); },
+                            'OK':function() { deleteNow($(this).data('keyval'));$( this ).dialog( 'close' ); },
                             'Cancel':function() { $( this ).dialog( 'close' );} 
                             }" 
                             autoOpen="false" 
                             modal="true" 
-                            title="Delete user confirmation"
+                            title="Delete confirmation"
                             width="400"
                             height="150"
                             position="center"
@@ -343,7 +332,6 @@
                             <sjg:gridColumn name="address" index="ADDRESS" title="Address"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="tpOffice" index="TP_OFFICE" title="Office No"  align="left" width="12"  sortable="true"/>
                             <sjg:gridColumn name="tpMobile" index="TP_MOBILE" title="Mobile No"  align="left" width="12"  sortable="true"/>
-
                             <sjg:gridColumn name="regDate" index="REG_DATE" title="Reg Date"  align="left" width="8"  sortable="true"/>                         
                             <sjg:gridColumn name="statusCode" index="STATUS" title="Status" align="center" width="8" formatter="statusformatter" sortable="true"/>                    
 

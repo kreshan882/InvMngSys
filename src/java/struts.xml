@@ -72,7 +72,6 @@
         <action name="*editViewCus"    class="com.org.cust.action.EditViewCustomer"   method="{1}">       
             <result name="list" type="json"></result>           
             <result name="find" type="json"></result>              
-            <result name="loadusers" type="json"></result> 
             <result name="delete"  type="json"  ></result>
             <result name="update">/pages/msgFrag.jsp</result>
             <result name="success">/pages/customManagement/editViewCustomer.jsp</result>        

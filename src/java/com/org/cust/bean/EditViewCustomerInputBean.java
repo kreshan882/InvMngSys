@@ -20,25 +20,22 @@ import java.util.Map;
 public class EditViewCustomerInputBean {
     
 
-//    private Map<String,String>  usableStatusList=Util.getBasicStatus();
-//    
-//    private List<String> usernameList=new ArrayList<String>();
-//    
-//
-//    private String username;
-//    private String delsuccess;
-//    
-//    private String company;
-//    private String status;
-//    private String statusCode;
-//
-//    
-//    private String upstatus;    
-//    private int  upinstituteID;    
-//    private String upusername;
-//    private String upcompany;
-//    private String upusername2;
-//    private String message;
+    //delete values
+    private String dcustId;
+    private boolean dsuccess;
+    private String dmessage;
+    
+    
+    //update values
+    private String upcustId; 
+    private String upcustName;
+    private String upcompanyName;
+    private String upemail;
+    private String upaddress;
+    private String uptpOffice;
+    private String uptpMobile;
+    private String upstatus;
+    private Map<String,String>  usableStatusList=Util.getBasicStatus();
      
     //search table
     private String custName="";
@@ -61,6 +58,38 @@ public class EditViewCustomerInputBean {
         return custName;
     }
 
+    public String getUpstatus() {
+        return upstatus;
+    }
+
+    public String getDcustId() {
+        return dcustId;
+    }
+
+    public void setDcustId(String dcustId) {
+        this.dcustId = dcustId;
+    }
+
+    public boolean isDsuccess() {
+        return dsuccess;
+    }
+
+    public void setDsuccess(boolean dsuccess) {
+        this.dsuccess = dsuccess;
+    }
+
+    public String getDmessage() {
+        return dmessage;
+    }
+
+    public void setDmessage(String dmessage) {
+        this.dmessage = dmessage;
+    }
+
+    public void setUpstatus(String upstatus) {
+        this.upstatus = upstatus;
+    }
+
     public void setCustName(String custName) {
         this.custName = custName;
     }
@@ -69,8 +98,73 @@ public class EditViewCustomerInputBean {
         return search;
     }
 
+    public String getUpcustId() {
+        return upcustId;
+    }
+
+    public void setUpcustId(String upcustId) {
+        this.upcustId = upcustId;
+    }
+
+    public String getUpcustName() {
+        return upcustName;
+    }
+
+    public void setUpcustName(String upcustName) {
+        this.upcustName = upcustName;
+    }
+
+    public String getUpcompanyName() {
+        return upcompanyName;
+    }
+
+    public void setUpcompanyName(String upcompanyName) {
+        this.upcompanyName = upcompanyName;
+    }
+
+    public String getUpemail() {
+        return upemail;
+    }
+
+    public void setUpemail(String upemail) {
+        this.upemail = upemail;
+    }
+
+    public String getUpaddress() {
+        return upaddress;
+    }
+
+    public void setUpaddress(String upaddress) {
+        this.upaddress = upaddress;
+    }
+
+    public String getUptpOffice() {
+        return uptpOffice;
+    }
+
+    public void setUptpOffice(String uptpOffice) {
+        this.uptpOffice = uptpOffice;
+    }
+
+    public String getUptpMobile() {
+        return uptpMobile;
+    }
+
+    public void setUptpMobile(String uptpMobile) {
+        this.uptpMobile = uptpMobile;
+    }
+
+    
     public void setSearch(boolean search) {
         this.search = search;
+    }
+
+    public Map<String, String> getUsableStatusList() {
+        return usableStatusList;
+    }
+
+    public void setUsableStatusList(Map<String, String> usableStatusList) {
+        this.usableStatusList = usableStatusList;
     }
 
     public List<CustomerBeen> getGridModel() {
