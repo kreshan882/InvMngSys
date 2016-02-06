@@ -51,7 +51,7 @@ public class EditViewCustomerService {
                 totalCount = res.getLong("TOTAL");                
             }          
        
-            quary ="SELECT CUS_ID,NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS,CAST(REG_DATE AS CHAR) AS REG_DATE "
+            quary ="SELECT CUS_ID,NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS,CAST(REG_DATE AS CHAR) AS REG_DATE "
                     + "FROM ic_customer WHERE NAME LIKE ? "+orderBy+ " LIMIT " + first + "," + max;
             
             perSt = con.prepareStatement(quary); 
@@ -65,7 +65,6 @@ public class EditViewCustomerService {
 
                  been.setCustId(res.getString("CUS_ID")); 
                  been.setCustName(res.getString("NAME"));
-                 been.setCompanyName(res.getString("COMPANY_NAME"));
                  been.setEmail(res.getString("EMAIL"));
                  been.setAddress(res.getString("ADDRESS"));
                  been.setTpOffice(res.getString("TP_OFFICE"));
@@ -144,7 +143,7 @@ public class EditViewCustomerService {
         try {
 
             con = DBConnection.getConnection();
-            sql = "SELECT CUS_ID,NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS "
+            sql = "SELECT CUS_ID,NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS "
                     + "FROM ic_customer WHERE CUS_ID=?";
 
             prepSt = con.prepareStatement(sql);
@@ -155,7 +154,6 @@ public class EditViewCustomerService {
             if (res.next()) {
                 bean.setUpcustId(res.getString("CUS_ID"));
                 bean.setUpcustName(res.getString("NAME"));
-                bean.setUpcompanyName(res.getString("COMPANY_NAME"));
                 bean.setUpemail(res.getString("EMAIL"));       
                 
                 bean.setUpaddress(res.getString("ADDRESS")); 
@@ -197,15 +195,14 @@ public class EditViewCustomerService {
             con.setAutoCommit(false);
             
            
-            sql = "update ic_customer SET COMPANY_NAME=?,EMAIL=?,ADDRESS=?,TP_OFFICE=?,TP_MOBILE=?,STATUS=? where CUS_ID=?";
+            sql = "update ic_customer SET EMAIL=?,ADDRESS=?,TP_OFFICE=?,TP_MOBILE=?,STATUS=? where CUS_ID=?";
             prepSt = con.prepareStatement(sql);
-            prepSt.setString(1, inputBean.getUpcompanyName());
-            prepSt.setString(2, inputBean.getUpemail());
-            prepSt.setString(3, inputBean.getUpaddress());
-            prepSt.setString(4, inputBean.getUptpOffice());
-            prepSt.setString(5, inputBean.getUptpMobile());
-            prepSt.setString(6, inputBean.getUpstatus());
-            prepSt.setString(7, inputBean.getUpcustId());
+            prepSt.setString(1, inputBean.getUpemail());
+            prepSt.setString(2, inputBean.getUpaddress());
+            prepSt.setString(3, inputBean.getUptpOffice());
+            prepSt.setString(4, inputBean.getUptpMobile());
+            prepSt.setString(5, inputBean.getUpstatus());
+            prepSt.setString(6, inputBean.getUpcustId());
 
             int n= prepSt.executeUpdate();
             if(n>0){

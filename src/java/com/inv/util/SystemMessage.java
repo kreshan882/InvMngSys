@@ -33,9 +33,7 @@ public class SystemMessage {
     ////////////////////////////////////////////////////////////////////////
     public static final String CUS_NAME_EMPTY           = "Empty customer name";
     public static final String CUS_NAME_INVALID         = "Invalid customer name";
-    public static final String CUS_NAME_ALREADY         = "Customer name already exists";
-    public static final String CUS_COMPANY_EMPTY        = "Empty company name";
-    public static final String CUS_COMPANY_INVALID      = "Invalid company name";  
+    public static final String CUS_NAME_ALREADY         = "Customer name already exists"; 
     public static final String CUS_ADDR_EMPTY           = "Empty customer address";
     public static final String CUS_ADDR_INVALID         = "Invalid customer address";
     public static final String CUS_EMAIL_EMPTY          = "Empty customer email";

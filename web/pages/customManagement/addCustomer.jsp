@@ -20,7 +20,6 @@
             function resetData(){
                 
                 $('#custName').val("");
-                $('#companyName').val("");
                 $('#address').val("");
                 $('#email').val("");
                 $('#tpMobile').val("");
@@ -62,28 +61,28 @@
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="custName" name="custName" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Company Name</td>
+                                    <td class="content_td formLable">Address</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="companyName" name="companyName" cssClass="textField" /></td>
+                                    <td><s:textfield id="address" name="address" cssClass="textField" /></td>
                                 </tr>
                                 <tr>
                                     <td class="content_td formLable">Email<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="email" name="email" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Address</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="address" name="address" cssClass="textField" /></td>
-                                   
-                                </tr>
-                                <tr>
                                     <td class="content_td formLable">Tp-Office</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="tpOffice" name="tpOffice" cssClass="textField" /></td>
-                                    <td class="content_td formLable"></td>
+                                   
+                                </tr>
+                                <tr>
                                     <td class="content_td formLable">Tp-Mobile</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="tpMobile" name="tpMobile" cssClass="textField" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable"></td>
+                                    <td></td>
                                 </tr>
 
                                 

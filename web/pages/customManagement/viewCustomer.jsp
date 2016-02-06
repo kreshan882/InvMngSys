@@ -33,139 +33,6 @@
                     }
                     return html;
              }
-                
-
-            function deleteUser(keyval) {
-                var instituteID = $('#institute').val();
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/DeleteeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-                        $('#message').empty();
-                        if (data.delsuccess == 1) {
-                            $("#deletesuccdialog").dialog('open');
-                            $("#deletesuccdialog").html(data.message);
-                        } else {
-                            $("#deleteerrordialog").dialog('open');
-                            $("#deleteerrordialog").html(data.message);
-                        }
-                        resetData();
-                    },
-                    error: function(data) {
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-
-            }
-
-
-            function loadUserList(keyval) {
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/LoadUserseditViewUserISA',
-                    data: {instituteID: keyval},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-
-                    },
-                    error: function(data) {
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-
-
-            }
-
-            function deleteUserInit(keyval) {
-                $('#message').empty();
-                $("#deletedialog").data('keyval', keyval).dialog('open');
-                $("#deletedialog").html('Are you sure you want to delete user ' + keyval + ' ?');
-                return false;
-            }
-
-            function editUser(keyval) {
-                $('#userEditForm').show();
-                $('#userISAForm').hide();
-                var instituteID = $('#institute').val();
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/FindeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-
-                        $('#userEditForm').show();
-                        $('#userISAForm').hide();
-
-
-                        $('#upusername2').attr('readOnly', true);
-                        $('#upstatus').val(data.statusCode);
-                        $('#upcompany').val(data.company);
-                        $('#upusername2').val(data.username);
-                        $('#upinstituteID').val(data.instituteID);
-
-
-                    },
-                    error: function(data) {
-
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-            }
-
-            function resetData() {
-
-
-                jQuery("#gridtable").trigger("reloadGrid");
-            }
-
-            function backToMain() {
-                $('#userEditForm').hide();
-                $('#userISAForm').show();
-                jQuery("#gridtable").trigger("reloadGrid");
-
-            }
-
-
-            function resetUpdateForm() {
-
-                var instituteID = $('#institute').val();
-                var keyval = $('#upusername2').val();
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/FindeditViewUserISA',
-                    data: {username: keyval, instituteID: instituteID},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data) {
-
-                        $('#userEditForm').show();
-                        $('#userISAForm').hide();
-
-
-                        $('#upusername2').attr('readOnly', true);
-                        $('#upstatus').val(data.statusCode);
-                        $('#upcompany').val(data.company);
-                        $('#upusername2').val(data.username);
-                        $('#upinstituteID').val(data.instituteID);
-
-
-                    },
-                    error: function(data) {
-
-                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
-                    }
-                });
-
-
-
-                jQuery("#gridtable").trigger("reloadGrid");
-
-            }
 
             $.subscribe('onclicksearch', function(event, data) {
 
@@ -177,9 +44,7 @@
             });
             
             
-            function resetSearchData() {
-                $("#gridtable").jqGrid('clearGridData', true);
-            }
+
 
 
         </script>
@@ -209,7 +74,7 @@
                                     <sj:a  id="searchbut"   button="true" onClickTopics="onclicksearch"  
                                            cssClass="button_asearch ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"   
                                            role="button" aria-disabled="false" >Search</sj:a>
-                                    <s:reset  value="Reset" onClick="resetSearchData()" type="button" cssClass="button_reset"/></td>
+                                    
                             </tr>
 
                         </table>
@@ -244,7 +109,6 @@
                         <sjg:gridColumn name="custId" index="CUS_ID" title="User Name"  hidden="true"/>                    
                         
                         <sjg:gridColumn name="custName" index="NAME" title="Customer Name"  align="left" width="10"  sortable="true"/>                        
-                        <sjg:gridColumn name="companyName" index="COMPANY_NAME" title="Company Name"  align="left" width="15"  sortable="true"/>
                         <sjg:gridColumn name="email" index="EMAIL" title="Email"  align="left" width="15"  sortable="true"/>
                         <sjg:gridColumn name="address" index="ADDRESS" title="Address"  align="left" width="15"  sortable="true"/>
                         <sjg:gridColumn name="tpOffice" index="TP_OFFICE" title="Office No"  align="left" width="12"  sortable="true"/>

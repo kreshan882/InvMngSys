@@ -145,11 +145,11 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
         
         try {
             
-            if (cusBean.getUpcompanyName() == null || cusBean.getUpcompanyName().isEmpty()) {
-                addActionError(SystemMessage.CUS_COMPANY_EMPTY);
+            if (cusBean.getUpaddress() == null || cusBean.getUpaddress().isEmpty()) {
+                addActionError(SystemMessage.CUS_ADDR_EMPTY);
                 return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getUpcompanyName())) {
-                addActionError(SystemMessage.CUS_COMPANY_INVALID);
+            } else if (!Util.validateDESCRIPTION(cusBean.getUpaddress())) {
+                addActionError(SystemMessage.CUS_ADDR_INVALID);
                 return ok;
             }else if (cusBean.getUpemail() == null || cusBean.getUpemail().isEmpty()) {
                 addActionError(SystemMessage.CUS_EMAIL_EMPTY);
@@ -157,13 +157,7 @@ public class EditViewCustomer extends ActionSupport implements ModelDriven<EditV
             } else if (!Util.validateEMAIL(cusBean.getUpemail())) {
                 addActionError(SystemMessage.CUS_EAMIL_INVALID);
                 return ok;
-            }else if (cusBean.getUpaddress() == null || cusBean.getUpaddress().isEmpty()) {
-                addActionError(SystemMessage.CUS_ADDR_EMPTY);
-                return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getUpaddress())) {
-                addActionError(SystemMessage.CUS_ADDR_INVALID);
-                return ok;
-            }else if (cusBean.getUptpOffice() == null || cusBean.getUptpOffice().isEmpty()) {
+            }else  if (cusBean.getUptpOffice() == null || cusBean.getUptpOffice().isEmpty()) {
                 addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);
                 return ok;
             } else if (!Util.validatePHONENO(cusBean.getUptpOffice())) {

@@ -85,7 +85,6 @@
                         $('#upcustId').val(data.upcustId);
                         $('#upcustName').attr('readOnly', true);
                         $('#upcustName').val(data.upcustName);
-                        $('#upcompanyName').val(data.upcompanyName);
                         $('#upemail').val(data.upemail);
                         $('#upaddress').val(data.upaddress);
                         
@@ -107,9 +106,7 @@
             
             
             function resetData() {
-                 alert("rdddddd");
                 $('#upcustName').val("");
-                $('#upcompanyName').val("");
                 $('#upaddress').val("");
                 $('#upemail').val("");
                 $('#uptpMobile').val("");
@@ -194,39 +191,31 @@
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="upcustName" name="upcustName" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Company Name</td>
+                                    <td class="content_td formLable">Address</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="upcompanyName" name="upcompanyName" cssClass="textField" /></td>
+                                    <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>
                                 </tr>
                                 <tr>
                                     <td class="content_td formLable">Email<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="upemail" name="upemail" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Address</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="upaddress" name="upaddress" cssClass="textField" /></td>
-                                   
-                                </tr>
-                                <tr>
                                     <td class="content_td formLable">Tp-Office</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="uptpOffice" name="uptpOffice" cssClass="textField" /></td>
-                                    <td class="content_td formLable"></td>
+                                   
+                                </tr>
+                                <tr>
                                     <td class="content_td formLable">Tp-Mobile</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="uptpMobile" name="uptpMobile" cssClass="textField" /></td>
-                                </tr>
-                                <tr>
+                                    <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Status</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:select  name="upstatus" id="upstatus" headerKey="-1"  headerValue="---Select---" 
                                                list="%{usableStatusList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td></td>
                                 </tr>
+
                                 <tr>
                                     <td colspan="3">
                                         <s:url var="updateuserurl" action="UpdateeditViewCus"/>                                   
@@ -309,7 +298,6 @@
                              <sjg:gridColumn name="custId" index="CUS_ID" title="User Name"  hidden="true"/>                    
                         
                             <sjg:gridColumn name="custName" index="NAME" title="Customer Name"  align="left" width="10"  sortable="true"/>                        
-                            <sjg:gridColumn name="companyName" index="COMPANY_NAME" title="Company Name"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="email" index="EMAIL" title="Email"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="address" index="ADDRESS" title="Address"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="tpOffice" index="TP_OFFICE" title="Office No"  align="left" width="12"  sortable="true"/>

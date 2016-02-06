@@ -23,60 +23,7 @@ import java.util.List;
  */
 public class ViewCustomerService {
     
-    
-     
-    
-//    public   void loaduserProfileList(ViewUserAAInputBean bean)throws Exception{
-//        
-//        HttpSession session = ServletActionContext.getRequest().getSession(false);
-//        SessionUserBean su = (SessionUserBean)session.getAttribute("SessionObject");
-//        PreparedStatement perSt = null;
-//        ResultSet res = null;
-//        Connection con=null;
-//        String sql = null;
-//        try {
-//            con= DBConnection.getConnection();
-//            con.setAutoCommit(false);
-//            if(su.getApptype().equals(AppType.IAM)){
-//                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND STATUS!=?";
-//
-//                perSt = con.prepareStatement(sql);
-//                perSt.setInt(1, su.getInstituteid());
-//                perSt.setString(2, Status.DELETED);
-//                res = perSt.executeQuery();
-//            }else{
-//                sql="SELECT PROFILE_ID,NAME FROM E24OCM_USER_PROFILE where INSTITUTE_ID =? AND APP_TYPE=? AND APP_ID=? AND STATUS!=?";
-//
-//                perSt = con.prepareStatement(sql);
-//                perSt.setInt(1, su.getInstituteid());
-//                perSt.setString(2, su.getApptype());
-//                perSt.setInt(3, su.getAppid());
-//                perSt.setString(4, Status.DELETED);
-//                res = perSt.executeQuery();
-//            }
-//            while (res.next()) {
-//                 bean.getUserProfileList().put(res.getInt("PROFILE_ID"), res.getString("NAME"));
-//            }
-//            
-//            con.commit();
-//        } catch (Exception ex) {
-//            if(con!=null){con.rollback();}
-//            
-//            throw ex;
-//        } finally {
-//            if (perSt != null) {
-//                perSt.close();
-//            }
-//            if (res != null) {
-//                res.close();
-//            }
-//            if (con != null) {
-//                con.close();
-//            }
-//        }
-//    
-//    }
-    
+  
     public   List<CustomerBeen> loadUsers( ViewCustomerInputBean bean,String orderBy, int max, int first )throws Exception{
     
         
@@ -102,7 +49,7 @@ public class ViewCustomerService {
                 totalCount = res.getLong("TOTAL");                
             }          
        
-            quary ="SELECT CUS_ID,NAME,COMPANY_NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS,CAST(REG_DATE AS CHAR) AS REG_DATE "
+            quary ="SELECT CUS_ID,NAME,EMAIL,ADDRESS,TP_OFFICE,TP_MOBILE,STATUS,CAST(REG_DATE AS CHAR) AS REG_DATE "
                     + "FROM ic_customer WHERE NAME LIKE ? "+orderBy+ " LIMIT " + first + "," + max;
             
             perSt = con.prepareStatement(quary); 
@@ -116,7 +63,6 @@ public class ViewCustomerService {
 
                  been.setCustId(res.getString("CUS_ID")); 
                  been.setCustName(res.getString("NAME"));
-                 been.setCompanyName(res.getString("COMPANY_NAME"));
                  been.setEmail(res.getString("EMAIL"));
                  been.setAddress(res.getString("ADDRESS"));
                  been.setTpOffice(res.getString("TP_OFFICE"));

@@ -21,7 +21,6 @@ public class CustomerBeen {
     //add details
     private String custId;
     private String custName;
-    private String companyName;
     private String email;
     private String address;
     private String tpOffice;
@@ -34,13 +33,7 @@ public class CustomerBeen {
 
    private long fullCount;
 
-    public String getCompanyName() {
-        return companyName;
-    }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
 
    
    

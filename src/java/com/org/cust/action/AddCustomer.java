@@ -56,7 +56,7 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
             if (doValidation(customerBean)) {
                 
                 
-                if (service.insertCustomerDetails(customerBean, sub)) {
+                if (service.addData(customerBean, sub)) {
                     DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + customerBean.getCustName(),request.getRemoteAddr());
                     
                     addActionMessage(SystemMessage.CUS_ADD);
@@ -87,29 +87,23 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
             if (cusBean.getCustName() == null || cusBean.getCustName().isEmpty()) {
                 addActionError(SystemMessage.CUS_NAME_EMPTY);
                 return ok;
-            } else if (!Util.validateNAME(cusBean.getCustName())) {
+            } else if (!Util.validateDESCRIPTION(cusBean.getCustName())) {
                 addActionError(SystemMessage.CUS_NAME_INVALID);
                 return ok;
             }else if (service.checkCusName(cusBean.getCustName())) {
                 addActionError(SystemMessage.CUS_NAME_ALREADY);
-                return ok;
-            }else if (cusBean.getCompanyName() == null || cusBean.getCompanyName().isEmpty()) {
-                addActionError(SystemMessage.CUS_COMPANY_EMPTY);
-                return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getCompanyName())) {
-                addActionError(SystemMessage.CUS_COMPANY_INVALID);
-                return ok;
-            }else if (cusBean.getEmail() == null || cusBean.getEmail().isEmpty()) {
-                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
-                return ok;
-            } else if (!Util.validateEMAIL(cusBean.getEmail())) {
-                addActionError(SystemMessage.CUS_EAMIL_INVALID);
                 return ok;
             }else if (cusBean.getAddress() == null || cusBean.getAddress().isEmpty()) {
                 addActionError(SystemMessage.CUS_ADDR_EMPTY);
                 return ok;
             } else if (!Util.validateDESCRIPTION(cusBean.getAddress())) {
                 addActionError(SystemMessage.CUS_ADDR_INVALID);
+                return ok;
+            }else if (cusBean.getEmail() == null || cusBean.getEmail().isEmpty()) {
+                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
+                return ok;
+            } else if (!Util.validateEMAIL(cusBean.getEmail())) {
+                addActionError(SystemMessage.CUS_EAMIL_INVALID);
                 return ok;
             }else if (cusBean.getTpOffice() == null || cusBean.getTpOffice().isEmpty()) {
                 addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);

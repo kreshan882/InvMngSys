@@ -29,7 +29,6 @@ public class EditViewCustomerInputBean {
     //update values
     private String upcustId; 
     private String upcustName;
-    private String upcompanyName;
     private String upemail;
     private String upaddress;
     private String uptpOffice;
@@ -114,13 +113,6 @@ public class EditViewCustomerInputBean {
         this.upcustName = upcustName;
     }
 
-    public String getUpcompanyName() {
-        return upcompanyName;
-    }
-
-    public void setUpcompanyName(String upcompanyName) {
-        this.upcompanyName = upcompanyName;
-    }
 
     public String getUpemail() {
         return upemail;
