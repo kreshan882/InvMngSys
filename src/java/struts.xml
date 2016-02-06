@@ -95,7 +95,16 @@
             <result name="success">/pages/confManagement/changePassword.jsp</result> 
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
-               
+        <!-- later remove this -->
+        <action name="*addSupplier" class="com.org.conf.action.Protocols" method="{1}">
+            <result name="success">/pages/suppManagement/addSupplier.jsp</result>         
+        </action>   
+        <action name="*editViewSupplier" class="com.org.conf.action.Protocols" method="{1}">
+            <result name="success">/pages/suppManagement/editViewSupplier.jsp</result>         
+        </action>  
+        <action name="*viewSupplier" class="com.org.conf.action.Protocols" method="{1}">
+            <result name="success">/pages/suppManagement/viewSupplier.jsp</result>         
+        </action>  
     </package>  
     
  
