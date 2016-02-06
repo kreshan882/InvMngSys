@@ -1,5 +1,3 @@
-
-
 <%-- 
     Document   : editViewCustomer
     Created on : Aug 6, 2014, 4:05:53 PM
