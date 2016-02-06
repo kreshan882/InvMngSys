@@ -69,10 +69,6 @@
             }
 
 
-
-
-            
-
             function editCall(keyval) {
 
                 $.ajax({
@@ -96,8 +92,6 @@
                         $('#uptpOffice').val(data.uptpOffice);
                         $('#uptpMobile').val(data.uptpMobile);
                         $('#upstatus').val(data.upstatus);
-
-
                     },
                     error: function(data) {
                         window.location = "${pageContext.request.contextPath}/logoutCall.action";
@@ -113,7 +107,7 @@
             
             
             function resetData() {
-                 
+                 alert("rdddddd");
                 $('#upcustName').val("");
                 $('#upcompanyName').val("");
                 $('#upaddress').val("");
@@ -137,9 +131,6 @@
 
             }
 
-
-            
-
             $.subscribe('onclicksearch', function(event, data) {
 
                 var custName = $('#custName').val();
@@ -150,13 +141,6 @@
 
             });
 
-            $.subscribe('oncompleteform', function(event, data) {
-                $('#upstatus').val("");
-                $('#upcompany').val("");
-                $('#upusername2').val("");
-                jQuery("#gridtable").trigger("reloadGrid");
-
-            });
 
 
         </script>
