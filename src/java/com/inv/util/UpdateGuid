@@ -2,12 +2,6 @@
 =====       Data Base Updates         =====
 ===========================================
 #####################################
-## start 1.00(03022016) ---- 1.01  ##
+## start 1.00(06022016) ---- more  ##
 #####################################
-
-Custmer ->EMAIL var(100)
-customer => name uniq
-customer> COMPANY_NAME var(45)
-
-add operation table
-add history table
+starting
