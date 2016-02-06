@@ -4,7 +4,7 @@
  */
 package com.inv.interceptor;
 
-import com.inv.log.LogFileCreator;
+import com.inv.util.LogFileCreator;
 import com.org.login.action.UserLogin;
 import com.org.login.bean.SessionUserBean;
 import com.inv.util.AccessControlService;

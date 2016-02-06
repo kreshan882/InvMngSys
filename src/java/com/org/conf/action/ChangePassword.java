@@ -7,7 +7,7 @@ package com.org.conf.action;
 //import com.inv.init.AppType;
 import com.inv.init.Module;
 import com.inv.init.Operation;
-import com.inv.log.LogFileCreator;
+import com.inv.util.LogFileCreator;
 import com.org.login.bean.SessionUserBean;
 import com.org.conf.bean.ChangePasswordBean;
 import com.org.conf.service.ChangePasswordService;

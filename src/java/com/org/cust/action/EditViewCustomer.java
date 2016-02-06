@@ -7,7 +7,7 @@ package com.org.cust.action;
 
 import com.inv.init.Module;
 import com.inv.init.Operation;
-import com.inv.log.LogFileCreator;
+import com.inv.util.LogFileCreator;
 import com.org.login.bean.SessionUserBean;
 import com.org.cust.bean.EditViewCustomerInputBean;
 import com.org.cust.service.EditViewCustomerService;

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.inv.test;
+package com.inv.util;
 
 import com.inv.util.Util;
 

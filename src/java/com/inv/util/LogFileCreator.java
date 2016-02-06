@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.inv.log;
+package com.inv.util;
 
 import com.org.login.bean.SessionUserBean;
 import com.inv.util.Util;

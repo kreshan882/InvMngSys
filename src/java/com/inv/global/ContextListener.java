@@ -6,7 +6,7 @@ package com.inv.global;
 
 import com.inv.db.DBConnection;
 import com.inv.util.Util;
-import com.inv.xml.ReaderDbInit;
+import com.inv.util.ReaderDbInit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;

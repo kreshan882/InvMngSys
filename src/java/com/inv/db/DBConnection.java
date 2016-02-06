@@ -5,7 +5,7 @@
 package com.inv.db;
 
 import com.inv.init.InitConfigValue;
-import com.inv.log.LogFileCreator;
+import com.inv.util.LogFileCreator;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;

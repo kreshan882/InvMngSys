@@ -7,7 +7,7 @@
 package com.org.cust.action;
 
 
-import com.inv.log.LogFileCreator;
+import com.inv.util.LogFileCreator;
 import com.org.cust.bean.ViewCustomerInputBean;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
