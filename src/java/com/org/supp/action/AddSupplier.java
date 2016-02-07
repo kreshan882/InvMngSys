@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.org.cust.action;
+package com.org.supp.action;
 
+import com.org.cust.action.*;
 import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.util.LogFileCreator;
 import com.org.login.bean.SessionUserBean;
-import com.org.cust.bean.CustomerBeen;
-import com.org.cust.service.AddCustomerService;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.DBProcesses;
@@ -20,6 +19,8 @@ import com.inv.util.SystemMessage;
 import com.inv.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.org.supp.bean.SupplierBeen;
+import com.org.supp.service.AddSupplierService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -31,10 +32,11 @@ import org.apache.struts2.ServletActionContext;
  * @author sadun
  *
  */
-public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBeen> , AccessControlService{
+public class AddSupplier extends ActionSupport implements ModelDriven<SupplierBeen> , AccessControlService{
     
-    CustomerBeen customerBean = new CustomerBeen();
-    AddCustomerService service = new AddCustomerService(); 
+    SupplierBeen supplierBean = new SupplierBeen();
+    AddSupplierService service = new AddSupplierService(); 
+    
     HttpServletRequest request = ServletActionContext.getRequest();
     SessionUserBean sub = (SessionUserBean) ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
     
@@ -44,33 +46,33 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
     }
     
     @Override
-    public CustomerBeen getModel() {
-        return customerBean;
+    public SupplierBeen getModel() {
+        return supplierBean;
     }
     
     
-    public String CustomerAdd() {
+    public String Add() {
         
         try {
   
-            if (doValidation(customerBean)) {
+            if (doValidation(supplierBean)) {
                 
                 
-                if (service.addData(customerBean, sub)) {
-                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + customerBean.getCustName(),request.getRemoteAddr());
+                if (service.addData(supplierBean, sub)) {
+                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SUPPLIER_MANAGEMENT, Operation.ADD, SystemMessage.SUPP_ADD+ " for " + supplierBean.getSuppName(),request.getRemoteAddr());
                     
-                    addActionMessage(SystemMessage.CUS_ADD);
-                    LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+customerBean.getCustName());
+                    addActionMessage(SystemMessage.SUPP_ADD);
+                    LogFileCreator.writeInfoToLog(SystemMessage.SUPP_ADD+supplierBean.getSuppName());
                     
                 } else {
-                   addActionError(SystemMessage.CUS_ADD_FAIL); 
+                   addActionError(SystemMessage.SUPP_ADD_FAIL); 
                     
                 }
             }
             
         } catch (Exception ex) {
             try {
-                addActionError(SystemMessage.CUS_ADD_FAIL);
+                addActionError(SystemMessage.SUPP_ADD_FAIL);
                  ex.printStackTrace();
                 LogFileCreator.writeErrorToLog(ex);
             } catch (Exception ex1) {
@@ -81,41 +83,41 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
         return "message";
     }
     
-    private boolean doValidation(CustomerBeen cusBean) throws Exception {
+    private boolean doValidation(SupplierBeen cusBean) throws Exception {
         boolean ok = false;
         try {
-            if (cusBean.getCustName() == null || cusBean.getCustName().isEmpty()) {
-                addActionError(SystemMessage.CUS_NAME_EMPTY);
+            if (cusBean.getSuppName() == null || cusBean.getSuppName().isEmpty()) {
+                addActionError(SystemMessage.SUPP_NAME_EMPTY);
                 return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getCustName())) {
-                addActionError(SystemMessage.CUS_NAME_INVALID);
+            } else if (!Util.validateDESCRIPTION(cusBean.getSuppName())) {
+                addActionError(SystemMessage.SUPP_NAME_INVALID);
                 return ok;
-            }else if (service.checkCusName(cusBean.getCustName())) {
-                addActionError(SystemMessage.CUS_NAME_ALREADY);
+            }else if (service.checkSuppName(cusBean.getSuppName())) {
+                addActionError(SystemMessage.SUPP_NAME_ALREADY);
                 return ok;
             }else if (cusBean.getAddress() == null || cusBean.getAddress().isEmpty()) {
-                addActionError(SystemMessage.CUS_ADDR_EMPTY);
+                addActionError(SystemMessage.SUPP_ADDR_EMPTY);
                 return ok;
             } else if (!Util.validateDESCRIPTION(cusBean.getAddress())) {
-                addActionError(SystemMessage.CUS_ADDR_INVALID);
+                addActionError(SystemMessage.SUPP_ADDR_INVALID);
                 return ok;
             }else if (cusBean.getEmail() == null || cusBean.getEmail().isEmpty()) {
-                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
+                addActionError(SystemMessage.SUPP_EMAIL_EMPTY);
                 return ok;
             } else if (!Util.validateEMAIL(cusBean.getEmail())) {
-                addActionError(SystemMessage.CUS_EAMIL_INVALID);
+                addActionError(SystemMessage.SUPP_EAMIL_INVALID);
                 return ok;
             }else if (cusBean.getTpOffice() == null || cusBean.getTpOffice().isEmpty()) {
-                addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);
+                addActionError(SystemMessage.SUPP_TP_OFFI_EMPTY);
                 return ok;
             } else if (!Util.validatePHONENO(cusBean.getTpOffice())) {
-                addActionError(SystemMessage.CUS_TP_OFFI_INVALID);
+                addActionError(SystemMessage.SUPP_TP_OFFI_INVALID);
                 return ok;
             }else if (cusBean.getTpMobile() == null || cusBean.getTpMobile().isEmpty()) {
-                addActionError(SystemMessage.CUS_TP_MOB_EMPTY);
+                addActionError(SystemMessage.SUPP_TP_MOB_EMPTY);
                 return ok;
             } else if (!Util.validatePHONENO(cusBean.getTpMobile())) {
-                addActionError(SystemMessage.CUS_TP_MOB_INVALID);
+                addActionError(SystemMessage.SUPP_TP_MOB_INVALID);
                 return ok;
             } else {
                 ok = true;
@@ -131,7 +133,7 @@ public class AddCustomer extends ActionSupport implements ModelDriven<CustomerBe
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.CUS_ADD;
+        String page = PageVarList.SUPP_ADD;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;

@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.org.cust.action;
+package com.org.supp.action;
 
 
 import com.inv.util.LogFileCreator;
-import com.org.cust.bean.ViewCustomerInputBean;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
 import com.inv.util.PageVarList;
@@ -16,8 +15,10 @@ import com.inv.util.SystemMessage;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.org.cust.bean.CustomerBeen;
-import com.org.cust.service.ViewCustomerService;
+import com.org.supp.bean.SupplierBeen;
+import com.org.supp.bean.ViewSupplierInputBean;
+import com.org.supp.service.ViewSupplierService;
+
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -26,18 +27,18 @@ import org.apache.struts2.ServletActionContext;
  *
  * @author tharaka
  */
-public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCustomerInputBean> , AccessControlService {
+public class ViewSupplier extends ActionSupport implements ModelDriven<ViewSupplierInputBean> , AccessControlService {
 
     
-     private ViewCustomerInputBean inputBean = new ViewCustomerInputBean();
-     private ViewCustomerService   service = new ViewCustomerService();
+     private ViewSupplierInputBean inputBean = new ViewSupplierInputBean();
+     private ViewSupplierService   service = new ViewSupplierService();
      
      public String execute(){    
          return SUCCESS;
      }
      
      public String List(){
-        List<CustomerBeen> dataList = null;
+        List<SupplierBeen> dataList = null;
         try {
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
@@ -72,7 +73,7 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
      
      
      @Override
-    public ViewCustomerInputBean getModel() {
+    public ViewSupplierInputBean getModel() {
         return inputBean;
     }
     
@@ -80,7 +81,7 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.CUS_VIEW;
+        String page = PageVarList.SUPP_VIEW;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;
