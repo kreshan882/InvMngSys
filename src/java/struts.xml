@@ -105,6 +105,28 @@
               
     </package>  
     
+     <package name="inventory_Items" namespace="/" extends="pglobal">     
+                          
+        <action name="*addItem" method="{1}" class="com.org.item.action.AddItem" > 
+            <result name="success">/pages/itemManagement/addItem.jsp</result> 
+            <result name="message">/pages/msgFrag.jsp</result>            
+        </action>
+              
+<!--        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       
+            <result name="list" type="json"></result>           
+            <result name="find" type="json"></result>              
+            <result name="delete"  type="json"  ></result>
+            <result name="update">/pages/msgFrag.jsp</result>
+            <result name="success">/pages/itemManagement/editViewItem.jsp</result>                 
+        </action>
+        
+        <action name="*viewItem"    class="com.org.item.action.ViewItem"   method="{1}">      
+            <result name="list" type="json"></result>       
+            <result name="success">/pages/itemManagement/viewItem.jsp</result>              
+        </action>-->
+              
+    </package> 
+    
      <package name="inventory_configuration" namespace="/" extends="pglobal">
   
         <action name="*changePassword" class="com.org.conf.action.ChangePassword" method="{1}">
@@ -112,10 +134,10 @@
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
 
-
+<!--
         <action name="*addItem" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/itemManagement/addItem.jsp</result>         
-        </action> 
+        </action> -->
         <action name="*editViewItem" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/itemManagement/editViewItem.jsp</result>         
         </action> 
