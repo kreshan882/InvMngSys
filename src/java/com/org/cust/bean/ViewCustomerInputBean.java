@@ -6,6 +6,7 @@
 
 package com.org.cust.bean;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,12 @@ import java.util.Map;
  */
 public class ViewCustomerInputBean {
 
-    
+    //**************Search***************
     private String custName="";
     private boolean search;
     
-
+    //**************Export XSL***************
+    private ByteArrayInputStream excelStream;
     
       // JQGrid pagination
     private List<CustomerBeen> gridModel;
@@ -42,6 +44,14 @@ public class ViewCustomerInputBean {
     public void setSearch(boolean search) {
         this.search = search;
     }    
+
+    public ByteArrayInputStream getExcelStream() {
+        return excelStream;
+    }
+
+    public void setExcelStream(ByteArrayInputStream excelStream) {
+        this.excelStream = excelStream;
+    }
 
     public String getCustName() {
         return custName;

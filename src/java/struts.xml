@@ -77,7 +77,13 @@
         
         <action name="*viewCus"    class="com.org.cust.action.ViewCustomer"   method="{1}">      
             <result name="list" type="json"></result>       
-            <result name="success">/pages/customManagement/viewCustomer.jsp</result>              
+            <result name="success">/pages/customManagement/viewCustomer.jsp</result>  
+            <result name="excelreport" type="stream">
+                <param name="contentType">"application/vnd.ms-excel"</param>
+                <param name="inputName">excelStream</param>
+                <param name="contentDisposition">attachment;filename="non_function_terminal_report.xlsx"</param>
+                <param name="bufferSize">61440</param>
+            </result>            
         </action>
               
     </package>  

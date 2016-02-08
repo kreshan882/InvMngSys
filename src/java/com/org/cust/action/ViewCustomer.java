@@ -17,9 +17,13 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.cust.bean.CustomerBeen;
+import com.org.cust.service.ExcelReport;
 import com.org.cust.service.ViewCustomerService;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 /**
@@ -69,6 +73,27 @@ public class ViewCustomer extends ActionSupport implements ModelDriven<ViewCusto
         }
         return "list";
      }
+     
+         
+     public String XSLcreat(){
+         
+        try {
+            ByteArrayOutputStream outputStream = null;
+            Object object =ExcelReport.generateExcelReport(inputBean);
+            
+            if (object instanceof XSSFWorkbook) {
+                XSSFWorkbook workbook = (XSSFWorkbook) object;
+                outputStream = new ByteArrayOutputStream();
+                workbook.write(outputStream);
+                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogFileCreator.writeErrorToLog(e);
+        }
+        return "excelreport";
+    }
      
      
      @Override

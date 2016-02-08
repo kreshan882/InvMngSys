@@ -60,7 +60,7 @@
                         <i style="color: red">  <s:actionerror theme="jquery"/></i>
                         <i style="color: green"> <s:actionmessage theme="jquery"/></i>
                     </s:div>
-                    <s:form id="userAAForm" action="ViewviewUser" theme="simple">         
+                    <s:form id="userAAForm" action="XSLcreatviewCus" theme="simple" method="post">         
                         <table class="form_table">
                             <tr>
                                 <td class="content_td formLable">Customer Name</td>
@@ -74,7 +74,7 @@
                                     <sj:a  id="searchbut"   button="true" onClickTopics="onclicksearch"  
                                            cssClass="button_asearch ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"   
                                            role="button" aria-disabled="false" >Search</sj:a>
-                                    
+                                    <s:submit  value="Export XSL"  cssClass="button_sreset" />
                             </tr>
 
                         </table>
