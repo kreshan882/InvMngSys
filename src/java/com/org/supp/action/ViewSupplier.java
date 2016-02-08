@@ -17,10 +17,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.supp.bean.SupplierBeen;
 import com.org.supp.bean.ViewSupplierInputBean;
+import com.org.supp.service.ExcelReport;
 import com.org.supp.service.ViewSupplierService;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 /**
@@ -71,6 +75,26 @@ public class ViewSupplier extends ActionSupport implements ModelDriven<ViewSuppl
         return "list";
      }
      
+     
+      public String XSLcreat(){
+         
+        try {
+            ByteArrayOutputStream outputStream = null;
+            Object object =ExcelReport.generateExcelReport(inputBean);
+            
+            if (object instanceof XSSFWorkbook) {
+                XSSFWorkbook workbook = (XSSFWorkbook) object;
+                outputStream = new ByteArrayOutputStream();
+                workbook.write(outputStream);
+                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogFileCreator.writeErrorToLog(e);
+        }
+        return "excelreport";
+    }
      
      @Override
     public ViewSupplierInputBean getModel() {

@@ -81,7 +81,7 @@
             <result name="excelreport" type="stream">
                 <param name="contentType">"application/vnd.ms-excel"</param>
                 <param name="inputName">excelStream</param>
-                <param name="contentDisposition">attachment;filename="non_function_terminal_report.xlsx"</param>
+                <param name="contentDisposition">attachment;filename="customer_list.xlsx"</param>
                 <param name="bufferSize">61440</param>
             </result>            
         </action>
@@ -107,6 +107,12 @@
         <action name="*viewSupplier"    class="com.org.supp.action.ViewSupplier"   method="{1}">      
             <result name="list" type="json"></result>       
             <result name="success">/pages/suppManagement/viewSupplier.jsp</result>              
+            <result name="excelreport" type="stream">
+                <param name="contentType">"application/vnd.ms-excel"</param>
+                <param name="inputName">excelStream</param>
+                <param name="contentDisposition">attachment;filename="supplier_list.xlsx"</param>
+                <param name="bufferSize">61440</param>
+            </result> 
         </action>
               
     </package>  

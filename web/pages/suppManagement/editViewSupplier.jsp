@@ -159,7 +159,7 @@
                     
                     
 
-                    <s:form id="searchForm"  theme="simple">         
+                    <s:form id="searchForm"  action="XSLcreatviewSupplier" theme="simple" method="post">         
                         <table class="form_table">
                             
                             <tr>
@@ -172,7 +172,7 @@
                                 <td colspan="4">
                                     <sj:a   id="searchbut"  button="true"    onClickTopics="onclicksearch"  cssClass="button_asearch" 
                                             role="button" aria-disabled="false" >Search</sj:a>
-                                    <sj:submit button="true" value="Gen-XSL" onClick="generateXSL()" cssClass="button_sreset"/>
+                                    <s:submit  value="Export XSL"  cssClass="button_sreset" />
                                </td>
 
                             </tr>

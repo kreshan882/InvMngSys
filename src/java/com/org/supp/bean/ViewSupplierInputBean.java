@@ -7,6 +7,7 @@
 package com.org.supp.bean;
 
 import com.org.cust.bean.*;
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,8 @@ public class ViewSupplierInputBean {
     private String suppName="";
     private boolean search;
     
-
+   //**************Export XSL***************
+    private ByteArrayInputStream excelStream;
     
       // JQGrid pagination
     private List<SupplierBeen> gridModel;
@@ -116,6 +118,14 @@ public class ViewSupplierInputBean {
 
     public String getSearchField() {
         return searchField;
+    }
+
+    public ByteArrayInputStream getExcelStream() {
+        return excelStream;
+    }
+
+    public void setExcelStream(ByteArrayInputStream excelStream) {
+        this.excelStream = excelStream;
     }
 
     public void setSearchField(String searchField) {
