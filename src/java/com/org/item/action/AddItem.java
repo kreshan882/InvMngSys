@@ -25,13 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
-/**
- * Title : InstituteSuperUserManagement Description : Institute super user
- * management action class Company : Epic Lanka (pvt) Ltd
- *
- * @author sadun
- *
- */
+
 public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , AccessControlService{
     
     ItemBeen inputBean = new ItemBeen();
@@ -50,7 +44,7 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
     }
     
     
-    public String CustomerAdd() {
+    public String Add() {
         
         try {
   
@@ -58,10 +52,10 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
                 
                 
                 if (service.addData(inputBean, sub)) {
-                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.CUST_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + inputBean.getCustName(),request.getRemoteAddr());
+                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.ITEM_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + inputBean.getItemNo(),request.getRemoteAddr());
                     
                     addActionMessage(SystemMessage.CUS_ADD);
-                    LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+inputBean.getCustName());
+                    LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+inputBean.getItemNo());
                     
                 } else {
                    addActionError(SystemMessage.CUS_ADD_FAIL); 
@@ -82,41 +76,17 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
         return "message";
     }
     
-    private boolean doValidation(ItemBeen cusBean) throws Exception {
+    private boolean doValidation(ItemBeen bean) throws Exception {
         boolean ok = false;
         try {
-            if (cusBean.getCustName() == null || cusBean.getCustName().isEmpty()) {
+            if (bean.getItemNo() == null || bean.getItemNo().isEmpty()) {
                 addActionError(SystemMessage.CUS_NAME_EMPTY);
                 return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getCustName())) {
+            } else if (!Util.validateNUMBER(bean.getItemNo())) {
                 addActionError(SystemMessage.CUS_NAME_INVALID);
                 return ok;
-            }else if (service.checkCusName(cusBean.getCustName())) {
+            }else if (service.checkCusName(bean.getItemNo())) {
                 addActionError(SystemMessage.CUS_NAME_ALREADY);
-                return ok;
-            }else if (cusBean.getAddress() == null || cusBean.getAddress().isEmpty()) {
-                addActionError(SystemMessage.CUS_ADDR_EMPTY);
-                return ok;
-            } else if (!Util.validateDESCRIPTION(cusBean.getAddress())) {
-                addActionError(SystemMessage.CUS_ADDR_INVALID);
-                return ok;
-            }else if (cusBean.getEmail() == null || cusBean.getEmail().isEmpty()) {
-                addActionError(SystemMessage.CUS_EMAIL_EMPTY);
-                return ok;
-            } else if (!Util.validateEMAIL(cusBean.getEmail())) {
-                addActionError(SystemMessage.CUS_EAMIL_INVALID);
-                return ok;
-            }else if (cusBean.getTpOffice() == null || cusBean.getTpOffice().isEmpty()) {
-                addActionError(SystemMessage.CUS_TP_OFFI_EMPTY);
-                return ok;
-            } else if (!Util.validatePHONENO(cusBean.getTpOffice())) {
-                addActionError(SystemMessage.CUS_TP_OFFI_INVALID);
-                return ok;
-            }else if (cusBean.getTpMobile() == null || cusBean.getTpMobile().isEmpty()) {
-                addActionError(SystemMessage.CUS_TP_MOB_EMPTY);
-                return ok;
-            } else if (!Util.validatePHONENO(cusBean.getTpMobile())) {
-                addActionError(SystemMessage.CUS_TP_MOB_INVALID);
                 return ok;
             } else {
                 ok = true;
@@ -132,7 +102,7 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
     @Override
     public boolean checkAccess(int userRole) {
         boolean status = false;
-        String page = PageVarList.CUS_ADD;
+        String page = PageVarList.ITEM_ADD;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;

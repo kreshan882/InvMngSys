@@ -38,12 +38,12 @@ public class AddItemService {
             
             preStat = con.prepareStatement(query);
 
-            preStat.setString(1, userBean.getCustName());
-            preStat.setString(2, userBean.getEmail());
-            preStat.setString(3, userBean.getAddress());
-            
-            preStat.setString(4, userBean.getTpMobile());
-            preStat.setString(5, userBean.getTpOffice());
+//            preStat.setString(1, userBean.getCustName());
+//            preStat.setString(2, userBean.getEmail());
+//            preStat.setString(3, userBean.getAddress());
+//            
+//            preStat.setString(4, userBean.getTpMobile());
+//            preStat.setString(5, userBean.getTpOffice());
             preStat.setString(6, Status.ACTIVE);
             preStat.setDate(7, (Date) Util.getLocalDate());
 

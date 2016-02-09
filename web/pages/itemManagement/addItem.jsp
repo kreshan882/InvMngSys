@@ -57,34 +57,45 @@
                             <table class="form_table" border="0px">
                                 
                                 <tr>
-                                    <td class="content_td formLable">Customer Name<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">Item barcode<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="custName" name="custName" cssClass="textField" /></td>
+                                    <td><s:textfield id="itemNo" name="itemNo" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Address</td>
+                                    <td class="content_td formLable">Item type</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="address" name="address" cssClass="textField" /></td>
+                                    <td><s:select  name="itemType" id="itemType" headerKey="-1"  headerValue="---Select---" 
+                                               list="%{itemTypeList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
                                 </tr>
                                 <tr>
-                                    <td class="content_td formLable">Email<span class="mandatory">*</span></td>
+                                    <td class="content_td formLable">Name<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="email" name="email" cssClass="textField" /></td>
+                                    <td><s:textfield id="name" name="name" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable">Tp-Office</td>
+                                    <td class="content_td formLable">Colour</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="tpOffice" name="tpOffice" cssClass="textField" /></td>
+                                    <td><s:textfield id="colour" name="colour" cssClass="textField" /></td>
                                    
                                 </tr>
                                 <tr>
-                                    <td class="content_td formLable">Tp-Mobile</td>
+                                    <td class="content_td formLable">Unit type</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="tpMobile" name="tpMobile" cssClass="textField" /></td>
+                                    <td><s:select  name="unitType" id="unitType" headerKey="-1"  headerValue="---Select---" 
+                                               list="%{unitTypeList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
+                                    <td class="content_td formLable"></td>
+                                    <td class="content_td formLable">Unit prize</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="initPrize" name="initPrize" cssClass="textField" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="content_td formLable">Image path</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:textfield id="imagePath" name="imagePath" cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable"></td>
                                     <td></td>
                                 </tr>
-
                                 
                                 <tr>
                                     <td class="content_td formLable" colspan="7"><span class="mandatory_text">Mandatory fields are marked with</span><span class="mandatory">*</span></td>
@@ -92,7 +103,7 @@
                                 
                                 <tr>
                                     <td colspan="3">
-                                        <s:url var="addurl" action="CustomerAddaddCus"/>
+                                        <s:url var="addurl" action="AddaddItem"/>
                                         <sj:submit button="true" value="Save" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" />
                                         <sj:submit button="true" onClickTopics="resetButton" value="Reset" cssClass="button_reset"/>
                                     <td colspan="4"></td>

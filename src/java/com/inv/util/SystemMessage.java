@@ -81,6 +81,37 @@ public class SystemMessage {
     public static final String SUPP_DELETE_FAIL          = "Supplier delete failed";
     
     
+    /////////////////////////////////////////////////////////////////////////
+    // Items managment
+    ////////////////////////////////////////////////////////////////////////
+    public static final String ITEM_NUMBER_EMPTY           = "Empty barcode";
+    public static final String ITEM_NUMBER_INVALID         = "Invalid barcode";
+    public static final String ITEM_NUMBER_ALREADY         = "Barcode already exists"; 
+    public static final String ITEM_ITEMTYPE_EMPTY         = "Please select item type";
+    
+    public static final String ITEM_NAME_EMPTY             = "Empty item name";
+    public static final String ITEM_NAME_INVALID           = "Invalid item name";
+    
+    public static final String ITEM_COLOR_EMPTY           = "Empty item colour";
+    public static final String ITEM_COLOR_INVALID         = "Invalid item colour";
+    public static final String ITEM_UNITTYPE_EMPTY        = "Please select unit type";
+
+    public static final String ITEM_UNITPRIZE_EMPTY           = "Empty unit prize";
+    public static final String ITEM_UNITPRIZE_INVALID         = "Invalid unit prize";
+    public static final String ITEM_IMAGE_EMPTY           = "Empty image do file upload";
+    
+    public static final String ITEM_ADD                  = "Item add successful";
+    public static final String ITEM_ADD_FAIL             = "Item add failed";
+    
+    public static final String ITEM_UPDATE               = "Item update successful";
+    public static final String ITEM_UPDATE_FAIL          = "Item update failed";
+    
+    public static final String ITEM_DELETE               = "Item delete successful";
+    public static final String ITEM_DELETE_FAIL          = "Item delete failed";
+    
+    
+    
+    
     public static final String USR_PW_CHG        = "User password change successful";
     public static final String USR_PW_UPDATE     = "User password update successful";
     public static final String USR_PW_NOT_MAT    = "User password not matched ";

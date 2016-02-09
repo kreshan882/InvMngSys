@@ -7,8 +7,10 @@
 package com.org.item.bean;
 
 
+import com.inv.util.Util;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Title       : InstituteSuperUserBeen
@@ -20,13 +22,15 @@ import java.util.HashMap;
 public class ItemBeen {
     
     //add details
-    private String custId;
-    private String custName;
-    private String email;
-    private String address;
-    private String tpOffice;
-    private String tpMobile;
-    
+    private String itemNo;
+    private String itemType; //from ITEM_TYPE table default 1
+    private Map<String,String>  itemTypeList=Util.getBasicStatus();
+    private String name;
+    private String colour;
+    private String unitType;  //from UNIT_TYPE table default 1
+    private Map<String,String>  unitTypeList=Util.getBasicStatus();
+    private String initPrize;  //double
+    private String imagePath;
     
 
     private String statusCode;
@@ -34,56 +38,76 @@ public class ItemBeen {
 
    private long fullCount;
 
-
-
-   
-   
-    public String getCustId() {
-        return custId;
+    public String getItemNo() {
+        return itemNo;
     }
 
-    public void setCustId(String custId) {
-        this.custId = custId;
+    public void setItemNo(String itemNo) {
+        this.itemNo = itemNo;
     }
 
-    public String getCustName() {
-        return custName;
+    public Map<String, String> getItemTypeList() {
+        return itemTypeList;
     }
 
-    public void setCustName(String custName) {
-        this.custName = custName;
+    public void setItemTypeList(Map<String, String> itemTypeList) {
+        this.itemTypeList = itemTypeList;
     }
 
-    public String getAddress() {
-        return address;
+    public Map<String, String> getUnitTypeList() {
+        return unitTypeList;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUnitTypeList(Map<String, String> unitTypeList) {
+        this.unitTypeList = unitTypeList;
     }
 
-    public String getTpMobile() {
-        return tpMobile;
+    public String getItemType() {
+        return itemType;
     }
 
-    public void setTpMobile(String tpMobile) {
-        this.tpMobile = tpMobile;
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
-    public String getTpOffice() {
-        return tpOffice;
+    public String getName() {
+        return name;
     }
 
-    public void setTpOffice(String tpOffice) {
-        this.tpOffice = tpOffice;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getColour() {
+        return colour;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
+
+    public String getInitPrize() {
+        return initPrize;
+    }
+
+    public void setInitPrize(String initPrize) {
+        this.initPrize = initPrize;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getStatusCode() {
@@ -109,7 +133,8 @@ public class ItemBeen {
     public void setFullCount(long fullCount) {
         this.fullCount = fullCount;
     }
-   
-   
+
+
+
     
 }

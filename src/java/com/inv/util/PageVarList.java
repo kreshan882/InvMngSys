@@ -17,7 +17,11 @@ public class PageVarList {
     public static final String SUPP_EDIT_VIEW            =   "0202";
     public static final String SUPP_VIEW                 =   "0203";
     
-    public static final String CONF_PASSWDCHANGE            =   "0501";
+    public static final String ITEM_ADD                  =   "0301";
+    public static final String ITEM_EDIT_VIEW            =   "0302";
+    public static final String ITEM_VIEW                 =   "0303";
+    
+    public static final String CONF_PASSWDCHANGE         =   "0501";
     
     
 }
