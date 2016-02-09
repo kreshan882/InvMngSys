@@ -21,6 +21,11 @@ public class PageVarList {
     public static final String ITEM_EDIT_VIEW            =   "0302";
     public static final String ITEM_VIEW                 =   "0303";
     
+    public static final String SALE_ADD                  =   "0401";
+    public static final String SALE_EDIT_VIEW            =   "0402";
+    public static final String PURCHES_ADD               =   "0403";
+    public static final String PURCHES_EDIT_VIEW         =   "0404";
+    
     public static final String CONF_PASSWDCHANGE         =   "0501";
     
     

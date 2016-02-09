@@ -133,8 +133,8 @@ public class Util {
 
     
         
-    public static Map<Integer, String> getcountrys() throws Exception{
-        Map<Integer, String> countrylist = new HashMap<Integer, String>();
+    public static Map<String, String> getCustomerList() throws Exception{
+        Map<String, String> custumerlist = new HashMap<String, String>();
          
         PreparedStatement perSt = null;
         ResultSet res = null;
@@ -143,14 +143,15 @@ public class Util {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "SELECT CODE,COUNTRY_CODE FROM E24OCM_COUNTRY  order by COUNTRY_NAME;";
+            String sql = "SELECT CUS_ID,NAME FROM  ic_customer where status=?";
             perSt = con.prepareStatement(sql);
+            perSt.setString(1, Status.ACTIVE);
             res = perSt.executeQuery();
 
             while (res.next()) {
-               countrylist.put(res.getInt("CODE"), res.getString("COUNTRY_CODE"));
+               custumerlist.put(res.getString("CUS_ID"), res.getString("NAME"));
             }
-            con.commit();
+            
         } catch (Exception ex) {
             throw ex;
         } finally {
@@ -165,10 +166,44 @@ public class Util {
             }
         }
         
-        return countrylist;
+        return custumerlist;
     }
     
+public static Map<String, String> getStorList() throws Exception{
+        Map<String, String> storlist = new HashMap<String, String>();
+         
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
 
+            String sql = "SELECT STOR_ID,NAME FROM mt_store where STATUS=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setString(1, Status.ACTIVE);
+            res = perSt.executeQuery();
+
+            while (res.next()) {
+               storlist.put(res.getString("STOR_ID"), res.getString("NAME"));
+            }
+            
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        
+        return storlist;
+    }
 
         public static String getOSLogPath(String logpath)throws Exception{
 

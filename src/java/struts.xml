@@ -139,6 +139,31 @@
               
     </package> 
     
+         
+    <package name="inventory_SalesAndPurches" namespace="/" extends="pglobal">     
+                          
+        <action name="*addSale" method="{1}" class="com.org.sap.action.AddSale" > 
+            <result name="success">/pages/salePurchesManagement/addSale.jsp</result> 
+            <result name="message">/pages/msgFrag.jsp</result>
+            <result name="loadItemDetail" type="json"></result>  
+            <result name="addItem" type="json"></result>  
+            <result name="list" type="json"></result>         
+        </action>
+              
+<!--        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       
+            <result name="list" type="json"></result>           
+            <result name="find" type="json"></result>              
+            <result name="delete"  type="json"  ></result>
+            <result name="update">/pages/msgFrag.jsp</result>
+            <result name="success">/pages/itemManagement/editViewItem.jsp</result>                 
+        </action>
+        
+        <action name="*viewItem"    class="com.org.item.action.ViewItem"   method="{1}">      
+            <result name="list" type="json"></result>       
+            <result name="success">/pages/itemManagement/viewItem.jsp</result>              
+        </action>-->
+              
+    </package> 
      <package name="inventory_configuration" namespace="/" extends="pglobal">
   
         <action name="*changePassword" class="com.org.conf.action.ChangePassword" method="{1}">
@@ -146,10 +171,6 @@
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
 
-<!--
-        <action name="*addItem" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/itemManagement/addItem.jsp</result>         
-        </action> -->
         <action name="*editViewItem" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/itemManagement/editViewItem.jsp</result>         
         </action> 
@@ -157,9 +178,9 @@
             <result name="success">/pages/itemManagement/viewItem.jsp</result>         
         </action> 
         
-        <action name="*addSale" class="com.org.conf.action.Protocols" method="{1}">
+<!--        <action name="*addSale" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/salePurchesManagement/addSale.jsp</result>         
-        </action> 
+        </action> -->
         <action name="*editViewSale" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/salePurchesManagement/editViewSale.jsp</result>         
         </action> 
