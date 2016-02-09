@@ -78,17 +78,55 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
     
     private boolean doValidation(ItemBeen bean) throws Exception {
         boolean ok = false;
+        
+        System.out.println(">>"+bean.getImageFileName());
+        String file[] = bean.getImageFileName().split("\\.",2);
+	String filetype = file[1];
+        System.out.println(">"+filetype);
         try {
             if (bean.getItemNo() == null || bean.getItemNo().isEmpty()) {
-                addActionError(SystemMessage.CUS_NAME_EMPTY);
+                addActionError(SystemMessage.ITEM_NUMBER_EMPTY);
                 return ok;
             } else if (!Util.validateNUMBER(bean.getItemNo())) {
-                addActionError(SystemMessage.CUS_NAME_INVALID);
+                addActionError(SystemMessage.ITEM_NUMBER_INVALID);
                 return ok;
             }else if (service.checkCusName(bean.getItemNo())) {
-                addActionError(SystemMessage.CUS_NAME_ALREADY);
+                addActionError(SystemMessage.ITEM_NUMBER_ALREADY);
                 return ok;
-            } else {
+            }else if ("-1".equals(bean.getItemType())) {
+                addActionError(SystemMessage.ITEM_ITEMTYPE_SELECT);
+                return ok;
+            }
+            else if (bean.getName() == null || bean.getName().isEmpty()) {
+                addActionError(SystemMessage.ITEM_NAME_EMPTY);
+                return ok;
+            } else if (!Util.validateNAME(bean.getName())) {
+                addActionError(SystemMessage.ITEM_NAME_INVALID);
+                return ok;
+            }else if (bean.getColour() == null || bean.getColour().isEmpty()) {
+                addActionError(SystemMessage.ITEM_COLOR_EMPTY);
+                return ok;
+            } else if (!Util.validateNAME(bean.getColour())) {
+                addActionError(SystemMessage.ITEM_COLOR_INVALID);
+                return ok;
+            }else if ("-1".equals(bean.getUnitType())) {
+                addActionError(SystemMessage.ITEM_UNITTYPE_SELECT);
+                return ok;
+            }else if (bean.getUnitPrize() == null || bean.getUnitPrize().isEmpty()) {
+                addActionError(SystemMessage.ITEM_UNITPRIZE_EMPTY);
+                return ok;
+            } else if (!Util.validateNAME(bean.getColour())) { //check double
+                addActionError(SystemMessage.ITEM_UNITPRIZE_INVALID);
+                return ok;
+            }else if(bean.getImageFileName() == null || bean.getImageFileName().isEmpty()){ 
+              addActionError(SystemMessage.ITEM_IMAGE_EMPTY);                
+              return ok;
+            }
+//            else if (bean.getUpfileFileName() != null && !extension.equals(filetypeCheck)) {              
+//              addActionError(SystemMessage.REQ_CSR_EXTENTION);                
+//              return ok;
+//            }
+            else {
                 ok = true;
             }
             

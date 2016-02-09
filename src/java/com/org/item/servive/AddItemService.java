@@ -33,19 +33,22 @@ public class AddItemService {
         try {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
-            query="insert into ic_customer(NAME,EMAIL,ADDRESS,TP_MOBILE,TP_OFFICE,STATUS,REG_DATE) "
-                    + "VALUES(?,?,?,?,  ?,?,?)";
+            query="INSERT INTO ic_items(ITEM_NO,NAME,ITEM_TYPE,COLOUR,UNIT_PRIZE,"
+                    + "UNIT_TYPE,IMG_PATH,STATUS,REG_DATE) "
+                    + "VALUES(?,?,?,?,?,  ?,?,?,?)";
             
             preStat = con.prepareStatement(query);
 
-//            preStat.setString(1, userBean.getCustName());
-//            preStat.setString(2, userBean.getEmail());
-//            preStat.setString(3, userBean.getAddress());
-//            
-//            preStat.setString(4, userBean.getTpMobile());
-//            preStat.setString(5, userBean.getTpOffice());
-            preStat.setString(6, Status.ACTIVE);
-            preStat.setDate(7, (Date) Util.getLocalDate());
+            preStat.setString(1, userBean.getItemNo());
+            preStat.setString(2, userBean.getName());
+            preStat.setString(3, userBean.getItemType());
+            preStat.setString(4, userBean.getColour());
+            preStat.setDouble(5, Double.parseDouble(userBean.getUnitPrize()));
+            
+            preStat.setString(6, userBean.getUnitType());
+            preStat.setString(7, userBean.getImageFileName());
+            preStat.setString(8, Status.ACTIVE);
+            preStat.setDate(9, (Date) Util.getLocalDate());
 
            int n= preStat.executeUpdate();
            if(n >= 0){

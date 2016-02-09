@@ -8,6 +8,7 @@ package com.org.item.bean;
 
 
 import com.inv.util.Util;
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +30,12 @@ public class ItemBeen {
     private String colour;
     private String unitType;  //from UNIT_TYPE table default 1
     private Map<String,String>  unitTypeList=Util.getBasicStatus();
-    private String initPrize;  //double
-    private String imagePath;
+    private String unitPrize;  //double
     
+   // private String imagePath;
+    private File   image;  
+    private String imageContentType;
+    private String imageFileName;
 
     private String statusCode;
     private String regDate;
@@ -46,6 +50,30 @@ public class ItemBeen {
         this.itemNo = itemNo;
     }
 
+    public File getImage() {
+        return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
     public Map<String, String> getItemTypeList() {
         return itemTypeList;
     }
@@ -56,6 +84,14 @@ public class ItemBeen {
 
     public Map<String, String> getUnitTypeList() {
         return unitTypeList;
+    }
+
+    public String getUnitPrize() {
+        return unitPrize;
+    }
+
+    public void setUnitPrize(String unitPrize) {
+        this.unitPrize = unitPrize;
     }
 
     public void setUnitTypeList(Map<String, String> unitTypeList) {
@@ -94,21 +130,15 @@ public class ItemBeen {
         this.unitType = unitType;
     }
 
-    public String getInitPrize() {
-        return initPrize;
-    }
 
-    public void setInitPrize(String initPrize) {
-        this.initPrize = initPrize;
-    }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
+//    public String getImagePath() {
+//        return imagePath;
+//    }
+//
+//    public void setImagePath(String imagePath) {
+//        this.imagePath = imagePath;
+//    }
 
     public String getStatusCode() {
         return statusCode;

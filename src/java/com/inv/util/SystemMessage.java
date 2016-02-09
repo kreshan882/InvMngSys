@@ -87,14 +87,14 @@ public class SystemMessage {
     public static final String ITEM_NUMBER_EMPTY           = "Empty barcode";
     public static final String ITEM_NUMBER_INVALID         = "Invalid barcode";
     public static final String ITEM_NUMBER_ALREADY         = "Barcode already exists"; 
-    public static final String ITEM_ITEMTYPE_EMPTY         = "Please select item type";
+    public static final String ITEM_ITEMTYPE_SELECT         = "Please select item type";
     
     public static final String ITEM_NAME_EMPTY             = "Empty item name";
     public static final String ITEM_NAME_INVALID           = "Invalid item name";
     
     public static final String ITEM_COLOR_EMPTY           = "Empty item colour";
     public static final String ITEM_COLOR_INVALID         = "Invalid item colour";
-    public static final String ITEM_UNITTYPE_EMPTY        = "Please select unit type";
+    public static final String ITEM_UNITTYPE_SELECT        = "Please select unit type";
 
     public static final String ITEM_UNITPRIZE_EMPTY           = "Empty unit prize";
     public static final String ITEM_UNITPRIZE_INVALID         = "Invalid unit prize";

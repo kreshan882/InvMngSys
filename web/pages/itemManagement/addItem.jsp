@@ -19,11 +19,13 @@
             
             function resetData(){
                 
-                $('#custName').val("");
-                $('#address').val("");
-                $('#email').val("");
-                $('#tpMobile').val("");
-                $('#tpOffice').val("");
+                $('#itemNo').val("");
+                $('#itemType').val("-1");
+                $('#name').val("");
+                $('#colour').val("");
+                $('#unitType').val("-1");
+                $('#unitPrize').val("");
+                $('#image').val("");
             }
             
         </script>
@@ -84,13 +86,13 @@
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Unit prize</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="initPrize" name="initPrize" cssClass="textField" /></td>
+                                    <td><s:textfield id="unitPrize" name="unitPrize" cssClass="textField" /></td>
                                 </tr>
 
                                 <tr>
-                                    <td class="content_td formLable">Image path</td>
+                                    <td class="content_td formLable">Upload Image</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="imagePath" name="imagePath" cssClass="textField" /></td>
+                                    <td><s:file  id = "image" name="image" label="File" cssClass="fileField"  /></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable"></td>
