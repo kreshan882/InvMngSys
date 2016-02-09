@@ -29,7 +29,7 @@ public class ItemBeen {
     private String name;
     private String colour;
     private String unitType;  //from UNIT_TYPE table default 1
-    private Map<String,String>  unitTypeList=Util.getBasicStatus();
+    private Map<String,String>  unitTypeList=Util.getUnitType();
     private String unitPrize;  //double
     
    // private String imagePath;
