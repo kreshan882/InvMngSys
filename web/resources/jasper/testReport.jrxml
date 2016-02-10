@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2e0a3275-187e-41f2-8d19-df62152867d5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="78aa0e69-3527-4946-8bf3-46170358da56"/>
+	<subDataset name="dataset1" uuid="246b9f57-bde2-43b0-b2d8-c065355b9be8"/>
+	<parameter name="from_d" class="java.lang.String"/>
+	<parameter name="to_d" class="java.lang.String"/>
+	<parameter name="total_d" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="AA" class="java.lang.String"/>
+	<field name="BB" class="java.lang.String"/>
+	<field name="CC" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement style="table_TH" x="63" y="15" width="100" height="20" uuid="5c0fb15d-afc4-4b25-bbb1-c9aa6395864e"/>
+				<text><![CDATA[Test Jesper]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="87" splitType="Stretch">
+			<textField>
+				<reportElement x="261" y="16" width="100" height="20" uuid="a2dc7a2d-28c9-4fe3-8607-cd5393cd2288"/>
+				<textFieldExpression><![CDATA[$P{total_d}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="16" width="100" height="20" uuid="a1eae007-7f78-4b56-94d5-41a8fd370ddb"/>
+				<textFieldExpression><![CDATA[$P{to_d}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="17" y="16" width="100" height="20" uuid="f5949b50-4ec4-416f-a3c2-e165774e2a4a"/>
+				<textFieldExpression><![CDATA[$P{from_d}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="10" width="100" height="20" uuid="34b53b7b-1dc1-443d-9bc2-75a6dd12dc14"/>
+				<textFieldExpression><![CDATA[$F{AA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="10" width="100" height="20" uuid="8d0b536a-aceb-4d9b-bdd8-5fb302366e60"/>
+				<textFieldExpression><![CDATA[$F{AA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="10" width="100" height="20" uuid="4c975845-a765-4146-bd52-2ec6cc9bf3f3"/>
+				<textFieldExpression><![CDATA[$F{CC}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="243" y="0" width="1" height="34" uuid="67369598-4782-4215-a63d-e57ab05cc836"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -73,7 +73,7 @@
                                 $("#dialogbox").dialog('open');
                                 $("#dialogbox").html('<br><b><font size="3" color="red"><center> Adding Item ' + data.itemCode + ' fail ');
                             }
-                            alert(data.invoiceId)
+                            
                             $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: data.invoiceId}});
                             jQuery("#gridtable").trigger("reloadGrid");
                         },
@@ -132,7 +132,7 @@
                             
                     <div class="contentcenter">
                         
-                        <s:form theme="simple" method="post" name="addcus" id="addcus">         
+                        <s:form theme="simple" method="post"  name="addcus" id="addcus">         
                             <table class="form_table" border="0px">
                                 
                                 <tr>
@@ -183,8 +183,9 @@
                                 
                                 <tr>
                                     <td colspan="3">
+                                        <%--<s:submit label="Login" cssClass="login_button" value="Print" />--%>
                                         <s:url var="addurl" action="PrintInvoiceaddSale"/>
-                                        <sj:submit button="true" value="Print Invoice" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" />
+                                        <sj:submit button="true" value="Print Invoice" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" /> 
                                     <td colspan="4"></td>
                                 </tr>
                                 </table>

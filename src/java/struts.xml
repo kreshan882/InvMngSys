@@ -11,7 +11,7 @@
 
 <struts>
 
-    <package name="pglobal" namespace="/" extends="struts-default,json-default">
+    <package name="pglobal" namespace="/" extends="struts-default,json-default,jasperreports-default">
         
         <interceptors>
             <interceptor name="EpicAccesControl" class="com.inv.interceptor.AccessControlInterceptor" />              
@@ -148,7 +148,14 @@
             <result name="loadItemDetail" type="json"></result>  
             <result name="addItem" type="json"></result>  
             <result name="list" type="json"></result>    
-            <result name="delete" type="json"></result>       
+            <result name="delete" type="json"></result>  
+            <result name="jasperreport" type="jasper">            
+                <param name="location">/resources/jasper/testReport.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=testReport_k.pdf</param>
+            </result>     
         </action>
               
 <!--        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       

@@ -48,6 +48,27 @@ public class AddSaleInputBeen {
     private String searchString;
     private String searchOper;
 
+    //jasoer report data
+    Map parameterMap = null;
+    List<SaleItem> reportdatalist = null;
+
+    public Map getParameterMap() {
+        return parameterMap;
+    }
+
+    public void setParameterMap(Map parameterMap) {
+        this.parameterMap = parameterMap;
+    }
+
+    public List<SaleItem> getReportdatalist() {
+        return reportdatalist;
+    }
+
+    public void setReportdatalist(List<SaleItem> reportdatalist) {
+        this.reportdatalist = reportdatalist;
+    }
+    
+    
     public List<SaleItem> getGridModel() {
         return gridModel;
     }

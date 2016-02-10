@@ -19,6 +19,37 @@ public class SaleItem {
     
     private long fullCount;
 
+    //temo jasper
+    private String AA;
+    private String BB;
+    private String CC;
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String AA) {
+        this.AA = AA;
+    }
+
+    public String getBB() {
+        return BB;
+    }
+
+    public void setBB(String BB) {
+        this.BB = BB;
+    }
+
+    public String getCC() {
+        return CC;
+    }
+
+    public void setCC(String CC) {
+        this.CC = CC;
+    }
+    
+    
+    
     public String getInvId() {
         return invId;
     }

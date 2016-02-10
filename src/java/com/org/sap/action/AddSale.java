@@ -19,7 +19,10 @@ import com.org.login.bean.SessionUserBean;
 import com.org.sap.bean.AddSaleInputBeen;
 import com.org.sap.bean.SaleItem;
 import com.org.sap.service.AddSaleService;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -145,13 +148,33 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     public String PrintInvoice(){
         try {
             System.out.println("endddddddddddddddddddd");
-            
+             Map reportParameters = new HashMap();
+                reportParameters.put("from_d", "2012");
+                reportParameters.put("to_d", "2015");
+                reportParameters.put("total_d", "20");
+                inputBean.setParameterMap(reportParameters);
+
+                
+                    List datalist = new ArrayList();
+                    SaleItem data1 = new SaleItem();
+                    data1.setAA("1111");
+                    data1.setBB("bbbbb1");
+                    data1.setCC("ccccc1");
+                    datalist.add(data1);
+                    
+                    SaleItem data2 = new SaleItem();
+                    data2.setAA("2222");
+                    data2.setBB("bbbbb2");
+                    data2.setCC("ccccc2");
+                    datalist.add(data2);
+                    
+                inputBean.setReportdatalist(datalist);
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();
         }
         
-        return "printInvoice";
+        return "jasperreport";
     }
     
     @Override
