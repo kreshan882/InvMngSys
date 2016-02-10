@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 
 public class AddItemService {
 
-    public boolean addData(ItemBeen userBean ,  SessionUserBean sessionUserBean) throws Exception{
+    public boolean addItem(ItemBeen userBean ,  SessionUserBean sessionUserBean) throws Exception{
         Connection con = null;
         String query;
         PreparedStatement preStat=null;
@@ -74,7 +74,7 @@ public class AddItemService {
 
     
     
-     public boolean checkCusName(String cusname) throws Exception {
+     public boolean checkItemExists(String itno) throws Exception {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -83,9 +83,9 @@ public class AddItemService {
         try {
             connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
-            String sql = "SELECT * FROM ic_customer WHERE NAME=? ";
+            String sql = "SELECT * FROM ic_items where ITEM_NO=?";
             ps = connection.prepareStatement(sql);
-            ps.setString(1, cusname);
+            ps.setString(1, itno);
             result = ps.executeQuery();
 
             if (result.next()) {
@@ -109,6 +109,53 @@ public class AddItemService {
         return  ok;
         
         }
+
+    public boolean addStrockZero(ItemBeen inputBean, SessionUserBean sub) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        boolean ok=false;
+
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            
+            String sql = "SELECT STOR_ID FROM mt_store";
+            ps = con.prepareStatement(sql);
+            res = ps.executeQuery();
+
+            while (res.next()) {
+                ps = null;
+                System.out.println(">>"+res.getInt("STOR_ID"));
+                String insStock = "insert into ic_stock(STOR_ID,ITEM_NO,COUNT) values(?,?,?)";
+                ps = con.prepareStatement(insStock);
+                ps.setInt(1, res.getInt("STOR_ID"));
+                ps.setString(2, inputBean.getItemNo());
+                ps.setDouble(3, 0);
+                     int n= ps.executeUpdate();
+                     if(n >= 0){
+                        ok=true;
+                      }
+                  
+                con.commit();
+            }
+           
+        }
+        catch (Exception ex) {
+            throw ex;
+	}finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return  ok;
+    }
   
     
     

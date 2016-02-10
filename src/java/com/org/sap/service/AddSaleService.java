@@ -295,4 +295,108 @@ public class AddSaleService {
             }
         }
     }
+
+    public boolean checkItemAvaliable(AddSaleInputBeen inputBean) throws Exception{
+        boolean QtyAvaliable=false;
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+
+            String sql = "SELECT COUNT FROM ic_stock where STOR_ID=? AND ITEM_NO=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
+            perSt.setString(2, inputBean.getItemCode());
+            res = perSt.executeQuery();
+
+            if(res.next()) {
+                if(res.getDouble("COUNT") >= Double.parseDouble(inputBean.getItemQut())){
+                    QtyAvaliable=true;
+                }
+               
+            }
+            
+        } catch (Exception ex) {
+            QtyAvaliable=false;
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return QtyAvaliable;
+    }
+
+    public boolean submitInvoice(AddSaleInputBeen inputBean) throws Exception{
+        boolean qtySucess=false;
+        Connection con = null;
+        double total=0;
+        
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        String sql=null;
+        
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            //get total
+            sql = "SELECT SUM(TOTAL_PRIZE) FROM ic_invoice_details where INV_ID=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
+            res = perSt.executeQuery();
+
+            if(res.next()) {
+                total=res.getDouble("TOTAL_PRIZE");
+            }
+            //Upsate invoice table
+            perSt = null;
+            res = null;
+            sql=null;
+            sql = "update ic_invoice SET STATUS=?,TOTAL=? where INV_ID=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setString(1, Status.ACTIVE);
+            perSt.setDouble(2, total);
+            perSt.setInt(3, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.executeUpdate();
+
+            //update Stock
+            perSt = null;
+            res = null;
+            sql=null;
+            sql = "UPDATE ic_stock st INNER JOIN ic_invoice_details inv ON "
+                    + " st.item_no = inv.item_no   AND st.STOR_ID=? and inv.inv_id =? "
+                    + "SET st.COUNT = (st.COUNT - inv.COUNT);";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
+            perSt.setInt(3, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.executeUpdate();
+            int n= perSt.executeUpdate();
+            if(n >= 0){
+                qtySucess=true;
+            }
+            con.commit();
+        } catch (Exception ex) {
+            qtySucess=false;
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return qtySucess;
+    }
 }

@@ -71,7 +71,7 @@
                                 $('#itemPrize').val("");
                             }else{
                                 $("#dialogbox").dialog('open');
-                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> Adding Item ' + data.itemCode + ' fail ');
+                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> ' + data.message + '  ');
                             }
                             
                             $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: data.invoiceId}});

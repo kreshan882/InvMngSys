@@ -110,7 +110,21 @@ public class SystemMessage {
     public static final String ITEM_DELETE_FAIL          = "Item delete failed";
     
     
+     /////////////////////////////////////////////////////////////////////////
+    // Sale managment
+    ////////////////////////////////////////////////////////////////////////
+    public static final String SALE_ITEM_NOTAVAL           = "Item not avaliavle";
+
+
     
+    public static final String SALE_ADD                  = "Sale add successful";
+    public static final String SALE_ADD_FAIL             = "Sale add failed";
+    
+//    public static final String ITEM_UPDATE               = "Item update successful";
+//    public static final String ITEM_UPDATE_FAIL          = "Item update failed";
+//    
+//    public static final String ITEM_DELETE               = "Item delete successful";
+//    public static final String ITEM_DELETE_FAIL          = "Item delete failed";
     
     public static final String USR_PW_CHG        = "User password change successful";
     public static final String USR_PW_UPDATE     = "User password update successful";

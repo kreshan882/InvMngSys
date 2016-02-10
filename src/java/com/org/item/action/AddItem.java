@@ -51,11 +51,13 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
             if (doValidation(inputBean)) {
                 
                 
-                if (service.addData(inputBean, sub)) {
-                    DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.ITEM_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + inputBean.getItemNo(),request.getRemoteAddr());
+                if (service.addItem(inputBean, sub)) {
+                    if(service.addStrockZero(inputBean, sub)){
+                        DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.ITEM_MANAGEMENT, Operation.ADD, SystemMessage.CUS_ADD+ " for " + inputBean.getItemNo(),request.getRemoteAddr()); 
+                        addActionMessage(SystemMessage.CUS_ADD);
+                        LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+inputBean.getItemNo());
+                    }
                     
-                    addActionMessage(SystemMessage.CUS_ADD);
-                    LogFileCreator.writeInfoToLog(SystemMessage.CUS_ADD+inputBean.getItemNo());
                     
                 } else {
                    addActionError(SystemMessage.CUS_ADD_FAIL); 
@@ -90,7 +92,7 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
             } else if (!Util.validateNUMBER(bean.getItemNo())) {
                 addActionError(SystemMessage.ITEM_NUMBER_INVALID);
                 return ok;
-            }else if (service.checkCusName(bean.getItemNo())) {
+            }else if (service.checkItemExists(bean.getItemNo().trim())) {
                 addActionError(SystemMessage.ITEM_NUMBER_ALREADY);
                 return ok;
             }else if ("-1".equals(bean.getItemType())) {

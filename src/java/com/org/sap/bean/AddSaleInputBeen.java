@@ -31,6 +31,7 @@ public class AddSaleInputBeen {
 
     //add item
     private boolean itemadd;
+    private String message;
     
     //Delete selected item
     private String ditemNo;
@@ -55,6 +56,16 @@ public class AddSaleInputBeen {
     public Map getParameterMap() {
         return parameterMap;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
 
     public void setParameterMap(Map parameterMap) {
         this.parameterMap = parameterMap;

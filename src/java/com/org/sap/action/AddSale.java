@@ -63,27 +63,26 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     }
     
     public String addItem(){
-        System.out.println("addItemDetail.............");
+        System.out.println("addItem.............");
         try {
-            if(service.checkInvoiceId(inputBean.getInvoiceId())){
+            if(service.checkItemAvaliable(inputBean)){
+                if(service.checkInvoiceId(inputBean.getInvoiceId())){   //outher Rows
                 service.addInvoiceDetail(inputBean);
                 inputBean.setItemadd(true);
+                }else{   //add first row
+                    service.addInvoice(inputBean);
+                    service.addInvoiceDetail(inputBean);
+                    inputBean.setItemadd(true);
+                }
             }else{
-                service.addInvoice(inputBean);
-                service.addInvoiceDetail(inputBean);
-                inputBean.setItemadd(true);
+                inputBean.setItemadd(false);
+                inputBean.setMessage(SystemMessage.SALE_ITEM_NOTAVAL);
             }
-            
-//            if(service.getItemDetail(inputBean)){
-//               inputBean.setItemQut("1"); 
-//               inputBean.setItemfind(true);
-//            }else{
-//                inputBean.setItemfind(false);
-//            }
             
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             inputBean.setItemadd(false);
+            inputBean.setMessage(SystemMessage.COMMON_ERROR_PROCESS);
             ex.printStackTrace();
         }
         
@@ -145,12 +144,18 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         return "delete";
     }
     
-    public String SubmitInvoice(){
+    public String SubmitInvoice(){ //uudate invoice/stock table
         try {
             System.out.println("SubmitInvoice............"+inputBean.getInvoiceId());
-             
+             if(service.submitInvoice(inputBean)){
+                 
+             }else{
+                 
+             }
         } catch (Exception ex) {
-            LogFileCreator.writeErrorToLog(ex);
+           LogFileCreator.writeErrorToLog(ex);
+            inputBean.setItemadd(false);
+            inputBean.setMessage(SystemMessage.COMMON_ERROR_PROCESS);
             ex.printStackTrace();
         }
         
@@ -192,8 +197,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     @Override
     public AddSaleInputBeen getModel() {
         try {
-            System.out.println("getModel");
-//            service.getInvoiceNumber(inputBean);
             inputBean.getStorIdList().putAll(Util.getStorList());
             inputBean.getCustIdList().putAll(Util.getCustomerList());
         } catch (Exception ex) {
