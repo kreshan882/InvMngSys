@@ -145,9 +145,21 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         return "delete";
     }
     
+    public String SubmitInvoice(){
+        try {
+            System.out.println("SubmitInvoice............"+inputBean.getInvoiceId());
+             
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
+        }
+        
+        return "submitInvoice";
+    }
+    
     public String PrintInvoice(){
         try {
-            System.out.println("endddddddddddddddddddd");
+            System.out.println("endddddddddddddddddddd"+inputBean.getInvoiceId());
              Map reportParameters = new HashMap();
                 reportParameters.put("from_d", "2012");
                 reportParameters.put("to_d", "2015");

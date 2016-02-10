@@ -110,6 +110,36 @@
                 });
 
             }
+            
+            
+            function SubmitInvoice() {
+                    var invoiceId=$('#invoiceId').val();
+                    alert(invoiceId)
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/SubmitInvoiceaddSale',
+                        data: {invoiceId: invoiceId},
+                        dataType: "json",
+                        type: "POST",
+                        success: function(data) { 
+                            alert("done submit= do print");
+                            $('#invoiceId').val(data.invoiceId);
+                            $("#assignbut").click();
+//                            if(data.itemfind){    
+//                                $('#itemName').attr('readOnly', true);
+//                                $('#itemName').val(data.itemName);
+//                                $('#itemQut').val(data.itemQut);
+//                                $('#itemPrize').val(data.itemPrize);
+//                            }else{
+//                                $("#dialogbox").dialog('open');
+//                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> Barcode:' + data.itemCode + ' not founf ');
+//                            }
+                        },
+                        error: function(data) {
+                            window.location = "${pageContext.request.contextPath}/logoutCall.action?";
+                        }
+                    });
+                }
+            
         </script>
     </head>
     <body style="overflow:hidden">
@@ -131,6 +161,10 @@
 
                             
                     <div class="contentcenter">
+                        <s:form action="PrintInvoiceaddSale" theme="simple" >
+                                <s:hidden id="invoiceId" name="invoiceId" />
+                                <s:submit button="true"  id="assignbut" cssStyle="display: none; visibility: hidden;"  />
+                        </s:form>
                         
                         <s:form theme="simple" method="post"  name="addcus" id="addcus">         
                             <table class="form_table" border="0px">
@@ -183,9 +217,9 @@
                                 
                                 <tr>
                                     <td colspan="3">
-                                        <%--<s:submit label="Login" cssClass="login_button" value="Print" />--%>
-                                        <s:url var="addurl" action="PrintInvoiceaddSale"/>
-                                        <sj:submit button="true" value="Print Invoice" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" /> 
+                                        <s:submit button="true" value="Submit" onclick="SubmitInvoice()"  targets="divmsg"  cssClass="button_ssave" />
+                                        <%--<s:url var="addurl" action="PrintInvoiceaddSale"/>--%>
+                                        <sj:submit button="true" value="Print Invoice"  targets="divmsg"  cssClass="button_ssave" /> 
                                     <td colspan="4"></td>
                                 </tr>
                                 </table>
