@@ -15,20 +15,28 @@ import java.util.Map;
  * @author kreshan
  */
 public class AddSaleInputBeen {
+    //default load
     private String invoiceId;
     private String storId;
     private Map<String,String>  storIdList= new HashMap<String, String>();
     private String custId;
     private Map<String,String> custIdList= new HashMap<String, String>();
 
+    //item load
     private String itemCode;
     private String itemName;
     private String itemPrize;
     private String itemQut ;
     private boolean itemfind ;
 
+    //add item
+    private boolean itemadd;
     
-        //grid table
+    //Delete selected item
+    private String ditemNo;
+    private String dinvoNo;
+    
+    //grid table
     private List<SaleItem> gridModel;
     private Integer rows = 0;
     private Integer page = 0;
@@ -48,8 +56,34 @@ public class AddSaleInputBeen {
         this.gridModel = gridModel;
     }
 
+    public String getDitemNo() {
+        return ditemNo;
+    }
+
+    public void setDitemNo(String ditemNo) {
+        this.ditemNo = ditemNo;
+    }
+
+    public String getDinvoNo() {
+        return dinvoNo;
+    }
+
+    public void setDinvoNo(String dinvoNo) {
+        this.dinvoNo = dinvoNo;
+    }
+
+    
+
     public Integer getRows() {
         return rows;
+    }
+
+    public boolean isItemadd() {
+        return itemadd;
+    }
+
+    public void setItemadd(boolean itemadd) {
+        this.itemadd = itemadd;
     }
 
     public void setRows(Integer rows) {

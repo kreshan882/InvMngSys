@@ -14,7 +14,8 @@ public class Status {
 
         public static final String ACTIVE                   = "01";
         public static final String INACTIVE                 = "02";
-        public static final String DELETED                  = "03";
+        public static final String PENDING                  = "03";
+        public static final String RETURN                   = "04";
 
 }
 

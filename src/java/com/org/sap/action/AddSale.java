@@ -42,7 +42,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         return SUCCESS;
     }
     public String loadItemDetail(){
-        System.out.println("idddddddddddddddddddddddddd"+inputBean.getItemCode());
         try {
             if(service.getItemDetail(inputBean)){
                inputBean.setItemQut("1"); 
@@ -63,6 +62,15 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     public String addItem(){
         System.out.println("addItemDetail.............");
         try {
+            if(service.checkInvoiceId(inputBean.getInvoiceId())){
+                service.addInvoiceDetail(inputBean);
+                inputBean.setItemadd(true);
+            }else{
+                service.addInvoice(inputBean);
+                service.addInvoiceDetail(inputBean);
+                inputBean.setItemadd(true);
+            }
+            
 //            if(service.getItemDetail(inputBean)){
 //               inputBean.setItemQut("1"); 
 //               inputBean.setItemfind(true);
@@ -72,7 +80,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
             
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
-            inputBean.setItemfind(false);
+            inputBean.setItemadd(false);
             ex.printStackTrace();
         }
         
@@ -81,6 +89,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String List(){
         try {
+            System.out.println("inv id:"+inputBean.getInvoiceId());
                 List<SaleItem> dataList = null;
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
@@ -93,7 +102,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                     orderBy = " order by " + inputBean.getSidx() + " " + inputBean.getSord();
                 }
                 dataList=service.loadTableData(inputBean, orderBy, rows, from);//invoice details
-                System.out.println("jjjj"+dataList.size());
                 if (!dataList.isEmpty()) {
                     records = dataList.get(0).getFullCount();
                     inputBean.setRecords(records);
@@ -112,11 +120,45 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         }
         return "list";
      }
+    
+    public String firstload(){
+        try {
+            service.getInvoiceNumber(inputBean);
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+        }
+        return SUCCESS;
+    }
+    
+    public String Delete(){
+        try {
+            service.deleteSelectItem(inputBean);
+            
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
+        }
+        
+        return "delete";
+    }
+    
+    public String PrintInvoice(){
+        try {
+            System.out.println("endddddddddddddddddddd");
+            
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
+        }
+        
+        return "printInvoice";
+    }
+    
     @Override
     public AddSaleInputBeen getModel() {
         try {
-            System.out.println("sssssss");
-            service.getInvoiceNumber(inputBean);
+            System.out.println("getModel");
+//            service.getInvoiceNumber(inputBean);
             inputBean.getStorIdList().putAll(Util.getStorList());
             inputBean.getCustIdList().putAll(Util.getCustomerList());
         } catch (Exception ex) {

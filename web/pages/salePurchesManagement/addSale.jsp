@@ -13,10 +13,10 @@
         
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
-            $.subscribe('resetButton', function(event, data) {
-                $('#divmsg').empty();
-                resetData();
-            });
+//            $.subscribe('resetButton', function(event, data) {
+//                $('#divmsg').empty();
+//                resetData();
+//            });
             
             function resetData(){
                 
@@ -64,15 +64,17 @@
                         dataType: "json",
                         type: "POST",
                         success: function(data) { 
-                            if(true){    
+                            if(data.itemadd){    
                                 $('#itemCode').val("");
                                 $('#itemName').val("");
                                 $('#itemQut').val("");
                                 $('#itemPrize').val("");
                             }else{
                                 $("#dialogbox").dialog('open');
-                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> Barcode:' + data.itemCode + ' not founf ');
+                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> Adding Item ' + data.itemCode + ' fail ');
                             }
+                            alert(data.invoiceId)
+                            $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: data.invoiceId}});
                             jQuery("#gridtable").trigger("reloadGrid");
                         },
                         error: function(data) {
@@ -81,6 +83,33 @@
                     });
                 }
 
+
+            function deleteformatter(cellvalue, options, rowObject) {
+                return "<a href='#' onClick='deleteInit(&#34;" + rowObject.invId + "&#34;,&#34;" + rowObject.itemNo + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
+            }
+            function deleteInit(keyval1,keyval2) {
+                $("#deletedialog").data('keyval1', keyval1).data('keyval2', keyval2).dialog('open');
+                $("#deletedialog").html('<br><b><font size="3" color="red"><center>Please confirm to delete select item : ' + keyval2 + '');
+                return false;
+            }
+            
+            function deleteNow(dinvoNo,ditemNo) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/DeleteaddSale',
+                    data: {dinvoNo: dinvoNo,ditemNo:ditemNo},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data) {
+                        
+                        $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: data.dinvoNo}});
+                        jQuery("#gridtable").trigger("reloadGrid");
+                    },
+                    error: function(data) {
+                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
+                    }
+                });
+
+            }
         </script>
     </head>
     <body style="overflow:hidden">
@@ -154,9 +183,8 @@
                                 
                                 <tr>
                                     <td colspan="3">
-                                        <s:url var="addurl" action="CustomerAddaddCus"/>
-                                        <sj:submit button="true" value="Save" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" />
-                                        <sj:submit button="true" onClickTopics="resetButton" value="Reset" cssClass="button_reset"/>
+                                        <s:url var="addurl" action="PrintInvoiceaddSale"/>
+                                        <sj:submit button="true" value="Print Invoice" href="%{addurl}"  targets="divmsg"  cssClass="button_ssave" />
                                     <td colspan="4"></td>
                                 </tr>
                                 </table>
@@ -167,7 +195,19 @@
                        
                        <div class="viewuser_tbl">
                         <div id="tablediv">
-
+                                <sj:dialog 
+                                id="deletedialog" 
+                                buttons="{ 
+                                'OK':function() { deleteNow($(this).data('keyval1'),$(this).data('keyval2'));$( this ).dialog( 'close' ); },
+                                'Cancel':function() { $( this ).dialog( 'close' );} }" 
+                                autoOpen="false" 
+                                modal="true" 
+                                title="Delete confirmation"
+                                width="400"
+                                height="150"
+                                position="center"
+                                />
+                                
                                 <sj:dialog 
                                 id="dialogbox" 
                                 buttons="{'OK':function() { $( this ).dialog( 'close' );}}"  
@@ -195,13 +235,14 @@
                                     viewrecords="true"
                                     >
 
+                                    <sjg:gridColumn name="invId"  title="invoice id"  hidden="true"/> 
                    
-                                    <sjg:gridColumn name="itemNo" index="ITEM_NO" title="Customer Name"  align="left" width="10"  sortable="true"/>                        
-                                    <sjg:gridColumn name="count" index="COUNT" title="Email"  align="left" width="15"  sortable="true"/>
-                                    <sjg:gridColumn name="unitPrize" index="UNIT_PRIZE" title="Address"  align="left" width="15"  sortable="true"/>
-                                    <sjg:gridColumn name="totalPrize" index="UNIT_PRIZE" title="Office No"  align="left" width="12"  sortable="false"/>
+                                    <sjg:gridColumn name="itemNo" index="ITEM_NO" title="Barcode"  align="left" width="10"  sortable="true"/>                        
+                                    <sjg:gridColumn name="count" index="COUNT" title="Quantity"  align="left" width="15"  sortable="true"/>
+                                    <sjg:gridColumn name="unitPrize" index="UNIT_PRIZE" title="Unit Prize"  align="left" width="15"  sortable="true"/>
+                                    <sjg:gridColumn name="totalPrize" index="UNIT_PRIZE" title="Total Prize"  align="left" width="12"  sortable="true"/>
 
-                                    
+                                    <sjg:gridColumn name="itemNo"  title="Delete" align="center" width="10" align="center"   formatter="deleteformatter" sortable="false" />
 
                                 </sjg:grid> 
                             </div>

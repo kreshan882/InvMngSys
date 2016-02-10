@@ -25,7 +25,7 @@ public class ItemBeen {
     //add details
     private String itemNo;
     private String itemType; //from ITEM_TYPE table default 1
-    private Map<String,String>  itemTypeList=Util.getBasicStatus();
+    private Map<String,String>  itemTypeList=Util.getItemType();
     private String name;
     private String colour;
     private String unitType;  //from UNIT_TYPE table default 1

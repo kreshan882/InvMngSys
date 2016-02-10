@@ -147,7 +147,8 @@
             <result name="message">/pages/msgFrag.jsp</result>
             <result name="loadItemDetail" type="json"></result>  
             <result name="addItem" type="json"></result>  
-            <result name="list" type="json"></result>         
+            <result name="list" type="json"></result>    
+            <result name="delete" type="json"></result>       
         </action>
               
 <!--        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       
