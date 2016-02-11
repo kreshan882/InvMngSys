@@ -221,7 +221,7 @@
                                     <td colspan="3">
                                         <s:submit button="true" value="Submit" onclick="SubmitInvoice()"  targets="divmsg"  cssClass="button_ssave" />
                                         <%--<s:url var="addurl" action="PrintInvoiceaddSale"/>--%>
-                                        <sj:submit button="true" value="Print Invoice"  targets="divmsg"  cssClass="button_ssave" /> 
+                                        <sj:submit button="true" value="Print Invoice"  targets="divmsg"  cssStyle="display: none; visibility: hidden;" /> 
                                     <td colspan="4"></td>
                                 </tr>
                                 </table>
