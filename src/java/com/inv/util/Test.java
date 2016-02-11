@@ -19,11 +19,10 @@ public class Test {
     public static void main(String []ar)throws Exception{
 //    APInit.IS_HSM_ENABLED=false;
 //    SSMModule.initSSM("");
-        double a=5.50;
-        double b=0.02;
-        double c=a*b;
+        double a=5.30;
+
     
-        System.out.println(c);
+        System.out.println(a);
         
     }
       
