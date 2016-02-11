@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class AddSaleService {
 
-    public void getInvoiceNumber(AddSaleInputBeen inputBean) throws Exception{
+    public void getNextInvoiceNumber(AddSaleInputBeen inputBean) throws Exception{
         PreparedStatement perSt = null;
         ResultSet res = null;
         Connection con = null;
@@ -348,7 +348,7 @@ public class AddSaleService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             //get total
-            sql = "SELECT SUM(TOTAL_PRIZE) FROM ic_invoice_details where INV_ID=?";
+            sql = "SELECT SUM(TOTAL_PRIZE) AS TOTAL_PRIZE  FROM ic_invoice_details where INV_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
             res = perSt.executeQuery();
@@ -376,7 +376,7 @@ public class AddSaleService {
                     + "SET st.COUNT = (st.COUNT - inv.COUNT);";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
-            perSt.setInt(3, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(2, Integer.parseInt(inputBean.getInvoiceId()));
             perSt.executeUpdate();
             int n= perSt.executeUpdate();
             if(n >= 0){

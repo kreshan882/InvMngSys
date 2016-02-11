@@ -155,7 +155,7 @@
                 <param name="dataSource">reportdatalist</param>
                 <param name="format">PDF</param>
                 <param name="reportParameters">parameterMap</param>
-                <param name="contentDisposition">attachment;filename=testReport_k.pdf</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param>
             </result>     
         </action>
               

@@ -13,19 +13,20 @@
         
         <jsp:include page="/Styles.jsp" />
         <script type="text/javascript">
-//            $.subscribe('resetButton', function(event, data) {
-//                $('#divmsg').empty();
-//                resetData();
-//            });
+
             
             function resetData(){
                 
-                $('#custName').val("");
-                $('#address').val("");
-                $('#email').val("");
-                $('#tpMobile').val("");
-                $('#tpOffice').val("");
+                $('#invoiceId').val("");
+                $('#storId').val("1");
+                $('#custId').val("1");
+                $('#itemCode').val("");
+                $('#itemName').val("");
+                $('#itemQut').val("");
+                $('#itemPrize').val("");
+                $('#itemName').val("");
             }
+            
             function loadItemDetail() {
                     var itemCode=$('#itemCode').val();
                     $.ajax({
@@ -114,25 +115,26 @@
             
             function SubmitInvoice() {
                     var invoiceId=$('#invoiceId').val();
-                    alert(invoiceId)
+                    var storId=$('#storId').val();
                     $.ajax({
                         url: '${pageContext.request.contextPath}/SubmitInvoiceaddSale',
-                        data: {invoiceId: invoiceId},
+                        data: {invoiceId: invoiceId,storId:storId},
                         dataType: "json",
                         type: "POST",
                         success: function(data) { 
-                            alert("done submit= do print");
-                            $('#invoiceId').val(data.invoiceId);
-                            $("#assignbut").click();
-//                            if(data.itemfind){    
-//                                $('#itemName').attr('readOnly', true);
-//                                $('#itemName').val(data.itemName);
-//                                $('#itemQut').val(data.itemQut);
-//                                $('#itemPrize').val(data.itemPrize);
-//                            }else{
-//                                $("#dialogbox").dialog('open');
-//                                $("#dialogbox").html('<br><b><font size="3" color="red"><center> Barcode:' + data.itemCode + ' not founf ');
-//                            }
+                                 
+                            if(data.itemadd){    
+                                resetData();
+                                $('#pdfinvoiceId').val(data.invoiceId);
+                                $("#assignbut").click();
+                                var nestinv=Number(data.invoiceId)+Number(1);
+                                $('#invoiceId').val(nestinv);
+                                $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: nestinv}});
+                                jQuery("#gridtable").trigger("reloadGrid");
+                            }else{
+                                $("#dialogbox").dialog('open');
+                                $("#dialogbox").html('<br><b><font size="3" color="red"><center>' + data.message + ' ');
+                            }
                         },
                         error: function(data) {
                             window.location = "${pageContext.request.contextPath}/logoutCall.action?";
@@ -162,7 +164,7 @@
                             
                     <div class="contentcenter">
                         <s:form action="PrintInvoiceaddSale" theme="simple" >
-                                <s:hidden id="invoiceId" name="invoiceId" />
+                                <s:hidden id="pdfinvoiceId" name="pdfinvoiceId" />
                                 <s:submit button="true"  id="assignbut" cssStyle="display: none; visibility: hidden;"  />
                         </s:form>
                         
@@ -172,7 +174,7 @@
                                 <tr>
                                     <td class="content_td formLable">Invoice Number<span class="mandatory">*</span></td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="invoiceId" name="invoiceId" cssClass="textField" /></td>
+                                    <td><s:textfield id="invoiceId" name="invoiceId" cssClass="textField" disabled="true" /></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Store</td>
                                     <td class="content_td formLable">:</td>
@@ -200,7 +202,7 @@
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Item Quantity</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:textfield id="itemQut" name="itemQut" cssClass="textField" /></td>
+                                    <td><s:textfield id="itemQut" name="itemQut" maxLength="4"  cssClass="textField" /></td>
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Unit Prize</td>
                                     <td class="content_td formLable">:</td>

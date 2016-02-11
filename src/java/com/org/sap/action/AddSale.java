@@ -6,8 +6,11 @@
 
 package com.org.sap.action;
 
+import com.inv.init.Module;
+import com.inv.init.Operation;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
+import com.inv.util.DBProcesses;
 import com.inv.util.LogFileCreator;
 import com.inv.util.PageVarList;
 import com.inv.util.SystemMessage;
@@ -125,7 +128,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String firstload(){
         try {
-            service.getInvoiceNumber(inputBean);
+            service.getNextInvoiceNumber(inputBean);
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
         }
@@ -148,14 +151,21 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         try {
             System.out.println("SubmitInvoice............"+inputBean.getInvoiceId());
              if(service.submitInvoice(inputBean)){
+
                  
+                 inputBean.setItemadd(true);
+                 inputBean.setMessage(SystemMessage.SALE_ADD);
+                 DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.ADD, SystemMessage.SALE_ADD+ " Invoice No " + inputBean.getInvoiceId(),request.getRemoteAddr());
+                 LogFileCreator.writeInfoToLog(SystemMessage.SALE_ADD+ " Invoice No " + inputBean.getInvoiceId());
+                    
              }else{
-                 
+                 inputBean.setItemadd(false);
+                 inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
              }
         } catch (Exception ex) {
            LogFileCreator.writeErrorToLog(ex);
             inputBean.setItemadd(false);
-            inputBean.setMessage(SystemMessage.COMMON_ERROR_PROCESS);
+            inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
             ex.printStackTrace();
         }
         
@@ -186,6 +196,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                     datalist.add(data2);
                     
                 inputBean.setReportdatalist(datalist);
+                inputBean.setFilename("INVOICE-"+inputBean.getInvoiceId()+".pdf");
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();

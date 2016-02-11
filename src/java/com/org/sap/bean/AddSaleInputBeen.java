@@ -52,7 +52,27 @@ public class AddSaleInputBeen {
     //jasoer report data
     Map parameterMap = null;
     List<SaleItem> reportdatalist = null;
+    private String filename;
+    private String pdfinvoiceId;
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getPdfinvoiceId() {
+        return pdfinvoiceId;
+    }
+
+    public void setPdfinvoiceId(String pdfinvoiceId) {
+        this.pdfinvoiceId = pdfinvoiceId;
+    }
+
+  
+    
     public Map getParameterMap() {
         return parameterMap;
     }
