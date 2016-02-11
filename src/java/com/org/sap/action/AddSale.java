@@ -196,7 +196,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                     datalist.add(data2);
                     
                 inputBean.setReportdatalist(datalist);
-                inputBean.setFilename("INVOICE-"+inputBean.getInvoiceId()+".pdf");
+                inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();
