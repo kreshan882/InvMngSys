@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -358,6 +359,7 @@ public class AddSaleService {
             if(res.next()) {
                 total=res.getDouble("TOTAL_PRIZE");
             }
+
             //Upsate invoice table
             perSt = null;
             res = null;
@@ -374,15 +376,13 @@ public class AddSaleService {
             perSt = null;
             res = null;
             sql=null;
-//            select * from ic_stock st right join ic_invoice_details inv 
-//            on st.STOR_ID=1 and inv.INV_ID='2' and st.ITEM_NO=inv.ITEM_NO;
+
             sql = "UPDATE ic_stock AS st INNER JOIN ic_invoice_details AS inv  ON st.ITEM_NO=inv.ITEM_NO "
                     + " SET st.COUNT=(st.COUNT - inv.COUNT) "
-                    + " WHERE st.ITEM_NO=inv.ITEM_NO AND st.STOR_ID=? and inv.INV_ID=?";
+                    + " WHERE  st.STOR_ID=? and inv.INV_ID=? ";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
             perSt.setInt(2, Integer.parseInt(inputBean.getInvoiceId()));
-            perSt.executeUpdate();
             int n= perSt.executeUpdate();
             if(n >= 0){
                 qtySucess=true;
