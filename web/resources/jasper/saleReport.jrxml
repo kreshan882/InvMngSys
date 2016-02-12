@@ -64,7 +64,7 @@
 			<band height="4"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="44">
+			<band height="174">
 				<rectangle>
 					<reportElement mode="Opaque" x="310" y="14" width="223" height="25" backcolor="#C7D8ED" uuid="e95d77c1-028e-4e7c-908d-8998179fa1b7"/>
 					<graphicElement>
@@ -85,17 +85,34 @@
 					<reportElement x="438" y="17" width="100" height="20" uuid="98f968d4-6a23-474e-84f1-9a087754a7e8"/>
 					<textFieldExpression><![CDATA[$P{pdfTotal}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="27" y="133" width="100" height="20" uuid="6d34b351-cf3f-4499-9a89-cc441d9fb45a"/>
+					<text><![CDATA[Authorised Signatory]]></text>
+				</staticText>
+				<line>
+					<reportElement x="27" y="132" width="173" height="1" uuid="a991c731-506d-4a1c-af56-4d23bf60b65b"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>
 	<title>
 		<band height="73" splitType="Stretch">
 			<staticText>
-				<reportElement x="2" y="10" width="553" height="29" forecolor="#B9B9B9" uuid="ca595421-cd60-4a71-8dde-bfbb36cc8ce3"/>
+				<reportElement x="2" y="13" width="531" height="26" forecolor="#B9B9B9" uuid="ca595421-cd60-4a71-8dde-bfbb36cc8ce3"/>
 				<textElement textAlignment="Center">
-					<font size="18" isBold="true"/>
+					<font fontName="Serif" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Invoice Detail]]></text>
+				<text><![CDATA[Jee Raam Textile]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="39" width="338" height="1" uuid="50a37c2b-aca5-4f40-984d-e3ec57fb732c"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="40" width="531" height="20" uuid="92379e18-8d68-4b8f-a1b0-ed14d3554a78"/>
+				<textElement textAlignment="Center">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[# 47,3/4 Sea Street, Colombo - 11, Srilanka  tel: +94 3148093  email: mohan@gmail.com]]></text>
 			</staticText>
 		</band>
 	</title>

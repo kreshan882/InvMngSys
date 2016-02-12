@@ -22,12 +22,7 @@ import com.org.login.bean.SessionUserBean;
 import com.org.sap.bean.AddSaleInputBeen;
 import com.org.sap.bean.SaleItem;
 import com.org.sap.service.AddSaleService;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -94,7 +89,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String List(){
         try {
-            System.out.println("inv id:"+inputBean.getInvoiceId());
                 List<SaleItem> dataList = null;
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
@@ -118,7 +112,9 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                     inputBean.setTotal(0);
                 }
 //            }
-        } catch (Exception ex) {
+        }catch(NumberFormatException ne){
+            System.err.println("invoice id null");
+        }catch (Exception ex) {
              ex.printStackTrace();
             LogFileCreator.writeErrorToLog(ex);
             addActionError(SystemMessage.COMMON_ERROR_PROCESS);
@@ -150,9 +146,7 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     public String SubmitInvoice(){ //uudate invoice/stock table
         try {
             System.out.println("SubmitInvoice............"+inputBean.getInvoiceId());
-             if(service.submitInvoice(inputBean)){
-
-                 
+             if(service.submitInvoice(inputBean)){ 
                  inputBean.setItemadd(true);
                  inputBean.setMessage(SystemMessage.SALE_ADD);
                  DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.ADD, SystemMessage.SALE_ADD+ " Invoice No " + inputBean.getInvoiceId(),request.getRemoteAddr());
@@ -163,10 +157,10 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                  inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
              }
         } catch (Exception ex) {
-           LogFileCreator.writeErrorToLog(ex);
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
             inputBean.setItemadd(false);
             inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
-            ex.printStackTrace();
         }
         
         return "submitInvoice";

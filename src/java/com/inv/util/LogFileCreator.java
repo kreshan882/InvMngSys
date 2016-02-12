@@ -38,15 +38,14 @@ public class LogFileCreator {
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         SessionUserBean sub = (SessionUserBean) session.getAttribute("SessionObject");
         
-        String errorpath=sub.getLogFilePath()+"infors";
-        System.out.println("sssssssssssssss"+errorpath);
+        String infopath=sub.getLogFilePath()+"infors";
         
         BufferedWriter bw = null;
         String newLine = "";
         msg = newLine + "\n" + getTime() + "\n" + msg;
 
         try {
-            String osinfopath=Util.getOSLogPath(errorpath);
+            String osinfopath=Util.getOSLogPath(infopath);
             String filename=osinfopath + Util.getLocalDate()+"_INV_Infor";
             
             bw = new BufferedWriter(new FileWriter(filename, true));
@@ -75,7 +74,7 @@ public class LogFileCreator {
     public static void writeErrorToLog(Throwable aThrowable){
      HttpSession session = ServletActionContext.getRequest().getSession(false);
      SessionUserBean sub = (SessionUserBean) session.getAttribute("SessionObject");
-     String infopath=sub.getLogFilePath()+"errors";
+     String erpath=sub.getLogFilePath()+"errors";
 
 
 
@@ -84,7 +83,7 @@ public class LogFileCreator {
         String newLine = "";
 
          try { 
-            String osinfopath=Util.getOSLogPath(infopath);
+            String osinfopath=Util.getOSLogPath(erpath);
             String filename=osinfopath + Util.getLocalDate()+"_INV_Error";
             
             msg = newLine + "\n" + getTime() + "\n" + getStackTrace(aThrowable);

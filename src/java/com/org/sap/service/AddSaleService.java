@@ -373,6 +373,8 @@ public class AddSaleService {
             perSt = null;
             res = null;
             sql=null;
+//            select * from ic_stock st right join ic_invoice_details inv 
+//            on st.STOR_ID=1 and inv.INV_ID='2' and st.ITEM_NO=inv.ITEM_NO;
             sql = "UPDATE ic_stock st INNER JOIN ic_invoice_details inv ON "
                     + " st.item_no = inv.item_no   AND st.STOR_ID=? and inv.inv_id =? "
                     + "SET st.COUNT = (st.COUNT - inv.COUNT);";
