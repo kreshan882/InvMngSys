@@ -26,6 +26,64 @@ public class SaleItem {
     private String pdfItmQty;
     private String pdfItmTprize;
 
+    //edit And View
+    private String evinvId;
+    private String evcusName;
+    private String evstorName;
+    private String evtotal;
+    private String evsaleDate;
+    private String evstatus;
+
+    public String getEvinvId() {
+        return evinvId;
+    }
+
+    public void setEvinvId(String evinvId) {
+        this.evinvId = evinvId;
+    }
+
+    public String getEvcusName() {
+        return evcusName;
+    }
+
+    public void setEvcusName(String evcusName) {
+        this.evcusName = evcusName;
+    }
+
+    public String getEvstorName() {
+        return evstorName;
+    }
+
+    public void setEvstorName(String evstorName) {
+        this.evstorName = evstorName;
+    }
+
+    public String getEvtotal() {
+        return evtotal;
+    }
+
+    public void setEvtotal(String evtotal) {
+        this.evtotal = evtotal;
+    }
+
+    public String getEvsaleDate() {
+        return evsaleDate;
+    }
+
+    public void setEvsaleDate(String evsaleDate) {
+        this.evsaleDate = evsaleDate;
+    }
+
+    public String getEvstatus() {
+        return evstatus;
+    }
+
+    public void setEvstatus(String evstatus) {
+        this.evstatus = evstatus;
+    }
+    
+    
+    
     public String getPdfItmNo() {
         return pdfItmNo;
     }

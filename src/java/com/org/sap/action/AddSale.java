@@ -42,6 +42,16 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     public String execute(){
         return SUCCESS;
     }
+    
+    public String firstload(){
+        try {
+            service.getNextInvoiceNumber(inputBean);
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+        }
+        return SUCCESS;
+    }
+    
     public String loadItemDetail(){
         try {
             if(service.getItemDetail(inputBean)){
@@ -61,7 +71,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     }
     
     public String addItem(){
-        System.out.println("addItem.............");
         try {
             if(!service.checkItemalready(inputBean)){
                 if(service.checkItemQtyAvaliable(inputBean)){
@@ -115,7 +124,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
                     inputBean.setRecords(0L);
                     inputBean.setTotal(0);
                 }
-//            }
         }catch(NumberFormatException ne){
             System.err.println("invoice id null");
         }catch (Exception ex) {
@@ -126,19 +134,11 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
         return "list";
      }
     
-    public String firstload(){
-        try {
-            service.getNextInvoiceNumber(inputBean);
-        } catch (Exception ex) {
-            LogFileCreator.writeErrorToLog(ex);
-        }
-        return SUCCESS;
-    }
+
     
     public String Delete(){
         try {
-            service.deleteSelectItem(inputBean);
-            
+            service.deleteSelectItem(inputBean);           
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();
@@ -149,7 +149,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String SubmitInvoice(){ //uudate invoice/stock table
         try {
-            System.out.println("SubmitInvoice............"+inputBean.getInvoiceId());
              if(service.submitInvoice(inputBean)){ 
                  inputBean.setItemadd(true);
                  inputBean.setMessage(SystemMessage.SALE_ADD);
@@ -172,7 +171,6 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String PrintInvoice(){
         try {
-            
              service.setPdfParameters(inputBean);
              service.setPdfDataList(inputBean);
              inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
@@ -197,8 +195,8 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
 
      @Override
     public boolean checkAccess(int userRole) {
-        boolean status = false;
-        String page = PageVarList.SALE_ADD;
+            boolean status = false;
+            String page = PageVarList.SALE_ADD;
             HttpSession session = ServletActionContext.getRequest().getSession(false);
             status = new Common().checkMethodAccess(page, userRole, session);
         return status;

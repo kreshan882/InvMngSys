@@ -342,7 +342,6 @@ public class AddSaleService {
         boolean qtySucess=false;
         Connection con = null;
         double total=0;
-        System.out.println("cal for strouck update..........."+inputBean.getInvoiceId()+":"+inputBean.getStorId());
         PreparedStatement perSt = null;
         ResultSet res = null;
         String sql=null;
