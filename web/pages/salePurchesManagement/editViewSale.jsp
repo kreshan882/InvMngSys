@@ -135,6 +135,7 @@
                             <sjg:gridColumn name="evinvId" index="INV_ID" title="Cancle Sale" align="center" width="8" formatter="reprintformatter" sortable="true"/>  
 
 
+                            
                         </sjg:grid> 
 
                     </div> 
