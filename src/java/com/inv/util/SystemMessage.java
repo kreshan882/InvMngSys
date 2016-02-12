@@ -113,8 +113,9 @@ public class SystemMessage {
      /////////////////////////////////////////////////////////////////////////
     // Sale managment
     ////////////////////////////////////////////////////////////////////////
-    public static final String SALE_ITEM_NOTAVAL           = "Item not avaliavle";
-
+    public static final String SALE_ITEM_NOTAVAL           = "Item qty not avaliavle";
+    public static final String SALE_ITEM_ALREADT_ADD       = "Item already added";
+    
 
     
     public static final String SALE_ADD                  = "Sale add successful";

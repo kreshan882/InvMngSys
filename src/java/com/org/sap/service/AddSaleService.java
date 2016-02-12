@@ -298,7 +298,7 @@ public class AddSaleService {
         }
     }
 
-    public boolean checkItemAvaliable(AddSaleInputBeen inputBean) throws Exception{
+    public boolean checkItemQtyAvaliable(AddSaleInputBeen inputBean) throws Exception{
         boolean QtyAvaliable=false;
         PreparedStatement perSt = null;
         ResultSet res = null;
@@ -341,7 +341,7 @@ public class AddSaleService {
         boolean qtySucess=false;
         Connection con = null;
         double total=0;
-        
+        System.out.println("cal for strouck update..........."+inputBean.getInvoiceId()+":"+inputBean.getStorId());
         PreparedStatement perSt = null;
         ResultSet res = null;
         String sql=null;
@@ -368,6 +368,7 @@ public class AddSaleService {
             perSt.setDouble(2, total);
             perSt.setInt(3, Integer.parseInt(inputBean.getInvoiceId()));
             perSt.executeUpdate();
+            con.commit();
 
             //update Stock
             perSt = null;
@@ -375,9 +376,9 @@ public class AddSaleService {
             sql=null;
 //            select * from ic_stock st right join ic_invoice_details inv 
 //            on st.STOR_ID=1 and inv.INV_ID='2' and st.ITEM_NO=inv.ITEM_NO;
-            sql = "UPDATE ic_stock st INNER JOIN ic_invoice_details inv ON "
-                    + " st.item_no = inv.item_no   AND st.STOR_ID=? and inv.inv_id =? "
-                    + "SET st.COUNT = (st.COUNT - inv.COUNT);";
+            sql = "UPDATE ic_stock AS st INNER JOIN ic_invoice_details AS inv  ON st.ITEM_NO=inv.ITEM_NO "
+                    + " SET st.COUNT=(st.COUNT - inv.COUNT) "
+                    + " WHERE st.ITEM_NO=inv.ITEM_NO AND st.STOR_ID=? and inv.INV_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
             perSt.setInt(2, Integer.parseInt(inputBean.getInvoiceId()));
@@ -481,5 +482,41 @@ public class AddSaleService {
                 con.close();
             }
         }
+    }
+
+    public boolean checkItemalready(AddSaleInputBeen inputBean) throws Exception{
+        boolean isAlready=false;
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+
+            String sql = "SELECT * FROM ic_invoice_details where INV_ID=? AND ITEM_NO=?;";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(2, Integer.parseInt(inputBean.getItemCode()));
+            res = perSt.executeQuery();
+
+            if(res.next()) {
+               isAlready=true;
+            }
+            
+        } catch (Exception ex) {
+            isAlready=false;
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return isAlready;
     }
 }

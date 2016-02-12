@@ -63,20 +63,24 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     public String addItem(){
         System.out.println("addItem.............");
         try {
-            if(service.checkItemAvaliable(inputBean)){
-                if(service.checkInvoiceId(inputBean.getInvoiceId())){   //outher Rows
-                service.addInvoiceDetail(inputBean);
-                inputBean.setItemadd(true);
-                }else{   //add first row
-                    service.addInvoice(inputBean);
-                    service.addInvoiceDetail(inputBean);
-                    inputBean.setItemadd(true);
+            if(!service.checkItemalready(inputBean)){
+                if(service.checkItemQtyAvaliable(inputBean)){
+                    if(service.checkInvoiceId(inputBean.getInvoiceId())){   //outher Rows
+                        service.addInvoiceDetail(inputBean);
+                        inputBean.setItemadd(true);
+                    }else{   //add first row
+                        service.addInvoice(inputBean);
+                        service.addInvoiceDetail(inputBean);
+                        inputBean.setItemadd(true);
+                    }
+                }else{
+                    inputBean.setItemadd(false);
+                    inputBean.setMessage(SystemMessage.SALE_ITEM_NOTAVAL);
                 }
             }else{
                 inputBean.setItemadd(false);
-                inputBean.setMessage(SystemMessage.SALE_ITEM_NOTAVAL);
+                inputBean.setMessage(SystemMessage.SALE_ITEM_ALREADT_ADD);
             }
-            
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             inputBean.setItemadd(false);
