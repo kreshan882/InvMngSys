@@ -151,7 +151,7 @@
             <result name="delete" type="json"></result>
             <result name="submitInvoice" type="json"></result>  
             <result name="jasperreport" type="jasper">            
-                <param name="location">/resources/jasper/testReport.jasper</param>
+                <param name="location">/resources/jasper/saleReport.jasper</param>
                 <param name="dataSource">reportdatalist</param>
                 <param name="format">PDF</param>
                 <param name="reportParameters">parameterMap</param>

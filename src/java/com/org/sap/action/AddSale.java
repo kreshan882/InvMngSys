@@ -174,29 +174,10 @@ public class AddSale extends ActionSupport implements ModelDriven<AddSaleInputBe
     
     public String PrintInvoice(){
         try {
-            System.out.println("endddddddddddddddddddd"+inputBean.getInvoiceId());
-             Map reportParameters = new HashMap();
-                reportParameters.put("from_d", "2012");
-                reportParameters.put("to_d", "2015");
-                reportParameters.put("total_d", "20");
-                inputBean.setParameterMap(reportParameters);
-
-                
-                    List datalist = new ArrayList();
-                    SaleItem data1 = new SaleItem();
-                    data1.setAA("1111");
-                    data1.setBB("bbbbb1");
-                    data1.setCC("ccccc1");
-                    datalist.add(data1);
-                    
-                    SaleItem data2 = new SaleItem();
-                    data2.setAA("2222");
-                    data2.setBB("bbbbb2");
-                    data2.setCC("ccccc2");
-                    datalist.add(data2);
-                    
-                inputBean.setReportdatalist(datalist);
-                inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
+            
+             service.setPdfParameters(inputBean);
+             service.setPdfDataList(inputBean);
+             inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();

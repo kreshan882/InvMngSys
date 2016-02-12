@@ -47,18 +47,17 @@
 	<subDataset name="dataset1" uuid="8936f471-31c8-4f05-9622-e4a675eff1f1"/>
 	<subDataset name="Table Dataset 1" uuid="8f7d9975-b42f-4148-9928-b05fcc96e4a7"/>
 	<subDataset name="Table Dataset 2" uuid="a35528f0-7308-4395-a64f-df1e53102f78"/>
-	<parameter name="customerName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="customerEmail" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="invoiceNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="invoiceAmount" class="java.lang.Double" isForPrompting="false"/>
-	<parameter name="invoiceDate" class="java.util.Date" isForPrompting="false"/>
-	<parameter name="poNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="paymentType" class="java.lang.String" isForPrompting="false"/>
-	<field name="itemNo" class="java.lang.String"/>
-	<field name="productName" class="java.lang.String"/>
-	<field name="price" class="java.lang.Double"/>
-	<field name="qty" class="java.lang.Integer"/>
-	<field name="lineTotal" class="java.lang.Double"/>
+	<parameter name="pdfCusName" class="java.lang.String"/>
+	<parameter name="pdfInvNo" class="java.lang.String"/>
+	<parameter name="pdfInvDate" class="java.lang.String"/>
+	<parameter name="pdfTotal" class="java.lang.String"/>
+	<parameter name="pdfCusEmail" class="java.lang.String"/>
+	<parameter name="pdfCusAdd" class="java.lang.String"/>
+	<field name="pdfItmNo" class="java.lang.String"/>
+	<field name="pdfItmName" class="java.lang.String"/>
+	<field name="pdfItmUprize" class="java.lang.String"/>
+	<field name="pdfItmQty" class="java.lang.String"/>
+	<field name="pdfItmTprize" class="java.lang.String"/>
 	<group name="Total">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
@@ -77,16 +76,15 @@
 					<textElement textAlignment="Center">
 						<font size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Total Rs]]></text>
+					<text><![CDATA[Total Rs      :]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="433" y="17" width="89" height="20" uuid="fe655017-928c-417d-83c5-ae39a544a527"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$P{invoiceAmount}]]></textFieldExpression>
-				</textField>
 				<line>
 					<reportElement x="2" y="6" width="531" height="1" uuid="186cfe4a-79d3-4418-80fc-d2b2b5cf2f5c"/>
 				</line>
+				<textField>
+					<reportElement x="438" y="17" width="100" height="20" uuid="98f968d4-6a23-474e-84f1-9a087754a7e8"/>
+					<textFieldExpression><![CDATA[$P{pdfTotal}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -104,7 +102,7 @@
 	<pageHeader>
 		<band height="113" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Opaque" x="315" y="1" width="218" height="86" forecolor="#000000" backcolor="#C7D8ED" uuid="8c20e0d9-e5fa-4c17-8246-2bf682323306"/>
+				<reportElement mode="Opaque" x="315" y="1" width="218" height="55" forecolor="#000000" backcolor="#C7D8ED" uuid="8c20e0d9-e5fa-4c17-8246-2bf682323306"/>
 				<graphicElement>
 					<pen lineColor="#666666"/>
 				</graphicElement>
@@ -114,55 +112,55 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Customer Name :]]></text>
+				<text><![CDATA[Customer Name     :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="3" width="93" height="20" uuid="41a704ee-3005-44a5-8aa8-7c26983169da"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Invoice Number :]]></text>
+				<text><![CDATA[Invoice Number  :	 :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="28" width="93" height="20" uuid="0010280d-60c5-4244-8515-77028e5fb73d"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Invoice Date :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="325" y="56" width="93" height="20" uuid="c0273bb4-a54c-4a39-a06f-25627d9db048"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[PO Number :]]></text>
+				<text><![CDATA[Invoice Date        :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="27" width="98" height="20" uuid="f788893f-0cc0-4af5-a395-bf09203215df"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Customer Email :]]></text>
+				<text><![CDATA[Customer Email     :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="433" y="56" width="88" height="20" uuid="5c0bf9a9-3b5c-4aa4-b744-712d3a28dd10"/>
-				<textFieldExpression><![CDATA[$P{poNumber}]]></textFieldExpression>
+				<reportElement x="100" y="2" width="100" height="20" uuid="8e0def6d-4aec-434d-9911-a16c3956c599"/>
+				<textFieldExpression><![CDATA[$P{pdfCusName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="114" y="27" width="167" height="20" uuid="da1311e6-262e-473a-a042-2c6441977a24"/>
-				<textFieldExpression><![CDATA[$P{customerEmail}]]></textFieldExpression>
+				<reportElement x="100" y="28" width="88" height="20" uuid="949a4bb5-1734-4ba3-80d4-eb2f7907f3d0"/>
+				<textFieldExpression><![CDATA[$P{pdfCusEmail}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="114" y="2" width="167" height="20" uuid="847ada3b-d7e6-4c86-9f85-5bec4052c023"/>
-				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+				<reportElement x="418" y="2" width="100" height="20" uuid="414d2ae6-68cb-4233-8ee6-15be6467ea54"/>
+				<textFieldExpression><![CDATA[$P{pdfInvNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="434" y="3" width="88" height="20" uuid="de08a232-4b17-4f37-81d2-e8dc95b47a24"/>
-				<textFieldExpression><![CDATA[$P{invoiceNumber}]]></textFieldExpression>
+				<reportElement x="418" y="28" width="100" height="20" uuid="d2d0ab4a-4e72-4de7-9e6b-047dc7135d69"/>
+				<textFieldExpression><![CDATA[$P{pdfInvDate}]]></textFieldExpression>
 			</textField>
-			<textField pattern="">
-				<reportElement x="434" y="28" width="88" height="20" uuid="6d37913b-0f89-41b7-bf03-23cae880eaa7"/>
-				<textFieldExpression><![CDATA[$P{invoiceD}]]></textFieldExpression>
+			<staticText>
+				<reportElement x="2" y="56" width="98" height="20" uuid="849c87d9-5b79-4bfb-ac79-155df683dc9f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Address :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="56" width="100" height="20" uuid="dc047fb1-2f0a-4095-9fc2-49c3727397c1"/>
+				<textFieldExpression><![CDATA[$P{pdfCusAdd}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -203,7 +201,7 @@
 				<text><![CDATA[Quantity]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="454" y="4" width="79" height="18" uuid="57fc4cad-657c-425d-8839-78f8a801db8f"/>
+				<reportElement x="443" y="4" width="90" height="18" uuid="57fc4cad-657c-425d-8839-78f8a801db8f"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="false"/>
 				</textElement>
@@ -214,27 +212,24 @@
 	<detail>
 		<band height="29" splitType="Stretch">
 			<textField>
-				<reportElement x="12" y="5" width="54" height="20" uuid="0c3bbe82-7167-41dc-98d1-0391f0e2ae56"/>
-				<textFieldExpression><![CDATA[$F{itemNo}]]></textFieldExpression>
+				<reportElement x="12" y="0" width="100" height="20" uuid="e3fce803-b125-4cca-8e19-4182db2bd7ad"/>
+				<textFieldExpression><![CDATA[$F{pdfItmNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="78" y="5" width="167" height="20" uuid="4cf3c9d2-f04f-4da5-b713-57349f4bb7ec"/>
-				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+				<reportElement x="127" y="0" width="138" height="20" uuid="5dcb6607-4341-4e7e-8f75-13716ab31318"/>
+				<textFieldExpression><![CDATA[$F{pdfItmName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="5" width="57" height="20" uuid="179bd4b7-c451-49ef-8631-0ed27f4e0f26"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+				<reportElement x="275" y="0" width="90" height="20" uuid="e530f626-53ea-4f70-932b-19dbac5b12dd"/>
+				<textFieldExpression><![CDATA[$F{pdfItmUprize}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="358" y="5" width="75" height="20" uuid="134e2943-21ea-4eae-9acc-cd3db9f2a2a3"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+				<reportElement x="365" y="0" width="97" height="20" uuid="7257e618-f7b5-4be4-b96f-7ea38d13059f"/>
+				<textFieldExpression><![CDATA[$F{pdfItmQty}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="454" y="5" width="64" height="20" uuid="0f6ed123-7ab5-4a08-8991-1787b8580666"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{lineTotal}]]></textFieldExpression>
+				<reportElement x="462" y="0" width="71" height="20" uuid="df7352cd-6459-4cb6-8a6b-7b5454efabef"/>
+				<textFieldExpression><![CDATA[$F{pdfItmTprize}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -20,33 +20,53 @@ public class SaleItem {
     private long fullCount;
 
     //temo jasper
-    private String AA;
-    private String BB;
-    private String CC;
+    private String pdfItmNo;
+    private String pdfItmName;
+    private String pdfItmUprize;
+    private String pdfItmQty;
+    private String pdfItmTprize;
 
-    public String getAA() {
-        return AA;
+    public String getPdfItmNo() {
+        return pdfItmNo;
     }
 
-    public void setAA(String AA) {
-        this.AA = AA;
+    public void setPdfItmNo(String pdfItmNo) {
+        this.pdfItmNo = pdfItmNo;
     }
 
-    public String getBB() {
-        return BB;
+    public String getPdfItmName() {
+        return pdfItmName;
     }
 
-    public void setBB(String BB) {
-        this.BB = BB;
+    public void setPdfItmName(String pdfItmName) {
+        this.pdfItmName = pdfItmName;
     }
 
-    public String getCC() {
-        return CC;
+    public String getPdfItmUprize() {
+        return pdfItmUprize;
     }
 
-    public void setCC(String CC) {
-        this.CC = CC;
+    public void setPdfItmUprize(String pdfItmUprize) {
+        this.pdfItmUprize = pdfItmUprize;
     }
+
+    public String getPdfItmQty() {
+        return pdfItmQty;
+    }
+
+    public void setPdfItmQty(String pdfItmQty) {
+        this.pdfItmQty = pdfItmQty;
+    }
+
+    public String getPdfItmTprize() {
+        return pdfItmTprize;
+    }
+
+    public void setPdfItmTprize(String pdfItmTprize) {
+        this.pdfItmTprize = pdfItmTprize;
+    }
+
+
     
     
     
