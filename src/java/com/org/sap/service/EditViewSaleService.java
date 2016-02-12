@@ -13,7 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -90,5 +92,82 @@ public class EditViewSaleService {
         return dataList;
     }
     
-    
+    public void setPdfParameters(EditViewSaleInputBean inputBean) throws Exception{
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            Map pdfParaMtr = new HashMap();
+            String sql = "SELECT inv.INV_ID,CAST(inv.DATE AS CHAR) AS INV_DATE,inv.TOTAL,cus.NAME,cus.EMAIL,cus.ADDRESS "
+                    + "FROM ic_invoice inv,ic_customer cus where inv.CUS_ID=cus.CUS_ID AND inv.INV_ID=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getPdfinvoiceId()));
+            res = perSt.executeQuery();
+
+            if(res.next()) {
+                pdfParaMtr.put("pdfInvNo", res.getString("INV_ID"));
+                pdfParaMtr.put("pdfInvDate", res.getString("INV_DATE"));
+                pdfParaMtr.put("pdfTotal", res.getString("TOTAL"));
+                pdfParaMtr.put("pdfCusName", res.getString("NAME"));
+                pdfParaMtr.put("pdfCusEmail", res.getString("EMAIL"));
+                pdfParaMtr.put("pdfCusAdd", res.getString("ADDRESS"));
+                inputBean.setParameterMap(pdfParaMtr);
+            }
+            
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void setPdfDataList(EditViewSaleInputBean inputBean) throws Exception{
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        SaleItem saleItem=null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            List datalist = new ArrayList();
+            String sql = "SELECT inv.ITEM_NO,ite.NAME,inv.COUNT,inv.UNIT_PRIZE,inv.TOTAL_PRIZE "
+                    + "FROM ic_invoice_details inv ,ic_items ite where inv.ITEM_NO=ite.ITEM_NO AND inv.INV_ID=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getPdfinvoiceId()));
+            res = perSt.executeQuery();
+
+            while(res.next()) {
+                saleItem = new SaleItem();
+                    saleItem.setPdfItmNo(res.getString("ITEM_NO"));
+                    saleItem.setPdfItmName(res.getString("NAME"));  
+                    saleItem.setPdfItmQty(res.getString("COUNT"));
+                    saleItem.setPdfItmUprize(res.getString("UNIT_PRIZE"));
+                    saleItem.setPdfItmTprize(res.getString("TOTAL_PRIZE"));
+                    datalist.add(saleItem);
+            }
+            inputBean.setReportdatalist(datalist);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

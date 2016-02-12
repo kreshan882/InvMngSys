@@ -7,6 +7,7 @@
 package com.org.sap.bean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -30,6 +31,45 @@ public class EditViewSaleInputBean {
     private String searchString;
     private String searchOper;
 
+    //jasoer report data
+    Map parameterMap = null;
+    List<SaleItem> reportdatalist = null;
+    private String filename;
+    private String pdfinvoiceId;
+
+    public Map getParameterMap() {
+        return parameterMap;
+    }
+
+    public void setParameterMap(Map parameterMap) {
+        this.parameterMap = parameterMap;
+    }
+
+    public List<SaleItem> getReportdatalist() {
+        return reportdatalist;
+    }
+
+    public void setReportdatalist(List<SaleItem> reportdatalist) {
+        this.reportdatalist = reportdatalist;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getPdfinvoiceId() {
+        return pdfinvoiceId;
+    }
+
+    public void setPdfinvoiceId(String pdfinvoiceId) {
+        this.pdfinvoiceId = pdfinvoiceId;
+    }
+    
+    
     public List<SaleItem> getGridModel() {
         return gridModel;
     }

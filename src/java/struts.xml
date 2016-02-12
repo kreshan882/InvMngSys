@@ -161,7 +161,14 @@
               
         <action name="*editViewSale" class="com.org.sap.action.EditViewSale" method="{1}">
             <result name="success">/pages/salePurchesManagement/editViewSale.jsp</result> 
-            <result name="list" type="json"></result>        
+            <result name="list" type="json"></result>  
+            <result name="jasperreport" type="jasper">            
+                <param name="location">/resources/jasper/saleReport.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param>
+            </result>        
         </action> 
              
                 

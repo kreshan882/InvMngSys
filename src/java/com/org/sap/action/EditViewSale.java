@@ -64,7 +64,18 @@ public class EditViewSale extends ActionSupport implements ModelDriven<EditViewS
         }
         return "list";
      }
-    
+    public String PrintInvoice(){
+        try {
+             service.setPdfParameters(inputBean);
+             service.setPdfDataList(inputBean);
+             inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
+        }
+        
+        return "jasperreport";
+    }
     
     @Override
     public EditViewSaleInputBean getModel() {

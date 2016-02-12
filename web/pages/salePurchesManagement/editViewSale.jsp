@@ -32,6 +32,19 @@
                 }
                 return html;
             }
+            function reprintformatter(cellvalue, options, rowObject) {
+                if (rowObject.evstatus == '01') {
+                    return "<a href='#' onClick='reprintInit(&#34;" + rowObject.evinvId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/print.jpg'  /></a>"; 
+                } else {
+                    var html = "<img src= '${pageContext.request.contextPath}/resources/images/iconInactive.png' />";
+                }
+                return html;
+            }
+            function reprintInit(evinvId){
+                      $('#pdfinvoiceId').val(evinvId);
+                      $("#assignbut").click();
+    
+            }
 
             $.subscribe('onclicksearch', function(event, data) {
 
@@ -59,6 +72,11 @@
                         <i style="color: red">  <s:actionerror theme="jquery"/></i>
                         <i style="color: green"> <s:actionmessage theme="jquery"/></i>
                     </s:div>
+                        
+                   <s:form action="PrintInvoiceeditViewSale" theme="simple" >
+                                <s:hidden id="pdfinvoiceId" name="pdfinvoiceId" />
+                                <s:submit button="true"  id="assignbut" cssStyle="display: none; visibility: hidden;"  />
+                    </s:form>     
                     <s:form id="searchForm" method="post">         
                         <table class="form_table">
                             <tr>
@@ -111,8 +129,10 @@
                             <sjg:gridColumn name="evstorName" index="SNAME" title="Store"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="evtotal" index="TOTAL" title="Total"  align="left" width="12"  sortable="true"/>    
                             <sjg:gridColumn name="evsaleDate" index="SALE_DATE" title="Sale Date"  align="left" width="8"  sortable="true"/>                         
+                           
                             <sjg:gridColumn name="evstatus" index="STATUS" title="Status" align="center" width="8" formatter="statusformatter" sortable="true"/>                    
-
+                            <sjg:gridColumn name="evinvId" index="INV_ID" title="Re Print" align="center" width="8" formatter="reprintformatter" sortable="true"/>  
+                            <sjg:gridColumn name="evinvId" index="INV_ID" title="Cancle Sale" align="center" width="8" formatter="reprintformatter" sortable="true"/>  
 
 
                         </sjg:grid> 
