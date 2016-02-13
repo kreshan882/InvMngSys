@@ -76,7 +76,16 @@ public class EditViewSale extends ActionSupport implements ModelDriven<EditViewS
         
         return "jasperreport";
     }
-    
+    public String Cancle(){
+        try {
+             System.out.println("cancleeeing"+inputBean.getInvNo());
+        } catch (Exception ex) {
+            LogFileCreator.writeErrorToLog(ex);
+            ex.printStackTrace();
+        }
+        
+        return "cancle";
+    }
     @Override
     public EditViewSaleInputBean getModel() {
         return inputBean;

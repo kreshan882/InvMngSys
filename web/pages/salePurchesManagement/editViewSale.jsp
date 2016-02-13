@@ -34,9 +34,18 @@
             }
             function reprintformatter(cellvalue, options, rowObject) {
                 if (rowObject.evstatus == '01') {
-                    return "<a href='#' onClick='reprintInit(&#34;" + rowObject.evinvId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/print.jpg'  /></a>"; 
+                    return "<a href='#' onClick='reprintInit(&#34;" + rowObject.evinvId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/print.png'  /></a>"; 
                 } else {
                     var html = "<img src= '${pageContext.request.contextPath}/resources/images/iconInactive.png' />";
+                }
+                return html;
+            }
+            
+            function rejectformatter(cellvalue, options, rowObject) {
+                if (rowObject.evstatus == '01') {
+                    return "<a href='#' onClick='cancleInit(&#34;" + rowObject.evinvId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/reject.png'  /></a>"; 
+                } else {
+                    var html = "<img src= '${pageContext.request.contextPath}/resources/images/rejectDisabled.png' />";
                 }
                 return html;
             }
@@ -45,7 +54,28 @@
                       $("#assignbut").click();
     
             }
+            function cancleInit(keyval) {
+                $("#cancledialog").data('keyval', keyval).dialog('open');
+                $("#cancledialog").html('<br><b><font size="3" color="red"><center>Please confirm to cancle selected invoice : ' + keyval + '');
+                return false;
+            }
+            
+            function cancleNow(invNo) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/CancleeditViewSale',
+                    data: {invNo: invNo},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data) {
+                        alert("cancle going pending");
+                        jQuery("#gridtable").trigger("reloadGrid");
+                    },
+                    error: function(data) {
+                        window.location = "${pageContext.request.contextPath}/logoutCall.action";
+                    }
+                });
 
+            }
             $.subscribe('onclicksearch', function(event, data) {
 
                 var invNo = $('#invNo').val();
@@ -105,7 +135,18 @@
 
                 <div class="viewuser_tbl">
                     <div id="tablediv">                  
-
+                           <sj:dialog 
+                                id="cancledialog" 
+                                buttons="{ 
+                                'OK':function() { cancleNow($(this).data('keyval'));$( this ).dialog( 'close' ); },
+                                'Cancel':function() { $( this ).dialog( 'close' );} }" 
+                                autoOpen="false" 
+                                modal="true" 
+                                title="Cancle confirmation"
+                                width="400"
+                                height="150"
+                                position="center"
+                                />
                         <s:url var="listurl" action="ListeditViewSale"/>
                         <sjg:grid
                             id="gridtable"
@@ -132,7 +173,7 @@
                            
                             <sjg:gridColumn name="evstatus" index="STATUS" title="Status" align="center" width="8" formatter="statusformatter" sortable="true"/>                    
                             <sjg:gridColumn name="evinvId" index="INV_ID" title="Re Print" align="center" width="8" formatter="reprintformatter" sortable="true"/>  
-                            <sjg:gridColumn name="evinvId" index="INV_ID" title="Cancle Sale" align="center" width="8" formatter="reprintformatter" sortable="true"/>  
+                            <sjg:gridColumn name="evinvId" index="INV_ID" title="Cancle Sale" align="center" width="8" formatter="rejectformatter" sortable="true"/>  
 
 
                             

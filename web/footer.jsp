@@ -6,6 +6,6 @@
     Build Number    : 03022016ccccchh
 --%>
 <div class="foot_note">
-    © Epic Lanka Technologies (Pvt) Ltd<br/>epic aegis pki version 1.02
+    © nrk vision technology<br/>Jee Raam Textile
 </div>
 

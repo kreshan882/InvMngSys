@@ -168,7 +168,8 @@
                 <param name="format">PDF</param>
                 <param name="reportParameters">parameterMap</param>
                 <param name="contentDisposition">attachment;filename=${filename}</param>
-            </result>        
+            </result>  
+            <result name="cancle" type="json"></result>       
         </action> 
              
                 

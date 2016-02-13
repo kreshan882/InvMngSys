@@ -47,7 +47,7 @@
                             </tr>-->
                             <tr class="home_data">
                                 <td class="content_td homeLable" valign="top">Version</td>
-                                <td class="content_td homeLable1">ttttt</td>
+                                <td class="content_td homeLable1">V1.00</td>
                             </tr>
    
 
