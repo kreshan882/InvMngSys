@@ -34,8 +34,8 @@ public class AddItemService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             query="INSERT INTO ic_items(ITEM_NO,NAME,ITEM_TYPE,COLOUR,UNIT_PRIZE,"
-                    + "UNIT_TYPE,IMG_PATH,STATUS,REG_DATE) "
-                    + "VALUES(?,?,?,?,?,  ?,?,?,?)";
+                    + "IMG_PATH,STATUS,REG_DATE) "
+                    + "VALUES(?,?,?,?,?,  ?,?,?)";
             
             preStat = con.prepareStatement(query);
 
@@ -44,11 +44,10 @@ public class AddItemService {
             preStat.setString(3, userBean.getItemType());
             preStat.setString(4, userBean.getColour());
             preStat.setDouble(5, Double.parseDouble(userBean.getUnitPrize()));
-            
-            preStat.setString(6, userBean.getUnitType());
-            preStat.setString(7, userBean.getDbfilename());
-            preStat.setString(8, Status.ACTIVE);
-            preStat.setDate(9, (Date) Util.getLocalDate());
+           
+            preStat.setString(6, userBean.getDbfilename());
+            preStat.setString(7, Status.ACTIVE);
+            preStat.setDate(8, (Date) Util.getLocalDate());
 
            int n= preStat.executeUpdate();
            if(n >= 0){

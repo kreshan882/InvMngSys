@@ -28,8 +28,6 @@ public class ItemBeen {
     private Map<String,String>  itemTypeList=Util.getItemType();
     private String name;
     private String colour;
-    private String unitType;  //from UNIT_TYPE table default 1
-    private Map<String,String>  unitTypeList=Util.getUnitType();
     private String unitPrize;  //double
     
    // private String imagePath;
@@ -93,9 +91,7 @@ public class ItemBeen {
         this.itemTypeList = itemTypeList;
     }
 
-    public Map<String, String> getUnitTypeList() {
-        return unitTypeList;
-    }
+
 
     public String getUnitPrize() {
         return unitPrize;
@@ -105,9 +101,7 @@ public class ItemBeen {
         this.unitPrize = unitPrize;
     }
 
-    public void setUnitTypeList(Map<String, String> unitTypeList) {
-        this.unitTypeList = unitTypeList;
-    }
+
 
     public String getItemType() {
         return itemType;
@@ -133,23 +127,7 @@ public class ItemBeen {
         this.colour = colour;
     }
 
-    public String getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(String unitType) {
-        this.unitType = unitType;
-    }
-
-
-
-//    public String getImagePath() {
-//        return imagePath;
-//    }
-//
-//    public void setImagePath(String imagePath) {
-//        this.imagePath = imagePath;
-//    }
+ 
 
     public String getStatusCode() {
         return statusCode;

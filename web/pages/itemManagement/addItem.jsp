@@ -23,7 +23,6 @@
                 $('#itemType').val("-1");
                 $('#name').val("");
                 $('#colour').val("");
-                $('#unitType').val("-1");
                 $('#unitPrize').val("");
                 $('#image').val("");
             }
@@ -79,25 +78,16 @@
                                    
                                 </tr>
                                 <tr>
-                                    <td class="content_td formLable">Unit type</td>
-                                    <td class="content_td formLable">:</td>
-                                    <td><s:select  name="unitType" id="unitType" headerKey="-1"  headerValue="---Select---" 
-                                               list="%{unitTypeList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
-                                    <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Unit prize</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:textfield id="unitPrize" name="unitPrize" cssClass="textField" /></td>
-                                </tr>
-
-                                <tr>
+                                    <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Upload Image</td>
                                     <td class="content_td formLable">:</td>
                                     <td><s:file  id = "image" name="image" label="File" cssClass="fileField"  /></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td></td>
                                 </tr>
+
+                                
                                 
                                 <tr>
                                     <td class="content_td formLable" colspan="7"><span class="mandatory_text">Mandatory fields are marked with</span><span class="mandatory">*</span></td>

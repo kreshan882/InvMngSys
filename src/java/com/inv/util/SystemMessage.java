@@ -94,8 +94,7 @@ public class SystemMessage {
     
     public static final String ITEM_COLOR_EMPTY           = "Empty item colour";
     public static final String ITEM_COLOR_INVALID         = "Invalid item colour";
-    public static final String ITEM_UNITTYPE_SELECT        = "Please select unit type";
-
+    
     public static final String ITEM_UNITPRIZE_EMPTY           = "Empty unit prize";
     public static final String ITEM_UNITPRIZE_INVALID         = "Invalid unit prize";
     public static final String ITEM_IMAGE_EMPTY           = "Empty image do file upload";

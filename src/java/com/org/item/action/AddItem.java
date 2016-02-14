@@ -115,9 +115,6 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
             } else if (!Util.validateNAME(bean.getColour())) {
                 addActionError(SystemMessage.ITEM_COLOR_INVALID);
                 return ok;
-            }else if ("-1".equals(bean.getUnitType())) {
-                addActionError(SystemMessage.ITEM_UNITTYPE_SELECT);
-                return ok;
             }else if (bean.getUnitPrize() == null || bean.getUnitPrize().isEmpty()) {
                 addActionError(SystemMessage.ITEM_UNITPRIZE_EMPTY);
                 return ok;

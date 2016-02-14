@@ -8,3 +8,4 @@ starting
 1) ITEM_TYPE(varchar 2)
 2) page> 0401 -> URL -> firstloadaddSale
 3) when new shop open (mt_store | ic_stock
+4) UNIT_TYPR remove from item table

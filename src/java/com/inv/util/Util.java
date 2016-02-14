@@ -80,19 +80,13 @@ public class Util {
         return basicStatus;
     }
     
-    public static Map<String, String> getUnitType() {
-        Map<String, String> basicStatus = new HashMap<String, String>();
-        basicStatus.put("01", "Meeter");
-        basicStatus.put("02", "Kg");
-        basicStatus.put("03", "Leater");
-        return basicStatus;
-    }
     
     public static Map<String, String> getItemType() {
         Map<String, String> basicStatus = new HashMap<String, String>();
-        basicStatus.put("01", "Shirt");
-        basicStatus.put("02", "Showes");
-        basicStatus.put("03", "Bookes");
+        basicStatus.put("01", "Dress");
+        basicStatus.put("01", "Showes");
+        basicStatus.put("01", "Cap");
+        basicStatus.put("02", "Meterial");
         return basicStatus;
     }
 
