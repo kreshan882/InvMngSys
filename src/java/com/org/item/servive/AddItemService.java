@@ -46,7 +46,7 @@ public class AddItemService {
             preStat.setDouble(5, Double.parseDouble(userBean.getUnitPrize()));
             
             preStat.setString(6, userBean.getUnitType());
-            preStat.setString(7, userBean.getImageFileName());
+            preStat.setString(7, userBean.getDbfilename());
             preStat.setString(8, Status.ACTIVE);
             preStat.setDate(9, (Date) Util.getLocalDate());
 

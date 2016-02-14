@@ -36,12 +36,23 @@ public class ItemBeen {
     private File   image;  
     private String imageContentType;
     private String imageFileName;
-
+    private String dbfilename;
+    
     private String statusCode;
     private String regDate;
 
    private long fullCount;
 
+    public String getDbfilename() {
+        return dbfilename;
+    }
+
+    public void setDbfilename(String dbfilename) {
+        this.dbfilename = dbfilename;
+    }
+
+   
+   
     public String getItemNo() {
         return itemNo;
     }

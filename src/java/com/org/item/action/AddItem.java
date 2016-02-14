@@ -21,8 +21,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.item.bean.ItemBeen;
 import com.org.item.servive.AddItemService;
+import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 
@@ -47,9 +49,14 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
     public String Add() {
         
         try {
-  
+            
             if (doValidation(inputBean)) {
+                String IMAGE_PATH=Util.getOSLogPath(sub.getLogFilePath()+"items");
+                String filenm[] = inputBean.getImageFileName().split("\\.",2);    
+                inputBean.setDbfilename(inputBean.getItemNo()+"."+filenm[1]);
+                File newFileLocation  = new File(IMAGE_PATH, inputBean.getDbfilename());
                 
+                FileUtils.copyFile(inputBean.getImage(), newFileLocation);
                 
                 if (service.addItem(inputBean, sub)) {
                     if(service.addStrockZero(inputBean, sub)){
@@ -81,10 +88,7 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
     private boolean doValidation(ItemBeen bean) throws Exception {
         boolean ok = false;
         
-        System.out.println(">>"+bean.getImageFileName());
-        String file[] = bean.getImageFileName().split("\\.",2);
-	String filetype = file[1];
-        System.out.println(">"+filetype);
+
         try {
             if (bean.getItemNo() == null || bean.getItemNo().isEmpty()) {
                 addActionError(SystemMessage.ITEM_NUMBER_EMPTY);
