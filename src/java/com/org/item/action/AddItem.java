@@ -118,7 +118,7 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
             }else if (bean.getUnitPrize() == null || bean.getUnitPrize().isEmpty()) {
                 addActionError(SystemMessage.ITEM_UNITPRIZE_EMPTY);
                 return ok;
-            } else if (!Util.validateNAME(bean.getUnitPrize())) { //check double
+            } else if (!Util.validateAMOUNT(bean.getUnitPrize())) { //check double
                 addActionError(SystemMessage.ITEM_UNITPRIZE_INVALID);
                 return ok;
             }else if(bean.getImageFileName() == null || bean.getImageFileName().isEmpty()){ 

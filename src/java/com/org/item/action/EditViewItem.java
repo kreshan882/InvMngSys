@@ -151,7 +151,7 @@ public class EditViewItem extends ActionSupport implements ModelDriven<EditViewI
             }else if (bean.getUpunitPrize() == null || bean.getUpunitPrize().isEmpty()) {
                 addActionError(SystemMessage.ITEM_UNITPRIZE_EMPTY);
                 return ok;
-            } else if (!Util.validateNAME(bean.getUpunitPrize())) { //check double
+            } else if (!Util.validateAMOUNT(bean.getUpunitPrize())) { //check double
                 addActionError(SystemMessage.ITEM_UNITPRIZE_INVALID);
                 return ok;
             }else if ("-1".equals(bean.getUpstatus())) {

@@ -102,14 +102,12 @@
 
 
             function editCall(keyval) {
-                alert(keyval);
                 $.ajax({
                     url: '${pageContext.request.contextPath}/FindeditViewItem',
                     data: {upitemNo: keyval},
                     dataType: "json",
                     type: "POST",
                     success: function(data) {
-                        alert(data.upname);
                         $('#updateForm').show();
                         $('#searchForm').hide();
                         $('#divmsg').empty();

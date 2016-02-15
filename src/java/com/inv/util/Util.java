@@ -36,6 +36,9 @@ public class Util {
     public static boolean validateNUMBER(String numericString) throws Exception { 
         return numericString.matches("^[0-9]*$") && numericString.length() <= 15;
     }
+    public static boolean validateAMOUNT(String numericString) throws Exception { 
+        return numericString.matches("^\\d+(\\.\\d{1,2})?$") && numericString.length() <= 10;
+    }
     public static boolean validateEMAIL(String email) throws Exception {  //   VF2
         return email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") &&    email.length() <= 50  ;
     }

@@ -136,15 +136,15 @@ public class EditViewItemService {
         try {
             System.out.println(""+bean.getUpitemNo());
             con = DBConnection.getConnection();
-            sql = "SELECT ITEM_NO,NAME,COLOUR,UNIT_PRIZE,STATUS  FROM ic_items where ITEM_NO=?";
+            sql = "SELECT ITEM_NO,NAME,COLOUR,UNIT_PRIZE,STATUS  FROM ic_items WHERE ITEM_NO=?";
 
             prepSt = con.prepareStatement(sql);
             prepSt.setString(1,bean.getUpitemNo());
 
             res = prepSt.executeQuery();
             if (res.next()) {
-                System.out.println(">>>>>>>>>"+res.getString("CUS_ID"));
-                bean.setUpitemNo(res.getString("CUS_ID"));
+                System.out.println(">>>>>>>>>"+res.getString("ITEM_NO"));
+                bean.setUpitemNo(res.getString("ITEM_NO"));
                 bean.setUpname(res.getString("NAME"));
                 bean.setUpcolour(res.getString("COLOUR"));       
                 bean.setUpunitPrize(res.getString("UNIT_PRIZE"));  
