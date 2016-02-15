@@ -7,6 +7,7 @@
 package com.org.sap.service;
 
 import com.inv.db.DBConnection;
+import com.inv.init.Status;
 import com.org.sap.bean.EditViewSaleInputBean;
 import com.org.sap.bean.SaleItem;
 import java.sql.Connection;
@@ -49,7 +50,7 @@ public class EditViewSaleService {
                 totalCount = res.getLong("TOTAL");                
             }          
        
-            quary ="SELECT inv.INV_ID,cus.NAME AS CNAME,str.NAME AS SNAME,inv.STATUS,CAST(TOTAL AS CHAR) AS TOTAL ,CAST(DATE AS CHAR) AS SALE_DATE "
+            quary ="SELECT inv.INV_ID,cus.NAME AS CNAME,str.STOR_ID,str.NAME AS SNAME,inv.STATUS,CAST(TOTAL AS CHAR) AS TOTAL ,CAST(DATE AS CHAR) AS SALE_DATE "
                     + "FROM ic_invoice inv,ic_customer cus,mt_store str "
                     + "where inv.CUS_ID=cus.CUS_ID AND inv.STOR_ID=str.STOR_ID AND inv.INV_ID LIKE ? "+orderBy+ " LIMIT " + first + "," + max;
             
@@ -63,6 +64,7 @@ public class EditViewSaleService {
                  SaleItem been = new SaleItem();
                  been.setEvinvId(res.getString("INV_ID"));
                  been.setEvcusName(res.getString("CNAME"));
+                 been.setEvstorId(res.getString("STOR_ID"));
                  been.setEvstorName(res.getString("SNAME"));
                  been.setEvstatus(res.getString("STATUS"));
                  been.setEvtotal(res.getString("TOTAL"));
@@ -169,5 +171,57 @@ public class EditViewSaleService {
                 con.close();
             }
         }
+    }
+
+    public boolean rollbackStock(EditViewSaleInputBean inputBean) throws Exception{
+        boolean qtySucess=false;
+        Connection con = null;
+        double total=0;
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        String sql=null;
+        
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            
+            sql = "update ic_invoice SET STATUS=? where INV_ID=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setString(1, Status.RETURN);
+            perSt.setInt(2, Integer.parseInt(inputBean.getInvNo()));
+            perSt.executeUpdate();
+            con.commit();
+
+            //update Stock
+            perSt = null;
+            res = null;
+            sql=null;
+
+            sql = "UPDATE ic_stock AS st INNER JOIN ic_invoice_details AS inv  ON st.ITEM_NO=inv.ITEM_NO "
+                    + " SET st.COUNT=(st.COUNT + inv.COUNT) "
+                    + " WHERE  st.STOR_ID=? and inv.INV_ID=? ";
+            perSt = con.prepareStatement(sql);
+            perSt.setInt(1, Integer.parseInt(inputBean.getStorNo()));
+            perSt.setInt(2, Integer.parseInt(inputBean.getInvNo()));
+            int n= perSt.executeUpdate();
+            if(n >= 0){
+                qtySucess=true;
+            }
+            con.commit();
+        } catch (Exception ex) {
+            qtySucess=false;
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return qtySucess;
     }
 }

@@ -28,6 +28,7 @@ public class SaleItem {
 
     //edit And View
     private String evinvId;
+    private String evstorId;
     private String evcusName;
     private String evstorName;
     private String evtotal;
@@ -44,6 +45,14 @@ public class SaleItem {
 
     public String getEvcusName() {
         return evcusName;
+    }
+
+    public String getEvstorId() {
+        return evstorId;
+    }
+
+    public void setEvstorId(String evstorId) {
+        this.evstorId = evstorId;
     }
 
     public void setEvcusName(String evcusName) {

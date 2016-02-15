@@ -43,7 +43,7 @@
             
             function rejectformatter(cellvalue, options, rowObject) {
                 if (rowObject.evstatus == '01') {
-                    return "<a href='#' onClick='cancleInit(&#34;" + rowObject.evinvId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/reject.png'  /></a>"; 
+                    return "<a href='#' onClick='cancleInit(&#34;" + rowObject.evinvId + "&#34;,&#34;" + rowObject.evstorId + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/reject.png'  /></a>"; 
                 } else {
                     var html = "<img src= '${pageContext.request.contextPath}/resources/images/rejectDisabled.png' />";
                 }
@@ -54,20 +54,28 @@
                       $("#assignbut").click();
     
             }
-            function cancleInit(keyval) {
-                $("#cancledialog").data('keyval', keyval).dialog('open');
-                $("#cancledialog").html('<br><b><font size="3" color="red"><center>Please confirm to cancle selected invoice : ' + keyval + '');
+            function cancleInit(keyval,keyval2) {
+                $("#confirmdialog").data('keyval', keyval).data('keyval2', keyval2).dialog('open');
+                $("#confirmdialog").html('<br><b><font size="3" color="red"><center>Please confirm to cancle selected invoice : ' + keyval + '');
                 return false;
             }
             
-            function cancleNow(invNo) {
+            function cancleNow(invNo,storNo) {
                 $.ajax({
                     url: '${pageContext.request.contextPath}/CancleeditViewSale',
-                    data: {invNo: invNo},
+                    data: {invNo: invNo,storNo:storNo},
                     dataType: "json",
                     type: "POST",
                     success: function(data) {
                         alert("cancle going pending");
+                        if (data.success) {
+                            $("#dialogbox").dialog('open');
+                            $("#dialogbox").html('<br><b><font size="3" color="green"><center>' + data.message + ' ');
+                        } else {
+                            $("#dialogbox").dialog('open');
+                            $("#dialogbox").html('<br><b><font size="3" color="red"><center>' + data.message + ' ');
+                        }
+                        
                         jQuery("#gridtable").trigger("reloadGrid");
                     },
                     error: function(data) {
@@ -134,11 +142,21 @@
                 </div>
 
                 <div class="viewuser_tbl">
-                    <div id="tablediv">                  
+                    <div id="tablediv">    
+                        <sj:dialog 
+                            id="dialogbox" 
+                            buttons="{ 'OK':function() { $( this ).dialog( 'close' );} }"  
+                            autoOpen="false" 
+                            modal="true" 
+                            title="Delete user" 
+                            width="400"
+                            height="150"
+                            position="center"
+                            />
                            <sj:dialog 
-                                id="cancledialog" 
+                                id="confirmdialog" 
                                 buttons="{ 
-                                'OK':function() { cancleNow($(this).data('keyval'));$( this ).dialog( 'close' ); },
+                                'OK':function() { cancleNow($(this).data('keyval'),$(this).data('keyval2'));$( this ).dialog( 'close' ); },
                                 'Cancel':function() { $( this ).dialog( 'close' );} }" 
                                 autoOpen="false" 
                                 modal="true" 
@@ -164,7 +182,7 @@
                             viewrecords="true"
                             >
 
-
+                            <sjg:gridColumn name="evstorId" index="STOR_ID" title="Invoice Id" hidden="true" />  
                             <sjg:gridColumn name="evinvId" index="INV_ID" title="Invoice Id"  align="left" width="10"  sortable="true"/>                        
                             <sjg:gridColumn name="evcusName" index="CNAME" title="Customer Name"  align="left" width="15"  sortable="true"/>
                             <sjg:gridColumn name="evstorName" index="SNAME" title="Store"  align="left" width="15"  sortable="true"/>

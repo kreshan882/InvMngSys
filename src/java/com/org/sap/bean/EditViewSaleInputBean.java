@@ -15,6 +15,10 @@ import java.util.Map;
  */
 public class EditViewSaleInputBean {
 
+    //cancle
+    private String storNo="";
+    private boolean success;
+    private String message;
     //search table
     private String invNo="";
     private boolean search;
@@ -45,8 +49,32 @@ public class EditViewSaleInputBean {
         this.parameterMap = parameterMap;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public List<SaleItem> getReportdatalist() {
         return reportdatalist;
+    }
+
+    public String getStorNo() {
+        return storNo;
+    }
+
+    public void setStorNo(String storNo) {
+        this.storNo = storNo;
     }
 
     public void setReportdatalist(List<SaleItem> reportdatalist) {

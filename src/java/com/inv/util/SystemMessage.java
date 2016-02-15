@@ -121,6 +121,8 @@ public class SystemMessage {
     public static final String SALE_ADD                  = "Sale add successful";
     public static final String SALE_ADD_FAIL             = "Sale add failed";
     
+    public static final String SALE_CANCLE                  = "Sale cancle successful";
+    public static final String SALE_CANCLE_FAIL             = "Sale cancle failed";
 //    public static final String ITEM_UPDATE               = "Item update successful";
 //    public static final String ITEM_UPDATE_FAIL          = "Item update failed";
 //    

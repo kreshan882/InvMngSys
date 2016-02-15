@@ -6,17 +6,22 @@
 
 package com.org.sap.action;
 
+import com.inv.init.Module;
+import com.inv.init.Operation;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
+import com.inv.util.DBProcesses;
 import com.inv.util.LogFileCreator;
 import com.inv.util.PageVarList;
 import com.inv.util.SystemMessage;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.org.login.bean.SessionUserBean;
 import com.org.sap.bean.EditViewSaleInputBean;
 import com.org.sap.bean.SaleItem;
 import com.org.sap.service.EditViewSaleService;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
@@ -27,6 +32,8 @@ import org.apache.struts2.ServletActionContext;
 public class EditViewSale extends ActionSupport implements ModelDriven<EditViewSaleInputBean> , AccessControlService{
     EditViewSaleInputBean inputBean =new EditViewSaleInputBean();
     EditViewSaleService service =new EditViewSaleService();
+     HttpServletRequest request = ServletActionContext.getRequest();
+    SessionUserBean sub = (SessionUserBean)ServletActionContext.getRequest().getSession(false).getAttribute("SessionObject");
     
     public String execute(){
         return SUCCESS;
@@ -78,10 +85,21 @@ public class EditViewSale extends ActionSupport implements ModelDriven<EditViewS
     }
     public String Cancle(){
         try {
-             System.out.println("cancleeeing"+inputBean.getInvNo());
+             System.out.println("cancleeeing"+inputBean.getInvNo()+inputBean.getStorNo());
+             if(service.rollbackStock(inputBean)){
+                DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.DELETE, SystemMessage.SALE_CANCLE+" nivoice num:"+inputBean.getInvNo(),request.getRemoteAddr());        
+                LogFileCreator.writeInfoToLog(SystemMessage.SALE_CANCLE+" Inv NO:"+inputBean.getInvNo());
+                inputBean.setSuccess(true);
+                inputBean.setMessage(SystemMessage.SALE_CANCLE);
+            }else{
+                inputBean.setSuccess(false);
+                inputBean.setMessage(SystemMessage.SALE_CANCLE_FAIL);
+            }
         } catch (Exception ex) {
-            LogFileCreator.writeErrorToLog(ex);
+            inputBean.setSuccess(false);
+            inputBean.setMessage(SystemMessage.SALE_CANCLE_FAIL);
             ex.printStackTrace();
+            LogFileCreator.writeErrorToLog(ex);
         }
         
         return "cancle";
