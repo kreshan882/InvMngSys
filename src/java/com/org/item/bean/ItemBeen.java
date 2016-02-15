@@ -9,8 +9,6 @@ package com.org.item.bean;
 
 import com.inv.util.Util;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,6 +30,7 @@ public class ItemBeen {
     private Map<String,String>  itemTypeList=Util.getItemType();
     private String statusCode;
     private String regDate;
+    private String unitTcost;
     
     private long fullCount;
        
@@ -40,6 +39,14 @@ public class ItemBeen {
     private File   image;  
     private String imageContentType;
     private String imageFileName;
+
+    public String getUnitTcost() {
+        return unitTcost;
+    }
+
+    public void setUnitTcost(String unitTcost) {
+        this.unitTcost = unitTcost;
+    }
     
     
     

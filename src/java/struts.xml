@@ -134,7 +134,13 @@
         
         <action name="*viewItem"    class="com.org.item.action.ViewItem"   method="{1}">      
             <result name="list" type="json"></result>       
-            <result name="success">/pages/itemManagement/viewItem.jsp</result>              
+            <result name="success">/pages/itemManagement/viewItem.jsp</result>    
+            <result name="excelreport" type="stream">
+                <param name="contentType">"application/vnd.ms-excel"</param>
+                <param name="inputName">excelStream</param>
+                <param name="contentDisposition">attachment;filename="item_list.xlsx"</param>
+                <param name="bufferSize">61440</param>
+            </result>           
         </action>
               
     </package> 
