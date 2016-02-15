@@ -95,10 +95,11 @@ public class SystemMessage {
     public static final String ITEM_COLOR_EMPTY           = "Empty item colour";
     public static final String ITEM_COLOR_INVALID         = "Invalid item colour";
     
-    public static final String ITEM_UNITPRIZE_EMPTY           = "Empty unit prize";
-    public static final String ITEM_UNITPRIZE_INVALID         = "Invalid unit prize";
+    public static final String ITEM_UNITPRIZE_EMPTY       = "Empty unit prize";
+    public static final String ITEM_UNITPRIZE_INVALID     = "Invalid unit prize";
     public static final String ITEM_IMAGE_EMPTY           = "Empty image do file upload";
-    
+    public static final String ITEM_STATUS_EMPTY          = "Please select status";
+     
     public static final String ITEM_ADD                  = "Item add successful";
     public static final String ITEM_ADD_FAIL             = "Item add failed";
     

@@ -89,4 +89,132 @@ public class EditViewItemService {
         
         return dataList;
     }
+     
+     
+    public boolean deleteData(EditViewItemInputBean bean) throws Exception {
+
+        boolean result=false;
+        PreparedStatement prepSt = null;
+        Connection con = null;
+        String deleteUser = null;
+        try {
+
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            deleteUser = "delete from ic_items where ITEM_NO=?";
+            prepSt = con.prepareStatement(deleteUser);
+
+            prepSt.setInt(1,  Integer.parseInt(bean.getDitemNo()));
+            prepSt.execute();
+            con.commit();
+            result=true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            con.rollback();
+            result=false;
+            throw e;
+
+        } finally {
+            if (prepSt != null) {
+                prepSt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+//Added on 22nd Aug to find user.
+
+     public void findForUpdate(EditViewItemInputBean bean) throws Exception {
+        
+        PreparedStatement prepSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        String sql = null;
+        try {
+            System.out.println(""+bean.getUpitemNo());
+            con = DBConnection.getConnection();
+            sql = "SELECT ITEM_NO,NAME,COLOUR,UNIT_PRIZE,STATUS  FROM ic_items where ITEM_NO=?";
+
+            prepSt = con.prepareStatement(sql);
+            prepSt.setString(1,bean.getUpitemNo());
+
+            res = prepSt.executeQuery();
+            if (res.next()) {
+                System.out.println(">>>>>>>>>"+res.getString("CUS_ID"));
+                bean.setUpitemNo(res.getString("CUS_ID"));
+                bean.setUpname(res.getString("NAME"));
+                bean.setUpcolour(res.getString("COLOUR"));       
+                bean.setUpunitPrize(res.getString("UNIT_PRIZE"));  
+                bean.setUpstatus(res.getString("STATUS")); 
+            }
+            
+        } catch (Exception e) {
+            con.rollback();
+            throw e;
+
+        } finally {
+            if (prepSt != null) {
+                prepSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+
+    }
+
+    public boolean updateData(EditViewItemInputBean inputBean) throws Exception {
+
+        
+        boolean ok = false;
+        PreparedStatement prepSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        String sql = null;
+        try {
+
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            
+           
+            sql = "UPDATE ic_items SET NAME=?, COLOUR=?, UNIT_PRIZE=?,STATUS=? WHERE ITEM_NO=?;";
+            prepSt = con.prepareStatement(sql);
+            prepSt.setString(1, inputBean.getUpname());
+            prepSt.setString(2, inputBean.getUpcolour());
+            prepSt.setString(3, inputBean.getUpunitPrize());
+            prepSt.setString(4, inputBean.getUpstatus());
+            prepSt.setString(5, inputBean.getUpitemNo());
+
+            int n= prepSt.executeUpdate();
+            if(n>0){
+                ok = true;
+            }
+            con.commit();
+
+        } catch (Exception e) {
+            
+            con.rollback();
+            throw e;
+
+        } finally {
+            if (prepSt != null) {
+                prepSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+           return ok;
+    }
 }

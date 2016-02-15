@@ -4,14 +4,32 @@
  */
 package com.org.item.bean;
 
+import com.inv.util.Util;
 import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author kreshan88
  */
 public class EditViewItemInputBean {
+    
+     //delete values
+    private String ditemNo;
+    private boolean dsuccess;
+    private String dmessage;
+    
+    
+    //update values
+    private String upitemNo; 
+    private String upname;
+    private String upcolour;
+    private String upunitPrize;
+    private String upstatus;
+    private Map<String,String>  usableStatusList=Util.getBasicStatus();
+    
+    //serch
     private String itemNo="";
     private boolean search;
     
@@ -41,6 +59,80 @@ public class EditViewItemInputBean {
 
     public boolean isSearch() {
         return search;
+    }
+
+    public String getDitemNo() {
+        return ditemNo;
+    }
+
+    public void setDitemNo(String ditemNo) {
+        this.ditemNo = ditemNo;
+    }
+
+    public boolean isDsuccess() {
+        return dsuccess;
+    }
+
+    public void setDsuccess(boolean dsuccess) {
+        this.dsuccess = dsuccess;
+    }
+
+    public String getDmessage() {
+        return dmessage;
+    }
+
+    public void setDmessage(String dmessage) {
+        this.dmessage = dmessage;
+    }
+
+    public String getUpitemNo() {
+        return upitemNo;
+    }
+
+    public void setUpitemNo(String upitemNo) {
+        this.upitemNo = upitemNo;
+    }
+
+    public String getUpname() {
+        return upname;
+    }
+
+    public void setUpname(String upname) {
+        this.upname = upname;
+    }
+
+    public String getUpcolour() {
+        return upcolour;
+    }
+
+    public void setUpcolour(String upcolour) {
+        this.upcolour = upcolour;
+    }
+
+    public String getUpunitPrize() {
+        return upunitPrize;
+    }
+
+    public void setUpunitPrize(String upunitPrize) {
+        this.upunitPrize = upunitPrize;
+    }
+
+
+
+    public String getUpstatus() {
+        return upstatus;
+    }
+
+    public void setUpstatus(String upstatus) {
+        this.upstatus = upstatus;
+    }
+
+    public Map<String, String> getUsableStatusList() {
+        return usableStatusList;
+    }
+
+    public void setUsableStatusList(Map<String, String> usableStatusList) {
+        this.usableStatusList = usableStatusList;
     }
 
     public void setSearch(boolean search) {
