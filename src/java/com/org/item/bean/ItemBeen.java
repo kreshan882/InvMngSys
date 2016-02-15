@@ -24,22 +24,27 @@ public class ItemBeen {
     
     //add details
     private String itemNo;
-    private String itemType; //from ITEM_TYPE table default 1
-    private Map<String,String>  itemTypeList=Util.getItemType();
     private String name;
     private String colour;
     private String unitPrize;  //double
+    private String dbfilename;  //image name
+    private String itemType; //from ITEM_TYPE table default 1
+    private Map<String,String>  itemTypeList=Util.getItemType();
+    private String statusCode;
+    private String regDate;
+    
+    private long fullCount;
+       
     
    // private String imagePath;
     private File   image;  
     private String imageContentType;
     private String imageFileName;
-    private String dbfilename;
     
-    private String statusCode;
-    private String regDate;
+    
+    
 
-   private long fullCount;
+
 
     public String getDbfilename() {
         return dbfilename;
