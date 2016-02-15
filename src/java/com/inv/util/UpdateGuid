@@ -8,4 +8,7 @@ starting
 1) ITEM_TYPE(varchar 2)
 2) page> 0401 -> URL -> firstloadaddSale
 3) when new shop open (mt_store | ic_stock
-4) UNIT_TYPR remove from item table
+4) items -> UNIT_TYPR remove
+
+5) Items-> UNIT_TCOST Double(10,2) default 0.00
+6) ic_purchase_details -> UNIT_COST Double(10,2)

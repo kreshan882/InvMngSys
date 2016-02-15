@@ -43,7 +43,10 @@
              }
              
              function imageLoad(image){
-                alert(image);
+                
+                $("#deletedialogbox").dialog('open');
+                $("#deletedialogbox").html('<br><b><font size="3" color="green"><center> \n\
+         <img src= "${pageContext.request.contextPath}/resources/images/test1.jpg" />' + image + ' ');
              }
             $.subscribe('onclicksearch', function(event, data) {
 
@@ -99,7 +102,19 @@
 
             <div class="viewuser_tbl">
                 <div id="tablediv">                  
-
+                
+                    
+                    <sj:dialog 
+                            id="deletedialogbox" 
+                            buttons="{ 'OK':function() { $( this ).dialog( 'close' );} }"  
+                            autoOpen="false" 
+                            modal="true" 
+                            title="Delete user" 
+                            width="400"
+                            height="450"
+                            position="center"
+                            />
+                    
                     <s:url var="listurl" action="ListviewItem"/>
                     <sjg:grid
                         id="gridtable"

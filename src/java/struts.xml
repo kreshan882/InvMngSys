@@ -124,7 +124,7 @@
             <result name="message">/pages/msgFrag.jsp</result>            
         </action>
               
-<!--        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       
+        <action name="*editViewItem"    class="com.org.item.action.EditViewItem"   method="{1}">       
             <result name="list" type="json"></result>           
             <result name="find" type="json"></result>              
             <result name="delete"  type="json"  ></result>
@@ -132,7 +132,6 @@
             <result name="success">/pages/itemManagement/editViewItem.jsp</result>                 
         </action>
         
--->       
         <action name="*viewItem"    class="com.org.item.action.ViewItem"   method="{1}">      
             <result name="list" type="json"></result>       
             <result name="success">/pages/itemManagement/viewItem.jsp</result>              
@@ -182,19 +181,7 @@
             <result name="message">/pages/msgFrag.jsp</result>          
         </action>
 
-        <action name="*editViewItem" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/itemManagement/editViewItem.jsp</result>         
-        </action> 
-<!--        <action name="*viewItem" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/itemManagement/viewItem.jsp</result>         
-        </action> -->
-        
-<!--        <action name="*addSale" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/salePurchesManagement/addSale.jsp</result>         
-        </action> -->
-<!--        <action name="*editViewSale" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/salePurchesManagement/editViewSale.jsp</result>         
-        </action> -->
+
         <action name="*addPurches" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/salePurchesManagement/addPurches.jsp</result>         
         </action> 
