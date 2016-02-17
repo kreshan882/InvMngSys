@@ -46,7 +46,7 @@
                 
                 $("#imagedialogbox").dialog('open');
                 $("#imagedialogbox").html('<br><b><font size="3" color="green"><center> \n\
-                <img src= "${pageContext.request.contextPath}/resources/images/test1.jpg" />' + image + ' ');
+                <img  src="/items/'+image+'" /> ');
              }
              
             $.subscribe('onclicksearch', function(event, data) {

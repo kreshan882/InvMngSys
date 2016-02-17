@@ -241,16 +241,7 @@ public static Map<String, String> getStorList() throws Exception{
             return hashtext;
     }
 
-    public static void setDBxmlPath() throws Exception {
-        if (System.getProperty("os.name").startsWith("Windows")) {
-
-            InitConfigValue.SCONFIGPATH = "C:\\inventory\\sconfig\\";
-        } else if (System.getProperty("os.name").startsWith("Linux")) {
-
-            InitConfigValue.SCONFIGPATH = "/opt/inventory/sconfig/";
-        }
-
-    }
+  
     
     
 

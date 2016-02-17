@@ -24,5 +24,6 @@ public class InitConfigValue {
 	public static int 			DBCONNECTIONTIMEOUT;
 	public static int 			DBCONEXPIRTIMEOUT;
         public static String  SCONFIGPATH ;
+        public static String  GF_ROOT_PATH ;
 
 }

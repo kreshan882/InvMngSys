@@ -5,7 +5,7 @@
 package com.inv.global;
 
 import com.inv.db.DBConnection;
-import com.inv.util.Util;
+import com.inv.init.InitConfigValue;
 import com.inv.util.ReaderDbInit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +24,14 @@ public class ContextListener implements ServletContextListener{
         try {
             
 //~~~~~~~~~~start set globle configuration data~~~~~~~~~~~~~~
-            Util.setDBxmlPath();
+            //String GF_ROOT_PATH="C:\\Users\\kreshan\\AppData\\Roaming\\NetBeans\\7.4\\config\\GF_4.0\\domain1\\docroot\\";
+            if (System.getProperty("os.name").startsWith("Windows")) {
+
+                InitConfigValue.SCONFIGPATH = "C:\\inventory\\sconfig\\";
+            } else if (System.getProperty("os.name").startsWith("Linux")) {
+
+                InitConfigValue.SCONFIGPATH = "/opt/inventory/sconfig/";
+            }
             ReaderDbInit.readConfigValues();
             DBConnection.createDbPool();
            

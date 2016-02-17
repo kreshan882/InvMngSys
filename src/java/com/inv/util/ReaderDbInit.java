@@ -40,6 +40,7 @@ public class ReaderDbInit {
 
             InitConfigValue.DBCONNECTIONTIMEOUT                 = Integer.parseInt(cfg.get("DB_CONNECTION_TIMEOUT").trim());
             InitConfigValue.DBCONEXPIRTIMEOUT                   = Integer.parseInt(cfg.get("DB_CON_EXPIR_TIMEOUT").trim());
+            InitConfigValue.GF_ROOT_PATH                        = cfg.get("GF_ROOT_PATH").trim();
         }
     
   

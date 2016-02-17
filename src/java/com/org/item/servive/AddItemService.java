@@ -13,6 +13,8 @@ import com.inv.init.Status;
 import com.org.login.bean.SessionUserBean;
 import com.inv.util.Util;
 import com.org.item.bean.ItemBeen;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,6 +33,7 @@ public class AddItemService {
         
         
         try {
+            FileInputStream inputStream = new FileInputStream(userBean.getImage());
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             query="INSERT INTO ic_items(ITEM_NO,NAME,ITEM_TYPE,COLOUR,UNIT_PRIZE,"
@@ -48,7 +51,6 @@ public class AddItemService {
             preStat.setString(6, userBean.getDbfilename());
             preStat.setString(7, Status.ACTIVE);
             preStat.setDate(8, (Date) Util.getLocalDate());
-
            int n= preStat.executeUpdate();
            if(n >= 0){
                ok=true;

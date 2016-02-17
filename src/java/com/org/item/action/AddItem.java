@@ -7,6 +7,7 @@
 package com.org.item.action;
 
 
+import com.inv.init.InitConfigValue;
 import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.util.LogFileCreator;
@@ -51,7 +52,8 @@ public class AddItem extends ActionSupport implements ModelDriven<ItemBeen> , Ac
         try {
             
             if (doValidation(inputBean)) {
-                String IMAGE_PATH=Util.getOSLogPath(sub.getLogFilePath()+"items");
+                String IMAGE_PATH=Util.getOSLogPath(InitConfigValue.GF_ROOT_PATH+"items");
+                System.out.println("image path>"+IMAGE_PATH);
                 String filenm[] = inputBean.getImageFileName().split("\\.",2);    
                 inputBean.setDbfilename(inputBean.getItemNo()+"."+filenm[1]);
                 File newFileLocation  = new File(IMAGE_PATH, inputBean.getDbfilename());
