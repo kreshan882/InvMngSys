@@ -166,7 +166,43 @@ public class Util {
         return custumerlist;
     }
     
-public static Map<String, String> getStorList() throws Exception{
+        public static Map<String, String> getSupplierList() throws Exception{
+        Map<String, String> supplierlist = new HashMap<String, String>();
+         
+        PreparedStatement perSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+
+            String sql = "SELECT SUP_ID,NAME FROM  ic_supplier where status=?";
+            perSt = con.prepareStatement(sql);
+            perSt.setString(1, Status.ACTIVE);
+            res = perSt.executeQuery();
+
+            while (res.next()) {
+               supplierlist.put(res.getString("SUP_ID"), res.getString("NAME"));
+            }
+            
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (perSt != null) {
+                perSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        
+        return supplierlist;
+    }
+
+    public static Map<String, String> getStorList() throws Exception{
         Map<String, String> storlist = new HashMap<String, String>();
          
         PreparedStatement perSt = null;

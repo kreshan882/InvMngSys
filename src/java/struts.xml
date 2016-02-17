@@ -177,7 +177,23 @@
             </result>  
             <result name="cancle" type="json"></result>       
         </action> 
-             
+       
+        <action name="*addPurches" class="com.org.sap.action.AddPurches" method="{1}">
+            <result name="success">/pages/salePurchesManagement/addPurches.jsp</result>         
+            <result name="message">/pages/msgFrag.jsp</result>
+            <result name="loadItemDetail" type="json"></result>  
+            <result name="addItem" type="json"></result>  
+            <result name="list" type="json"></result>    
+            <result name="delete" type="json"></result>
+            <result name="submitInvoice" type="json"></result>  
+            <result name="jasperreport" type="jasper">            
+                <param name="location">/resources/jasper/saleReport.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param>
+            </result> 
+        </action>       
                 
     </package> 
      <package name="inventory_configuration" namespace="/" extends="pglobal">
@@ -188,9 +204,7 @@
         </action>
 
 
-        <action name="*addPurches" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/salePurchesManagement/addPurches.jsp</result>         
-        </action> 
+        
         <action name="*editViewPurches" class="com.org.conf.action.Protocols" method="{1}">
             <result name="success">/pages/salePurchesManagement/editViewPurches.jsp</result>         
         </action> 

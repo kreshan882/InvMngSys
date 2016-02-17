@@ -7,7 +7,7 @@ GF_ROOT_PATH=/opt/Users/kreshan/AppData/Roaming/NetBeans/7.4/config/GF_4.0/domai
 #####################################
 starting
 1) ITEM_TYPE(varchar 2)
-2) page> 0401 -> URL -> firstloadaddSale
+2) page> 0401 -> URL -> firstloadaddSale/firstloadaddPurches
 3) when new shop open (mt_store | ic_stock
 4) items -> UNIT_TYPR remove
 
