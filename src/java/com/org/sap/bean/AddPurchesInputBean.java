@@ -39,7 +39,7 @@ public class AddPurchesInputBean {
     private String dpurNo;
     
     //grid table
-    private List<SaleItem> gridModel;
+    private List<PurchesItem> gridModel;
     private Integer rows = 0;
     private Integer page = 0;
     private Integer total = 0;
@@ -176,13 +176,15 @@ public class AddPurchesInputBean {
         this.dpurNo = dpurNo;
     }
 
-    public List<SaleItem> getGridModel() {
+    public List<PurchesItem> getGridModel() {
         return gridModel;
     }
 
-    public void setGridModel(List<SaleItem> gridModel) {
+    public void setGridModel(List<PurchesItem> gridModel) {
         this.gridModel = gridModel;
     }
+
+
 
     public Integer getRows() {
         return rows;
@@ -286,6 +288,10 @@ public class AddPurchesInputBean {
 
     public void setPdfpurchaseId(String pdfpurchaseId) {
         this.pdfpurchaseId = pdfpurchaseId;
+    }
+
+    public String getInvoiceId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

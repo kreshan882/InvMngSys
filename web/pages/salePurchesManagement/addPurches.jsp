@@ -284,6 +284,7 @@
                    
                                     <sjg:gridColumn name="itemNo" index="ITEM_NO" title="Barcode"  align="left" width="10"  sortable="true"/>                        
                                     <sjg:gridColumn name="count" index="COUNT" title="Quantity"  align="left" width="15"  sortable="true"/>
+                                    <sjg:gridColumn name="unitCost" index="UNIT_COST" title="Unit Cost"  align="left" width="15"  sortable="true"/>
                                     <sjg:gridColumn name="unitPrize" index="UNIT_PRIZE" title="Unit Prize"  align="left" width="15"  sortable="true"/>
                                     <sjg:gridColumn name="totalPrize" index="UNIT_PRIZE" title="Total Prize"  align="left" width="12"  sortable="true"/>
 

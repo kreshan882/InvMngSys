@@ -7,12 +7,18 @@
 package com.org.sap.service;
 
 import com.inv.db.DBConnection;
+import com.inv.init.Status;
+import com.inv.util.Util;
 import com.org.sap.bean.AddPurchesInputBean;
 import com.org.sap.bean.PurchesItem;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -100,30 +106,31 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             
-            String sqlCount = "SELECT COUNT(*) AS TOTAL FROM ic_invoice_details WHERE INV_ID=?";
+            String sqlCount = "SELECT COUNT(*) AS TOTAL FROM ic_purchase_details WHERE PUR_ID=?";
             
             perSt = con.prepareStatement(sqlCount);  
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId())); 
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId())); 
             res = perSt.executeQuery();
             
             while (res.next()) {
                 totalCount = res.getLong("TOTAL");                
             }          
        
-            quary ="SELECT INV_ID,ITEM_NO,COUNT,UNIT_PRIZE,TOTAL_PRIZE FROM ic_invoice_details WHERE INV_ID=?"
+            quary ="SELECT PUR_ID,ITEM_NO,COUNT,UNIT_COST,UNIT_PRIZE,TOTAL_PRIZE FROM ic_purchase_details WHERE PUR_ID=?"
                     + " "+orderBy+ " LIMIT " + first + "," + max;
             
             perSt = con.prepareStatement(quary); 
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId())); 
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId())); 
             res = perSt.executeQuery();             
             
             dataList = new ArrayList<PurchesItem>();
              while (res.next()) {
                  
                  PurchesItem been = new PurchesItem();
-                 been.setInvId(res.getString("INV_ID"));
+                 been.setPurId(res.getString("PUR_ID"));
                  been.setItemNo(res.getString("ITEM_NO"));
                  been.setCount(res.getString("COUNT"));
+                 been.setUnitCost(res.getString("UNIT_COST"));
                  been.setUnitPrize(res.getString("UNIT_PRIZE"));
                  been.setTotalPrize(res.getString("TOTAL_PRIZE"));
                  
@@ -152,7 +159,7 @@ public class AddPurchesService {
 
 
 
-    public boolean checkInvoiceId(String invoiceId) throws Exception{
+    public boolean checkPurcheaseId(String purId) throws Exception{
         boolean isAlready=false;
         PreparedStatement perSt = null;
         ResultSet res = null;
@@ -161,9 +168,9 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "SELECT * FROM ic_invoice where INV_ID=?";
+            String sql = "SELECT * FROM ic_purchase where PUR_ID=?";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(invoiceId));
+            perSt.setInt(1, Integer.parseInt(purId));
             res = perSt.executeQuery();
 
             if(res.next()) {
@@ -197,11 +204,11 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "INSERT INTO ic_invoice(INV_ID,CUS_ID,STOR_ID,STATUS,DATE) "
+            String sql = "INSERT INTO ic_purchase(PUR_ID,SUP_ID,STOR_ID,STATUS,DATE) "
                     + "VALUES(?,?,?,?,?)";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
-            perSt.setInt(2, Integer.parseInt(inputBean.getCustId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId()));
+            perSt.setInt(2, Integer.parseInt(inputBean.getSuppId()));
             perSt.setInt(3, Integer.parseInt(inputBean.getStorId()));
             perSt.setString(4, Status.PENDING);
             perSt.setDate(5, (Date) Util.getLocalDate());
@@ -232,14 +239,15 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "INSERT INTO ic_invoice_details(INV_ID,ITEM_NO,COUNT,UNIT_PRIZE,TOTAL_PRIZE) "
-                    + "VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO ic_purchase_details(PUR_ID,ITEM_NO,COUNT,UNIT_COST,UNIT_PRIZE,TOTAL_PRIZE) "
+                    + "VALUES(?,?,?,?,?,?)";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId()));
             perSt.setString(2, inputBean.getItemCode().trim());
             perSt.setDouble(3, Double.parseDouble(inputBean.getItemQut()));
-            perSt.setDouble(4, Double.parseDouble(inputBean.getItemPrize()));
-            perSt.setDouble(5, Double.parseDouble(inputBean.getItemQut()) * Double.parseDouble(inputBean.getItemPrize()) );
+            perSt.setDouble(4, Double.parseDouble(inputBean.getItemCost()));
+            perSt.setDouble(5, Double.parseDouble(inputBean.getItemPrize()));
+            perSt.setDouble(6, Double.parseDouble(inputBean.getItemQut()) * (Double.parseDouble(inputBean.getItemPrize())+Double.parseDouble(inputBean.getItemCost())) );
             int n= perSt.executeUpdate();
             if(n >= 0){
                 ok=true;
@@ -270,7 +278,7 @@ public class AddPurchesService {
 
             String sql = "DELETE  FROM ic_invoice_details where INV_ID=? and ITEM_NO=? ";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1,  Integer.parseInt(inputBean.getDinvoNo()));
+            perSt.setInt(1,  Integer.parseInt(inputBean.getDpurNo()));
             perSt.setString(2,  inputBean.getDitemNo().trim());
             perSt.execute();
             con.commit();
@@ -290,44 +298,44 @@ public class AddPurchesService {
         }
     }
 
-    public boolean checkItemQtyAvaliable(AddPurchesInputBean inputBean) throws Exception{
-        boolean QtyAvaliable=false;
-        PreparedStatement perSt = null;
-        ResultSet res = null;
-        Connection con = null;
-        try {
-            con = DBConnection.getConnection();
-            con.setAutoCommit(false);
-
-            String sql = "SELECT COUNT FROM ic_stock where STOR_ID=? AND ITEM_NO=?";
-            perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
-            perSt.setString(2, inputBean.getItemCode());
-            res = perSt.executeQuery();
-
-            if(res.next()) {
-                if(res.getDouble("COUNT") >= Double.parseDouble(inputBean.getItemQut())){
-                    QtyAvaliable=true;
-                }
-               
-            }
-            
-        } catch (Exception ex) {
-            QtyAvaliable=false;
-            throw ex;
-        } finally {
-            if (perSt != null) {
-                perSt.close();
-            }
-            if (res != null) {
-                res.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return QtyAvaliable;
-    }
+//    public boolean checkItemQtyAvaliable(AddPurchesInputBean inputBean) throws Exception{
+//        boolean QtyAvaliable=false;
+//        PreparedStatement perSt = null;
+//        ResultSet res = null;
+//        Connection con = null;
+//        try {
+//            con = DBConnection.getConnection();
+//            con.setAutoCommit(false);
+//
+//            String sql = "SELECT COUNT FROM ic_stock where STOR_ID=? AND ITEM_NO=?";
+//            perSt = con.prepareStatement(sql);
+//            perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
+//            perSt.setString(2, inputBean.getItemCode());
+//            res = perSt.executeQuery();
+//
+//            if(res.next()) {
+//                if(res.getDouble("COUNT") >= Double.parseDouble(inputBean.getItemQut())){
+//                    QtyAvaliable=true;
+//                }
+//               
+//            }
+//            
+//        } catch (Exception ex) {
+//            QtyAvaliable=false;
+//            throw ex;
+//        } finally {
+//            if (perSt != null) {
+//                perSt.close();
+//            }
+//            if (res != null) {
+//                res.close();
+//            }
+//            if (con != null) {
+//                con.close();
+//            }
+//        }
+//        return QtyAvaliable;
+//    }
 
     public boolean submitInvoice(AddPurchesInputBean inputBean) throws Exception{
         boolean qtySucess=false;
@@ -406,7 +414,7 @@ public class AddPurchesService {
             String sql = "SELECT inv.INV_ID,CAST(inv.DATE AS CHAR) AS INV_DATE,inv.TOTAL,cus.NAME,cus.EMAIL,cus.ADDRESS "
                     + "FROM ic_invoice inv,ic_customer cus where inv.CUS_ID=cus.CUS_ID AND inv.INV_ID=?";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getPdfinvoiceId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPdfpurchaseId()));
             res = perSt.executeQuery();
 
             if(res.next()) {
@@ -438,7 +446,7 @@ public class AddPurchesService {
         PreparedStatement perSt = null;
         ResultSet res = null;
         Connection con = null;
-        SaleItem saleItem=null;
+        PurchesItem saleItem=null;
         try {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
@@ -446,11 +454,11 @@ public class AddPurchesService {
             String sql = "SELECT inv.ITEM_NO,ite.NAME,inv.COUNT,inv.UNIT_PRIZE,inv.TOTAL_PRIZE "
                     + "FROM ic_invoice_details inv ,ic_items ite where inv.ITEM_NO=ite.ITEM_NO AND inv.INV_ID=?";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getPdfinvoiceId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPdfpurchaseId()));
             res = perSt.executeQuery();
 
             while(res.next()) {
-                saleItem = new SaleItem();
+                saleItem = new PurchesItem();
                     saleItem.setPdfItmNo(res.getString("ITEM_NO"));
                     saleItem.setPdfItmName(res.getString("NAME"));  
                     saleItem.setPdfItmQty(res.getString("COUNT"));
@@ -483,9 +491,9 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "SELECT * FROM ic_invoice_details where INV_ID=? AND ITEM_NO=?;";
+            String sql = "SELECT * FROM ic_purchase_details where PUR_ID=? AND ITEM_NO=?";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId()));
             perSt.setInt(2, Integer.parseInt(inputBean.getItemCode()));
             res = perSt.executeQuery();
 

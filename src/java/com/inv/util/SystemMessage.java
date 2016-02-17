@@ -116,18 +116,23 @@ public class SystemMessage {
     public static final String SALE_ITEM_NOTAVAL           = "Item qty not avaliavle";
     public static final String SALE_ITEM_ALREADT_ADD       = "Item already added";
     
-
-    
     public static final String SALE_ADD                  = "Sale add successful";
     public static final String SALE_ADD_FAIL             = "Sale add failed";
     
     public static final String SALE_CANCLE                  = "Sale cancle successful";
     public static final String SALE_CANCLE_FAIL             = "Sale cancle failed";
-//    public static final String ITEM_UPDATE               = "Item update successful";
-//    public static final String ITEM_UPDATE_FAIL          = "Item update failed";
-//    
-//    public static final String ITEM_DELETE               = "Item delete successful";
-//    public static final String ITEM_DELETE_FAIL          = "Item delete failed";
+
+     /////////////////////////////////////////////////////////////////////////
+    // Sale managment
+    ////////////////////////////////////////////////////////////////////////
+    public static final String PURCH_ITEM_NOTAVAL           = "Item qty not avaliavle";
+    public static final String PURCH_ITEM_ALREADT_ADD       = "Item already added";
+    
+    public static final String PURCH_ADD                  = "Purchase add successful";
+    public static final String PURCH_ADD_FAIL             = "Purchanse add failed";
+    
+    public static final String PURCH_CANCLE               = "Purchase cancle successful";
+    public static final String PURCH_CANCLE_FAIL          = "Purchanse cancle failed";
     
     public static final String USR_PW_CHG        = "User password change successful";
     public static final String USR_PW_UPDATE     = "User password update successful";

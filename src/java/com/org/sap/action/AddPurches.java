@@ -6,8 +6,11 @@
 
 package com.org.sap.action;
 
+import com.inv.init.Module;
+import com.inv.init.Operation;
 import com.inv.util.AccessControlService;
 import com.inv.util.Common;
+import com.inv.util.DBProcesses;
 import com.inv.util.LogFileCreator;
 import com.inv.util.PageVarList;
 import com.inv.util.SystemMessage;
@@ -16,7 +19,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.login.bean.SessionUserBean;
 import com.org.sap.bean.AddPurchesInputBean;
+import com.org.sap.bean.PurchesItem;
 import com.org.sap.service.AddPurchesService;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
@@ -61,8 +66,8 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
     public String addItem(){
         try {
             if(!service.checkItemalready(inputBean)){
-                if(service.checkItemQtyAvaliable(inputBean)){
-                    if(service.checkInvoiceId(inputBean.getInvoiceId())){   //outher Rows
+//                if(service.checkItemQtyAvaliable(inputBean)){
+                    if(service.checkPurcheaseId(inputBean.getPurchaseId())){   //outher Rows
                         service.addInvoiceDetail(inputBean);
                         inputBean.setItemadd(true);
                     }else{   //add first row
@@ -70,13 +75,13 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
                         service.addInvoiceDetail(inputBean);
                         inputBean.setItemadd(true);
                     }
-                }else{
-                    inputBean.setItemadd(false);
-                    inputBean.setMessage(SystemMessage.SALE_ITEM_NOTAVAL);
-                }
+//                }else{
+//                    inputBean.setItemadd(false);
+//                    inputBean.setMessage(SystemMessage.SALE_ITEM_NOTAVAL);
+//                }
             }else{
                 inputBean.setItemadd(false);
-                inputBean.setMessage(SystemMessage.SALE_ITEM_ALREADT_ADD);
+                inputBean.setMessage(SystemMessage.PURCH_ITEM_ALREADT_ADD);
             }
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
@@ -90,7 +95,7 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
     
     public String List(){
         try {
-                List<SaleItem> dataList = null;
+                List<PurchesItem> dataList = null;
                 int rows = inputBean.getRows();
                 int page = inputBean.getPage();
                 int to = (rows * page);
@@ -161,7 +166,7 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
         try {
              service.setPdfParameters(inputBean);
              service.setPdfDataList(inputBean);
-             inputBean.setFilename("INVOICE-"+inputBean.getPdfinvoiceId()+".pdf");
+             inputBean.setFilename("INVOICE-"+inputBean.getPdfpurchaseId()+".pdf");
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();
