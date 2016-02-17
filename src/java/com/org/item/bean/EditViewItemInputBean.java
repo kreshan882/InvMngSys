@@ -6,6 +6,7 @@ package com.org.item.bean;
 
 import com.inv.util.Util;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,12 @@ public class EditViewItemInputBean {
     private String upunitPrize;
     private String upstatus;
     private Map<String,String>  usableStatusList=Util.getBasicStatus();
+    // private String imagePath;
+    private File   image;  
+    private String imageContentType;
+    private String imageFileName;
+    private String dbfilename;
+    
     
     //serch
     private String itemNo="";
@@ -49,6 +56,42 @@ public class EditViewItemInputBean {
     private String searchOper;
     private boolean loadonce = false;  
 
+    
+
+    public String getDbfilename() {
+        return dbfilename;
+    }
+
+    public void setDbfilename(String dbfilename) {
+        this.dbfilename = dbfilename;
+    }
+    
+
+    public File getImage() {
+        return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+    
+    
     public String getItemNo() {
         return itemNo;
     }

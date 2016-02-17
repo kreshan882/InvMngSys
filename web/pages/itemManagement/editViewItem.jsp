@@ -217,9 +217,9 @@
                                     <td><s:select  name="upstatus" id="upstatus" headerKey="-1"  headerValue="---Select---" 
                                                list="%{usableStatusList}" listKey="key" listValue="value"  cssClass="dropdown" /></td>
                                     <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td class="content_td formLable"></td>
-                                    <td></td>
+                                    <td class="content_td formLable">Upload Image</td>
+                                    <td class="content_td formLable">:</td>
+                                    <td><s:file  id = "image" name="image" label="File" cssClass="fileField"  /></td>
                                 </tr>
 
                                 <tr>

@@ -43,10 +43,9 @@
              }
              
              function imageLoad(image){
-                
-                $("#deletedialogbox").dialog('open');
-                $("#deletedialogbox").html('<br><b><font size="3" color="green"><center> \n\
-         <img src= "${pageContext.request.contextPath}/resources/images/test1.jpg" />' + image + ' ');
+                $("#imagedialogbox").dialog('open');
+                $("#imagedialogbox").html('<br><b><font size="3" color="green"><center> \n\
+                <img  src="/items/'+image+'" /> ');
              }
             $.subscribe('onclicksearch', function(event, data) {
 
@@ -104,12 +103,12 @@
                 <div id="tablediv">                  
                 
                     
-                    <sj:dialog 
-                            id="deletedialogbox" 
+                            <sj:dialog 
+                            id="imagedialogbox" 
                             buttons="{ 'OK':function() { $( this ).dialog( 'close' );} }"  
                             autoOpen="false" 
                             modal="true" 
-                            title="Delete user" 
+                            title="View Image" 
                             width="400"
                             height="450"
                             position="center"

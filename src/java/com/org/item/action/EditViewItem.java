@@ -4,6 +4,7 @@
  */
 package com.org.item.action;
 
+import com.inv.init.InitConfigValue;
 import com.inv.init.Module;
 import com.inv.init.Operation;
 import com.inv.util.AccessControlService;
@@ -19,9 +20,11 @@ import com.org.item.bean.EditViewItemInputBean;
 import com.org.item.bean.ItemBeen;
 import com.org.item.servive.EditViewItemService;
 import com.org.login.bean.SessionUserBean;
+import java.io.File;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 /**
@@ -111,7 +114,17 @@ public class EditViewItem extends ActionSupport implements ModelDriven<EditViewI
          
         try {
             if (doValidation(inputBean)) {
+                if( null ==inputBean.getImageFileName() || inputBean.getImageFileName().isEmpty()){ 
+                                 
+                }else{
+                    String IMAGE_PATH=Util.getOSLogPath(InitConfigValue.GF_ROOT_PATH+"items");
+                    String filenm[] = inputBean.getImageFileName().split("\\.",2);    
+                    inputBean.setDbfilename(inputBean.getUpitemNo()+"."+filenm[1]);
+                    File newFileLocation  = new File(IMAGE_PATH, inputBean.getDbfilename());
+                    FileUtils.copyFile(inputBean.getImage(), newFileLocation);   
+                }
                if(service.updateData(inputBean)){
+
                 addActionMessage(SystemMessage.CUS_UPDATE);
                 DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.ITEM_MANAGEMENT, Operation.UPDATE, SystemMessage.ITEM_UPDATE+":"+inputBean.getUpitemNo(),request.getRemoteAddr());     
                 LogFileCreator.writeInfoToLog(SystemMessage.ITEM_UPDATE+":"+inputBean.getUpitemNo()); 

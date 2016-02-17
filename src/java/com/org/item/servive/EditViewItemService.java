@@ -183,14 +183,26 @@ public class EditViewItemService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             
+                if( null ==inputBean.getImageFileName() || inputBean.getImageFileName().isEmpty()){ 
+                        sql = "UPDATE ic_items SET NAME=?, COLOUR=?, UNIT_PRIZE=?,STATUS=? WHERE ITEM_NO=?;";
+                        prepSt = con.prepareStatement(sql);
+                        prepSt.setString(1, inputBean.getUpname());
+                        prepSt.setString(2, inputBean.getUpcolour());
+                        prepSt.setString(3, inputBean.getUpunitPrize());
+                        prepSt.setString(4, inputBean.getUpstatus());
+                        prepSt.setString(5, inputBean.getUpitemNo());            
+                }else{
+                        sql = "UPDATE ic_items SET NAME=?, COLOUR=?, UNIT_PRIZE=?,STATUS=?,IMG_PATH=? WHERE ITEM_NO=?;";
+                        prepSt = con.prepareStatement(sql);
+                        prepSt.setString(1, inputBean.getUpname());
+                        prepSt.setString(2, inputBean.getUpcolour());
+                        prepSt.setString(3, inputBean.getUpunitPrize());
+                        prepSt.setString(4, inputBean.getUpstatus());
+                        prepSt.setString(5, inputBean.getDbfilename());
+                        prepSt.setString(6, inputBean.getUpitemNo());
+                }
            
-            sql = "UPDATE ic_items SET NAME=?, COLOUR=?, UNIT_PRIZE=?,STATUS=? WHERE ITEM_NO=?;";
-            prepSt = con.prepareStatement(sql);
-            prepSt.setString(1, inputBean.getUpname());
-            prepSt.setString(2, inputBean.getUpcolour());
-            prepSt.setString(3, inputBean.getUpunitPrize());
-            prepSt.setString(4, inputBean.getUpstatus());
-            prepSt.setString(5, inputBean.getUpitemNo());
+            
 
             int n= prepSt.executeUpdate();
             if(n>0){
