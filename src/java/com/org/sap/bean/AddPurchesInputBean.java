@@ -184,8 +184,6 @@ public class AddPurchesInputBean {
         this.gridModel = gridModel;
     }
 
-
-
     public Integer getRows() {
         return rows;
     }
@@ -290,9 +288,6 @@ public class AddPurchesInputBean {
         this.pdfpurchaseId = pdfpurchaseId;
     }
 
-    public String getInvoiceId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
     
 }

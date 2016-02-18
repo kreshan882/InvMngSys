@@ -118,6 +118,8 @@
                         $('#upcolour').val(data.upcolour);
                         $('#upunitPrize').val(data.upunitPrize);
                         $('#upstatus').val(data.upstatus);
+                        $('#image').attr('readOnly', true);
+                        $('#image').val("");
                     },
                     error: function(data) {
                         window.location = "${pageContext.request.contextPath}/logoutCall.action";
@@ -139,6 +141,8 @@
                 $('#upunitPrize').val("");
                 $('#uptpOffice').val("");
                 $('#upstatus').val("-1");
+                $('#image').attr('readOnly', true);
+                $('#image').val("");
                 jQuery("#gridtable").trigger("reloadGrid");
             }
             
@@ -219,7 +223,7 @@
                                     <td class="content_td formLable"></td>
                                     <td class="content_td formLable">Upload Image</td>
                                     <td class="content_td formLable">:</td>
-                                    <td><s:file  id = "image" name="image" label="File" cssClass="fileField"  /></td>
+                                    <td><s:file  id = "image" name="image" label="File" cssClass="fileField" /></td>
                                 </tr>
 
                                 <tr>

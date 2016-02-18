@@ -61,6 +61,7 @@ public class AddPurchesService {
         PreparedStatement perSt = null;
         ResultSet res = null;
         Connection con = null;
+        System.out.println("bbbbbb");
         try {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);

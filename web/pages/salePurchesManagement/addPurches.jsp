@@ -53,6 +53,7 @@
                     });
                 }
                  function addItem() {
+                 
                     var purchaseId=$('#purchaseId').val();
                     var storId=$('#storId').val();
                     var suppId=$('#suppId').val();
@@ -280,7 +281,7 @@
                                     viewrecords="true"
                                     >
 
-                                    <sjg:gridColumn name="invId"  title="invoice id"  hidden="true"/> 
+                                    <sjg:gridColumn name="purId" index="PUR_ID"  title="purches id"  hidden="true"/> 
                    
                                     <sjg:gridColumn name="itemNo" index="ITEM_NO" title="Barcode"  align="left" width="10"  sortable="true"/>                        
                                     <sjg:gridColumn name="count" index="COUNT" title="Quantity"  align="left" width="15"  sortable="true"/>
