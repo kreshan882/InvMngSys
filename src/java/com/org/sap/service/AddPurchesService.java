@@ -277,7 +277,7 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            String sql = "DELETE  FROM ic_invoice_details where INV_ID=? and ITEM_NO=? ";
+            String sql = "DELETE  FROM ic_purchase_details where PUR_ID=? and ITEM_NO=? ";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1,  Integer.parseInt(inputBean.getDpurNo()));
             perSt.setString(2,  inputBean.getDitemNo().trim());
@@ -350,9 +350,9 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             //get total
-            sql = "SELECT SUM(TOTAL_PRIZE) AS TOTAL_PRIZE  FROM ic_invoice_details where INV_ID=?";
+            sql = "SELECT SUM(TOTAL_PRIZE) AS TOTAL_PRIZE  FROM ic_purchase_details where PUR_ID=?";
             perSt = con.prepareStatement(sql);
-            perSt.setInt(1, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(1, Integer.parseInt(inputBean.getPurchaseId()));
             res = perSt.executeQuery();
 
             if(res.next()) {
@@ -363,11 +363,11 @@ public class AddPurchesService {
             perSt = null;
             res = null;
             sql=null;
-            sql = "update ic_invoice SET STATUS=?,TOTAL=? where INV_ID=?";
+            sql = "update ic_purchase SET STATUS=?,TOTAL=? where PUR_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setString(1, Status.ACTIVE);
             perSt.setDouble(2, total);
-            perSt.setInt(3, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(3, Integer.parseInt(inputBean.getPurchaseId()));
             perSt.executeUpdate();
             con.commit();
 
@@ -376,12 +376,12 @@ public class AddPurchesService {
             res = null;
             sql=null;
 
-            sql = "UPDATE ic_stock AS st INNER JOIN ic_invoice_details AS inv  ON st.ITEM_NO=inv.ITEM_NO "
-                    + " SET st.COUNT=(st.COUNT - inv.COUNT) "
-                    + " WHERE  st.STOR_ID=? and inv.INV_ID=? ";
+            sql = "UPDATE ic_stock AS st INNER JOIN ic_purchase_details AS inv  ON st.ITEM_NO=inv.ITEM_NO "
+                    + " SET st.COUNT=(st.COUNT + inv.COUNT) "
+                    + " WHERE  st.STOR_ID=? and inv.PUR_ID=? ";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getStorId()));
-            perSt.setInt(2, Integer.parseInt(inputBean.getInvoiceId()));
+            perSt.setInt(2, Integer.parseInt(inputBean.getPurchaseId()));
             int n= perSt.executeUpdate();
             if(n >= 0){
                 qtySucess=true;
@@ -412,15 +412,15 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             Map pdfParaMtr = new HashMap();
-            String sql = "SELECT inv.INV_ID,CAST(inv.DATE AS CHAR) AS INV_DATE,inv.TOTAL,cus.NAME,cus.EMAIL,cus.ADDRESS "
-                    + "FROM ic_invoice inv,ic_customer cus where inv.CUS_ID=cus.CUS_ID AND inv.INV_ID=?";
+            String sql = "SELECT pur.PUR_ID,CAST(pur.DATE AS CHAR) AS PUR_DATE,pur.TOTAL,sup.NAME,sup.EMAIL,sup.ADDRESS "
+                    + " ic_purchase pur,ic_supplier sup where pur.SUP_ID=sup.SUP_ID AND pur.PUR_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getPdfpurchaseId()));
             res = perSt.executeQuery();
 
             if(res.next()) {
-                pdfParaMtr.put("pdfInvNo", res.getString("INV_ID"));
-                pdfParaMtr.put("pdfInvDate", res.getString("INV_DATE"));
+                pdfParaMtr.put("pdfInvNo", res.getString("PUR_ID"));
+                pdfParaMtr.put("pdfInvDate", res.getString("PUR_DATE"));
                 pdfParaMtr.put("pdfTotal", res.getString("TOTAL"));
                 pdfParaMtr.put("pdfCusName", res.getString("NAME"));
                 pdfParaMtr.put("pdfCusEmail", res.getString("EMAIL"));
@@ -452,8 +452,8 @@ public class AddPurchesService {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
             List datalist = new ArrayList();
-            String sql = "SELECT inv.ITEM_NO,ite.NAME,inv.COUNT,inv.UNIT_PRIZE,inv.TOTAL_PRIZE "
-                    + "FROM ic_invoice_details inv ,ic_items ite where inv.ITEM_NO=ite.ITEM_NO AND inv.INV_ID=?";
+            String sql = "SELECT inv.ITEM_NO,ite.NAME,inv.COUNT,inv.UNIT_COST,inv.UNIT_PRIZE,inv.TOTAL_PRIZE "
+                    + "FROM ic_purchase_details inv ,ic_items ite where inv.ITEM_NO=ite.ITEM_NO AND inv.PUR_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getPdfpurchaseId()));
             res = perSt.executeQuery();
@@ -463,6 +463,7 @@ public class AddPurchesService {
                     saleItem.setPdfItmNo(res.getString("ITEM_NO"));
                     saleItem.setPdfItmName(res.getString("NAME"));  
                     saleItem.setPdfItmQty(res.getString("COUNT"));
+                    saleItem.setPdfItmUcost(res.getString("UNIT_COST"));
                     saleItem.setPdfItmUprize(res.getString("UNIT_PRIZE"));
                     saleItem.setPdfItmTprize(res.getString("TOTAL_PRIZE"));
                     datalist.add(saleItem);
@@ -517,5 +518,50 @@ public class AddPurchesService {
             }
         }
         return isAlready;
+    }
+
+    public boolean addItemUnitTotalCost(AddPurchesInputBean inputBean) throws Exception {
+
+        
+        boolean ok = false;
+        PreparedStatement prepSt = null;
+        ResultSet res = null;
+        Connection con = null;
+        String sql = null;
+        try {
+
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+            
+           
+            sql = "update ic_items SET UNIT_TCOST=? where ITEM_NO=?";
+            prepSt = con.prepareStatement(sql);
+            prepSt.setDouble(1, (Double.parseDouble(inputBean.getItemPrize())+Double.parseDouble(inputBean.getItemCost())) );
+            prepSt.setString(2, inputBean.getItemCode());
+
+            int n= prepSt.executeUpdate();
+            if(n>0){
+                ok = true;
+            }
+            con.commit();
+
+        } catch (Exception e) {
+            
+            con.rollback();
+            throw e;
+
+        } finally {
+            if (prepSt != null) {
+                prepSt.close();
+            }
+            if (res != null) {
+                res.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+           return ok;
     }
 }

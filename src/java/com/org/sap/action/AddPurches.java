@@ -73,6 +73,7 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
                     }else{   //add first row
                         service.addInvoice(inputBean);
                         service.addInvoiceDetail(inputBean);
+                        service.addItemUnitTotalCost(inputBean);
                         inputBean.setItemadd(true);
                     }
 //                }else{
@@ -140,33 +141,33 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
         return "delete";
     }
     
-    public String SubmitInvoice(){ //uudate invoice/stock table
+    public String SubmitPurchase(){ //uudate invoice/stock table
         try {
              if(service.submitInvoice(inputBean)){ 
                  inputBean.setItemadd(true);
-                 inputBean.setMessage(SystemMessage.SALE_ADD);
-                 DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.ADD, SystemMessage.SALE_ADD+ " Invoice No " + inputBean.getInvoiceId(),request.getRemoteAddr());
-                 LogFileCreator.writeInfoToLog(SystemMessage.SALE_ADD+ " Invoice No " + inputBean.getInvoiceId());
+                 inputBean.setMessage(SystemMessage.PURCH_ADD);
+                 DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.ADD, SystemMessage.PURCH_ADD+ " Purchase No " + inputBean.getPurchaseId(),request.getRemoteAddr());
+                 LogFileCreator.writeInfoToLog(SystemMessage.PURCH_ADD+ " Purchase No " + inputBean.getPurchaseId());
                     
              }else{
                  inputBean.setItemadd(false);
-                 inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
+                 inputBean.setMessage(SystemMessage.PURCH_ADD_FAIL);
              }
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();
             inputBean.setItemadd(false);
-            inputBean.setMessage(SystemMessage.SALE_ADD_FAIL);
+            inputBean.setMessage(SystemMessage.PURCH_ADD_FAIL);
         }
         
-        return "submitInvoice";
+        return "submitPurchase";
     }
     
     public String PrintInvoice(){
         try {
              service.setPdfParameters(inputBean);
              service.setPdfDataList(inputBean);
-             inputBean.setFilename("INVOICE-"+inputBean.getPdfpurchaseId()+".pdf");
+             inputBean.setFilename("PURCHASE-"+inputBean.getPdfpurchaseId()+".pdf");
         } catch (Exception ex) {
             LogFileCreator.writeErrorToLog(ex);
             ex.printStackTrace();

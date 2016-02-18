@@ -185,7 +185,7 @@
             <result name="addItem" type="json"></result>  
             <result name="list" type="json"></result>    
             <result name="delete" type="json"></result>
-            <result name="submitInvoice" type="json"></result>  
+            <result name="submitPurchase" type="json"></result>  
             <result name="jasperreport" type="jasper">            
                 <param name="location">/resources/jasper/saleReport.jasper</param>
                 <param name="dataSource">reportdatalist</param>

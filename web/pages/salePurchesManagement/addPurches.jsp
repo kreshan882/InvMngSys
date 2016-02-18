@@ -18,14 +18,15 @@
             
             function resetData(){
                 
-                $('#invoiceId').val("");
+                $('#purchaseId').val("");
                 $('#storId').val("1");
-                $('#custId').val("1");
+                $('#suppId').val("1");
                 $('#itemCode').val("");
                 $('#itemName').val("");
                 $('#itemQut').val("");
+                $('#itemCost').val("");
                 $('#itemPrize').val("");
-                $('#itemName').val("");
+                
             }
             
             function loadItemDetail() {
@@ -91,7 +92,7 @@
 
 
             function deleteformatter(cellvalue, options, rowObject) {
-                return "<a href='#' onClick='deleteInit(&#34;" + rowObject.invId + "&#34;,&#34;" + rowObject.itemNo + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
+                return "<a href='#' onClick='deleteInit(&#34;" + rowObject.purId + "&#34;,&#34;" + rowObject.itemNo + "&#34;)'><img src='${pageContext.request.contextPath}/resources/images/iconDelete.png'  /></a>";
             }
             function deleteInit(keyval1,keyval2) {
                 $("#deletedialog").data('keyval1', keyval1).data('keyval2', keyval2).dialog('open');
@@ -99,15 +100,15 @@
                 return false;
             }
             
-            function deleteNow(dinvoNo,ditemNo) {
+            function deleteNow(dpurNo,ditemNo) {
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/DeleteaddSale',
-                    data: {dinvoNo: dinvoNo,ditemNo:ditemNo},
+                    url: '${pageContext.request.contextPath}/DeleteaddPurches',
+                    data: {dpurNo: dpurNo,ditemNo:ditemNo},
                     dataType: "json",
                     type: "POST",
                     success: function(data) {
                         
-                        $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: data.dinvoNo}});
+                        $("#gridtable").jqGrid('setGridParam', {postData: {purchaseId: data.dpurNo}});
                         jQuery("#gridtable").trigger("reloadGrid");
                     },
                     error: function(data) {
@@ -118,23 +119,23 @@
             }
             
             
-            function SubmitInvoice() {
-                    var invoiceId=$('#invoiceId').val();
+            function SubmitPurchase() {
+                    var purchaseId=$('#purchaseId').val();
                     var storId=$('#storId').val();
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/SubmitInvoiceaddSale',
-                        data: {invoiceId: invoiceId,storId:storId},
+                        url: '${pageContext.request.contextPath}/SubmitPurchaseaddPurches',
+                        data: {purchaseId: purchaseId,storId:storId},
                         dataType: "json",
                         type: "POST",
                         success: function(data) { 
                                  
                             if(data.itemadd){    
                                 resetData();
-                                $('#pdfinvoiceId').val(data.invoiceId);
+                                $('#pdfpurchaseId').val(data.purchaseId);
                                 $("#assignbut").click();
-                                var nestinv=Number(data.invoiceId)+Number(1);
-                                $('#invoiceId').val(nestinv);
-                                $("#gridtable").jqGrid('setGridParam', {postData: {invoiceId: nestinv}});
+                                var nestinv=Number(data.purchaseId)+Number(1);
+                                $('#purchaseId').val(nestinv);
+                                $("#gridtable").jqGrid('setGridParam', {postData: {purchaseId: nestinv}});
                                 jQuery("#gridtable").trigger("reloadGrid");
                             }else{
                                 $("#dialogbox").dialog('open');
@@ -169,7 +170,7 @@
                             
                     <div class="contentcenter">
                         <s:form action="PrintInvoiceaddPurches" theme="simple" >
-                                <s:hidden id="pdfinvoiceId" name="pdfinvoiceId" />
+                                <s:hidden id="pdfpurchaseId" name="pdfpurchaseId" />
                                 <s:submit button="true"  id="assignbut" cssStyle="display: none; visibility: hidden;"  />
                         </s:form>
                         
@@ -228,7 +229,7 @@
                                 
                                 <tr>
                                     <td colspan="3">
-                                        <s:submit button="true" value="Submit" onclick="SubmitInvoice()"  targets="divmsg"  cssClass="button_ssave" />
+                                        <s:submit button="true" value="Submit" onclick="SubmitPurchase()"  targets="divmsg"  cssClass="button_ssave" />
                                         <%--<s:url var="addurl" action="PrintInvoiceaddSale"/>--%>
                                         <sj:submit button="true" value="Print Invoice"  targets="divmsg"  cssStyle="display: none; visibility: hidden;" /> 
                                     <td colspan="4"></td>

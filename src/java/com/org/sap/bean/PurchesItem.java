@@ -23,8 +23,9 @@ public class PurchesItem {
     //temo jasper
     private String pdfItmNo;
     private String pdfItmName;
-    private String pdfItmUprize;
     private String pdfItmQty;
+    private String pdfItmUcost;
+    private String pdfItmUprize;
     private String pdfItmTprize;
 
     public String getPurId() {
@@ -33,6 +34,14 @@ public class PurchesItem {
 
     public void setPurId(String purId) {
         this.purId = purId;
+    }
+
+    public String getPdfItmUcost() {
+        return pdfItmUcost;
+    }
+
+    public void setPdfItmUcost(String pdfItmUcost) {
+        this.pdfItmUcost = pdfItmUcost;
     }
 
     public String getItemNo() {
