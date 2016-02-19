@@ -338,7 +338,7 @@ public class AddPurchesService {
 //        return QtyAvaliable;
 //    }
 
-    public boolean submitInvoice(AddPurchesInputBean inputBean) throws Exception{
+    public boolean submitPurch(AddPurchesInputBean inputBean) throws Exception{
         boolean qtySucess=false;
         Connection con = null;
         double total=0;
@@ -413,7 +413,7 @@ public class AddPurchesService {
             con.setAutoCommit(false);
             Map pdfParaMtr = new HashMap();
             String sql = "SELECT pur.PUR_ID,CAST(pur.DATE AS CHAR) AS PUR_DATE,pur.TOTAL,sup.NAME,sup.EMAIL,sup.ADDRESS "
-                    + " ic_purchase pur,ic_supplier sup where pur.SUP_ID=sup.SUP_ID AND pur.PUR_ID=?";
+                    + " FROM ic_purchase pur,ic_supplier sup where pur.SUP_ID=sup.SUP_ID AND pur.PUR_ID=?";
             perSt = con.prepareStatement(sql);
             perSt.setInt(1, Integer.parseInt(inputBean.getPdfpurchaseId()));
             res = perSt.executeQuery();

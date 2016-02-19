@@ -143,7 +143,7 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
     
     public String SubmitPurchase(){ //uudate invoice/stock table
         try {
-             if(service.submitInvoice(inputBean)){ 
+             if(service.submitPurch(inputBean)){ 
                  inputBean.setItemadd(true);
                  inputBean.setMessage(SystemMessage.PURCH_ADD);
                  DBProcesses.insertHistoryRecord(sub.getUserid(),  Module.SALE_PURCH_MANAGEMENT, Operation.ADD, SystemMessage.PURCH_ADD+ " Purchase No " + inputBean.getPurchaseId(),request.getRemoteAddr());
