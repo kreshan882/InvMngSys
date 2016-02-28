@@ -11,12 +11,21 @@ package com.org.conf.bean;
 public class StockBean {
     private String itemCode;
     private String itemName;
+    private String strName;
     private String qty;
     
     private long fullCount;
 
     public String getItemCode() {
         return itemCode;
+    }
+
+    public String getStrName() {
+        return strName;
+    }
+
+    public void setStrName(String strName) {
+        this.strName = strName;
     }
 
     public void setItemCode(String itemCode) {

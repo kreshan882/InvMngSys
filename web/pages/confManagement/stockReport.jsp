@@ -113,9 +113,10 @@
                         >
                  
                         
-                        <sjg:gridColumn name="itemCode" index="NAME" title="Invoice Number"  align="left" width="10"  sortable="true"/>                        
-                        <sjg:gridColumn name="itemName" index="EMAIL" title="Item NAme"  align="left" width="15"  sortable="true"/>
-                        <sjg:gridColumn name="qty" index="ADDRESS" title="Quentity"  align="left" width="15"  sortable="true"/>
+                        <sjg:gridColumn name="itemCode" index="ITEM_NO" title="Invoice Number"  align="left" width="10"  sortable="true"/>                        
+                        <sjg:gridColumn name="itemName" index="NAME" title="Item NAme"  align="left" width="15"  sortable="true"/>
+                        <sjg:gridColumn name="strName" index="STRNAME" title="Store Name"  align="left" width="15"  sortable="true"/>
+                        <sjg:gridColumn name="qty" index="COUNT" title="Quentity"  align="left" width="15"  sortable="true"/>
                         
                        
 

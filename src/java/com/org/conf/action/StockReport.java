@@ -71,25 +71,25 @@ public class StockReport extends ActionSupport implements ModelDriven<StockRepor
      }
      
          
-     public String XSLcreat(){
-         
-        try {
-            ByteArrayOutputStream outputStream = null;
-            Object object =ExcelReport.generateExcelReport(inputBean);
-            
-            if (object instanceof XSSFWorkbook) {
-                XSSFWorkbook workbook = (XSSFWorkbook) object;
-                outputStream = new ByteArrayOutputStream();
-                workbook.write(outputStream);
-                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            LogFileCreator.writeErrorToLog(e);
-        }
-        return "excelreport";
-    }
+//     public String XSLcreat(){
+//         
+//        try {
+//            ByteArrayOutputStream outputStream = null;
+//            Object object =ExcelReport.generateExcelReport(inputBean);
+//            
+//            if (object instanceof XSSFWorkbook) {
+//                XSSFWorkbook workbook = (XSSFWorkbook) object;
+//                outputStream = new ByteArrayOutputStream();
+//                workbook.write(outputStream);
+//                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            LogFileCreator.writeErrorToLog(e);
+//        }
+//        return "excelreport";
+//    }
     
     @Override
     public StockReportInputBean getModel() {
