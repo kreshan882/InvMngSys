@@ -69,6 +69,7 @@ public class AddPurches extends ActionSupport implements ModelDriven<AddPurchesI
 //                if(service.checkItemQtyAvaliable(inputBean)){
                     if(service.checkPurcheaseId(inputBean.getPurchaseId())){   //outher Rows
                         service.addInvoiceDetail(inputBean);
+                        service.addItemUnitTotalCost(inputBean);
                         inputBean.setItemadd(true);
                     }else{   //add first row
                         service.addInvoice(inputBean);

@@ -27,6 +27,7 @@ public class PageVarList {
     public static final String PURCHES_EDIT_VIEW         =   "0404";
     
     public static final String CONF_PASSWDCHANGE         =   "0501";
+    public static final String CONF_REPORT_STOCK         =   "0502";
     
     
 }
