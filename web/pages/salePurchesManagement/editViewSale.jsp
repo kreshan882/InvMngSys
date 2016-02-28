@@ -67,7 +67,7 @@
                     dataType: "json",
                     type: "POST",
                     success: function(data) {
-                        alert("cancle going pending");
+//                        alert("cancle going pending");
                         if (data.success) {
                             $("#dialogbox").dialog('open');
                             $("#dialogbox").html('<br><b><font size="3" color="green"><center>' + data.message + ' ');

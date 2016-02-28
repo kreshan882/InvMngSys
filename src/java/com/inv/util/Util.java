@@ -87,9 +87,10 @@ public class Util {
     public static Map<String, String> getItemType() {
         Map<String, String> basicStatus = new HashMap<String, String>();
         basicStatus.put("01", "Dress");
-        basicStatus.put("01", "Showes");
-        basicStatus.put("01", "Cap");
-        basicStatus.put("02", "Meterial");
+        basicStatus.put("02", "Shoes");
+        basicStatus.put("03", "Caps");
+        basicStatus.put("04", "Materials");
+        basicStatus.put("05", "Others");
         return basicStatus;
     }
 
