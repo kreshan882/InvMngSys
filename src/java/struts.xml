@@ -194,7 +194,19 @@
                 <param name="contentDisposition">attachment;filename=${filename}</param>
             </result> 
         </action>       
-                
+               
+        <action name="*editViewPurches" class="com.org.sap.action.EditViewPurches" method="{1}">
+            <result name="success">/pages/salePurchesManagement/editViewPurches.jsp</result>         
+            <result name="list" type="json"></result>  
+            <result name="jasperreport" type="jasper">            
+                <param name="location">/resources/jasper/purchReport.jasper</param>
+                <param name="dataSource">reportdatalist</param>
+                <param name="format">PDF</param>
+                <param name="reportParameters">parameterMap</param>
+                <param name="contentDisposition">attachment;filename=${filename}</param>
+            </result>   
+            <result name="cancle" type="json"></result> 
+        </action>  
     </package> 
      <package name="inventory_configuration" namespace="/" extends="pglobal">
   
@@ -206,12 +218,16 @@
         <action name="*stockReport" class="com.org.conf.action.StockReport" method="{1}">
             <result name="success">/pages/confManagement/stockReport.jsp</result> 
             <result name="message">/pages/msgFrag.jsp</result>
-            <result name="list" type="json"></result>            
+            <result name="list" type="json"></result>   
+            <result name="excelreport" type="stream">
+                <param name="contentType">"application/vnd.ms-excel"</param>
+                <param name="inputName">excelStream</param>
+                <param name="contentDisposition">attachment;filename="Stock_Report.xlsx"</param>
+                <param name="bufferSize">61440</param>
+            </result>           
         </action>
         
-        <action name="*editViewPurches" class="com.org.conf.action.Protocols" method="{1}">
-            <result name="success">/pages/salePurchesManagement/editViewPurches.jsp</result>         
-        </action> 
+        
     </package>  
     
  

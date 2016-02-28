@@ -14,13 +14,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.org.conf.bean.StockBean;
 import com.org.conf.bean.StockReportInputBean;
+import com.org.conf.service.ExcelReport;
 import com.org.conf.service.StockReportService;
-import com.org.cust.service.ExcelReport;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
@@ -71,25 +69,25 @@ public class StockReport extends ActionSupport implements ModelDriven<StockRepor
      }
      
          
-//     public String XSLcreat(){
-//         
-//        try {
-//            ByteArrayOutputStream outputStream = null;
-//            Object object =ExcelReport.generateExcelReport(inputBean);
-//            
-//            if (object instanceof XSSFWorkbook) {
-//                XSSFWorkbook workbook = (XSSFWorkbook) object;
-//                outputStream = new ByteArrayOutputStream();
-//                workbook.write(outputStream);
-//                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            LogFileCreator.writeErrorToLog(e);
-//        }
-//        return "excelreport";
-//    }
+     public String XSLcreat(){
+         
+        try {
+            ByteArrayOutputStream outputStream = null;
+            Object object =ExcelReport.generateExcelReport(inputBean);
+            
+            if (object instanceof XSSFWorkbook) {
+                XSSFWorkbook workbook = (XSSFWorkbook) object;
+                outputStream = new ByteArrayOutputStream();
+                workbook.write(outputStream);
+                inputBean.setExcelStream(new ByteArrayInputStream(outputStream.toByteArray()));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogFileCreator.writeErrorToLog(e);
+        }
+        return "excelreport";
+    }
     
     @Override
     public StockReportInputBean getModel() {
